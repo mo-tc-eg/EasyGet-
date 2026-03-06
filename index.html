@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>EasyGet | بوابة إضافة البراند</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --red: #C8102E;
+            --red-dark: #9B0B22;
+            --red-light: #e8192c;
+            --black: #0a0a0a;
+            --dark: #0f0f0f;
+            --white: #ffffff;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background: #f3f3f3; color: var(--black); font-family: 'Cairo', sans-serif; direction: rtl; overflow-x: hidden; }
+
+        /* ===== HERO - LIGHT 3D ===== */
+        .hero {
+            background: #ffffff;
+            position: relative;
+            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Three.js canvas behind everything */
+        #hero3d {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        /* light gradient overlay — NO white blob behind text, just subtle edges */
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 50% 50% at 85% 8%,  rgba(200,16,46,0.06) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 40% at 8%  92%, rgba(200,16,46,0.05) 0%, transparent 60%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* bottom wave into form area */
+        .hero-slash {
+            position: absolute;
+            bottom: -2px; left: 0; right: 0;
+            height: 90px;
+            background: #f3f3f3;
+            clip-path: polygon(0 100%, 100% 100%, 100% 40%, 0 100%);
+            z-index: 3;
+        }
+
+        /* TOPBAR */
+        .hero-topbar {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 32px 48px;
+            background: rgba(255,255,255,0.75);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(200,16,46,0.08);
+        }
+
+        /* Logo — full original colors, no filter */
+        .logo-img {
+            height: 72px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .hero-badge {
+            position: absolute;
+            left: 48px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(200,16,46,0.08);
+            border: 1px solid rgba(200,16,46,0.2);
+            color: var(--red);
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 7px 16px;
+            border-radius: 50px;
+        }
+
+        .badge-dot {
+            width: 7px; height: 7px;
+            background: var(--red-light);
+            border-radius: 50%;
+            animation: blinkDot 2s infinite;
+        }
+        @keyframes blinkDot { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+        /* HERO BODY */
+        .hero-body {
+            position: relative;
+            z-index: 5;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px 24px 120px;
+        }
+
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #aaa;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            margin-bottom: 22px;
+        }
+        .hero-eyebrow::before, .hero-eyebrow::after {
+            content: '';
+            width: 28px; height: 1px;
+            background: rgba(200,16,46,0.25);
+        }
+
+        .hero-title {
+            font-size: clamp(2.4rem, 6vw, 4.2rem);
+            font-weight: 900;
+            color: #111;
+            line-height: 1.15;
+            letter-spacing: -2px;
+            margin-bottom: 22px;
+            max-width: 720px;
+        }
+
+        /* Both lines full light red with 3D depth feel */
+        .line-red-main {
+            display: block;
+            background: linear-gradient(135deg, #C8102E 0%, #ff4d6d 45%, #C8102E 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 4px 16px rgba(200,16,46,0.25)) drop-shadow(0 1px 0 rgba(200,16,46,0.15));
+        }
+
+        /* space between the two lines — reduced */
+        .line-gap { margin-top: 5px; }
+
+        /* underline animation on second line */
+        .line-red-main#heroRedLine { position: relative; }
+        .line-red-main#heroRedLine::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            right: 50%; left: 50%;
+            height: 4px;
+            background: linear-gradient(90deg, #C8102E, #ff4d6d, #C8102E);
+            border-radius: 4px;
+            transition: all 0.8s cubic-bezier(.4,0,.2,1);
+        }
+        .line-red-main#heroRedLine.ready::after { right: 0; left: 0; }
+
+        /* ── TEXT ENTRANCE ANIMATIONS ── */
+        /* Line 1: slides up + fades + 3D perspective flip */
+        .txt-anim-1 {
+            opacity: 0;
+            transform: perspective(600px) rotateX(45deg) translateY(40px);
+            animation: textReveal3D 0.9s cubic-bezier(0.16,1,0.3,1) 0.2s forwards;
+        }
+
+        /* Line 2: same but delayed */
+        .txt-anim-2 {
+            opacity: 0;
+            transform: perspective(600px) rotateX(45deg) translateY(40px);
+            animation: textReveal3D 0.9s cubic-bezier(0.16,1,0.3,1) 0.55s forwards;
+        }
+
+        @keyframes textReveal3D {
+            0%   { opacity:0; transform: perspective(600px) rotateX(45deg) translateY(40px) scale(0.95); filter: drop-shadow(0 20px 30px rgba(200,16,46,0.0)) blur(4px); }
+            60%  { opacity:1; filter: drop-shadow(0 4px 16px rgba(200,16,46,0.25)) blur(0px); }
+            100% { opacity:1; transform: perspective(600px) rotateX(0deg) translateY(0) scale(1);
+                   filter: drop-shadow(0 4px 16px rgba(200,16,46,0.25)) drop-shadow(0 1px 0 rgba(200,16,46,0.15)); }
+        }
+
+        /* Subtitle + CTA + Steps animations */
+        .sub-anim {
+            opacity: 0;
+            animation: fadeSlideUp 0.7s ease 0.95s forwards;
+        }
+        .steps-anim {
+            opacity: 0;
+            animation: fadeSlideUp 0.7s ease 1.15s forwards;
+        }
+        .cta-anim {
+            opacity: 0;
+            animation: fadeSlideUp 0.7s ease 1.3s forwards;
+        }
+
+        @keyframes fadeSlideUp {
+            from { opacity:0; transform: translateY(22px); }
+            to   { opacity:1; transform: translateY(0); }
+        }
+
+        .hero-sub {
+            font-size: 1.05rem;
+            font-weight: 400;
+            color: #777;
+            max-width: 500px;
+            line-height: 1.85;
+            margin-bottom: 36px;
+        }
+        .hero-sub strong { color: #333; font-weight: 700; }
+
+        /* Steps */
+        .hero-steps-row { display: flex; align-items: center; flex-wrap: nowrap; }
+
+        .step-item {
+            display: flex; align-items: center; gap: 10px;
+            padding: 10px 18px;
+            background: rgba(255,255,255,0.8);
+            border: 1px solid rgba(200,16,46,0.1);
+            border-radius: 12px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+        }
+
+        .step-num {
+            width: 26px; height: 26px;
+            background: var(--red);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.75rem; font-weight: 800; color: white;
+            flex-shrink: 0;
+            box-shadow: 0 3px 10px rgba(200,16,46,0.35);
+        }
+
+        .step-text { font-size: 0.8rem; font-weight: 600; color: #555; white-space: nowrap; }
+        .step-arrow { color: #ccc; font-size: 0.7rem; margin: 0 6px; flex-shrink: 0; }
+
+        /* CTA */
+        .hero-cta {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: var(--red); color: white;
+            border: none; border-radius: 50px;
+            padding: 16px 38px;
+            font-size: 1rem; font-weight: 800;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer; transition: all 0.25s;
+            box-shadow: 0 6px 30px rgba(200,16,46,0.35);
+            margin-top: 36px; text-decoration: none;
+        }
+        .hero-cta:hover { background: var(--red-dark); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(200,16,46,0.45); }
+
+        /* FORM */
+        .main-wrap { max-width: 1000px; margin: 0 auto; padding: 60px 20px 70px; }
+        .form-section { background: white; border-radius: 20px; border: 1px solid #e4e4e4; margin-bottom: 22px; overflow: hidden; box-shadow: 0 2px 16px rgba(0,0,0,0.04); animation: fadeUp 0.5s ease both; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+        .form-section:nth-child(1){animation-delay:0.05s} .form-section:nth-child(2){animation-delay:0.10s} .form-section:nth-child(3){animation-delay:0.15s} .form-section:nth-child(4){animation-delay:0.20s} .form-section:nth-child(5){animation-delay:0.25s}
+
+        .section-head { display: flex; align-items: center; gap: 14px; padding: 20px 26px; border-bottom: 1px solid #f0f0f0; background: linear-gradient(135deg, #fafafa 0%, #f7f7f7 100%); }
+        .section-num { width: 34px; height: 34px; background: var(--red); color: white; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; font-weight: 800; flex-shrink: 0; box-shadow: 0 4px 12px rgba(200,16,46,0.3); }
+        .section-info h2 { font-size: 0.98rem; font-weight: 800; color: #111; }
+        .section-info p { font-size: 0.75rem; color: #aaa; font-weight: 400; margin-top: 1px; }
+        .section-body { padding: 26px; }
+
+        /* FIELDS */
+        .fields-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+        .field-group { display: flex; flex-direction: column; gap: 7px; }
+        .field-group.full { grid-column: 1 / -1; }
+        .field-label-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+        .field-label { font-size: 0.78rem; font-weight: 700; color: #444; display: flex; align-items: center; gap: 6px; }
+        .field-label i { color: var(--red); font-size: 0.76rem; }
+        .req { color: var(--red); margin-right: 2px; }
+
+        /* HELP BUTTON */
+        .help-wrap { position: relative; display: inline-flex; }
+        .help-btn { width: 22px; height: 22px; border-radius: 50%; background: #efefef; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; color: #888; font-weight: 900; transition: all 0.2s; flex-shrink: 0; font-family: 'Cairo', sans-serif; }
+        .help-btn:hover { background: var(--red); color: white; transform: scale(1.15); }
+
+        /* tooltip-box acts as data store only — invisible */
+        .tooltip-box { display: none; }
+        .tip-title { display: none; }
+
+        /* ── HELP MODAL OVERLAY ── */
+        #helpModalOverlay {
+            position: fixed;
+            inset: 0;
+            z-index: 999999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0);
+            backdrop-filter: blur(0px);
+            transition: background 0.3s, backdrop-filter 0.3s;
+            pointer-events: none;
+        }
+
+        #helpModalOverlay.open {
+            background: rgba(0,0,0,0.45);
+            backdrop-filter: blur(8px);
+            pointer-events: all;
+        }
+
+        #helpModalCard {
+            background: #fff;
+            border-radius: 24px;
+            padding: 32px 28px 28px;
+            width: min(380px, 90vw);
+            text-align: right;
+            direction: rtl;
+            box-shadow:
+                0 40px 80px rgba(0,0,0,0.18),
+                0 0 0 1px rgba(200,16,46,0.1),
+                inset 0 1px 0 rgba(255,255,255,0.9);
+            transform: perspective(800px) rotateX(20deg) scale(0.85) translateY(30px);
+            opacity: 0;
+            transition:
+                transform 0.45s cubic-bezier(0.16,1,0.3,1),
+                opacity 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #helpModalCard::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--red-dark), var(--red-light), var(--red-dark));
+            border-radius: 24px 24px 0 0;
+        }
+
+        #helpModalOverlay.open #helpModalCard {
+            transform: perspective(800px) rotateX(0deg) scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        /* close button */
+        #helpModalClose {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            width: 30px; height: 30px;
+            border-radius: 50%;
+            border: none;
+            background: #f0f0f0;
+            color: #888;
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s;
+        }
+        #helpModalClose:hover { background: var(--red); color: white; transform: scale(1.1); }
+
+        /* icon circle */
+        #helpModalIconWrap {
+            width: 52px; height: 52px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(200,16,46,0.1), rgba(200,16,46,0.05));
+            border: 1px solid rgba(200,16,46,0.15);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 16px rgba(200,16,46,0.12);
+        }
+
+        #helpModalTitle {
+            font-size: 1rem;
+            font-weight: 900;
+            color: #111;
+            margin-bottom: 10px;
+        }
+
+        #helpModalTitle span { color: var(--red); }
+
+        #helpModalBody {
+            font-size: 0.88rem;
+            line-height: 1.75;
+            color: #555;
+            font-weight: 500;
+        }
+
+        #helpModalBody strong { color: #222; font-weight: 700; }
+
+        /* decorative corner glow */
+        #helpModalCard::after {
+            content: '';
+            position: absolute;
+            bottom: -30px; left: -30px;
+            width: 120px; height: 120px;
+            background: radial-gradient(circle, rgba(200,16,46,0.08), transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .field-input { width: 100%; padding: 11px 15px; border: 1.5px solid #e0e0e0; border-radius: 12px; font-size: 0.88rem; font-family: 'Cairo', sans-serif; color: var(--black); background: #fff; transition: all 0.2s; outline: none; }
+        .field-input:focus { border-color: var(--red); box-shadow: 0 0 0 4px rgba(200,16,46,0.07); }
+        .field-input::placeholder { color: #ccc; }
+        textarea.field-input { min-height: 95px; resize: vertical; }
+
+        /* PAYMENT */
+        .payment-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }
+        .pay-card { border: 1.5px solid #e0e0e0; border-radius: 14px; padding: 14px 16px; display: flex; align-items: center; gap: 10px; cursor: pointer; transition: all 0.2s; background: #fafafa; }
+        .pay-card:hover { border-color: var(--red); background: rgba(200,16,46,0.03); }
+        .pay-card.active { border-color: var(--red); background: rgba(200,16,46,0.05); }
+        .pay-card input[type="checkbox"] { width: 17px; height: 17px; accent-color: var(--red); flex-shrink: 0; }
+        .pay-card label { font-size: 0.87rem; font-weight: 700; color: #444; cursor: pointer; display: flex; align-items: center; gap: 7px; }
+        .pay-card label i { color: var(--red); font-size: 0.88rem; }
+
+        /* SOCIAL */
+        .social-list { display: flex; flex-direction: column; gap: 10px; }
+        .social-row { display: flex; align-items: center; gap: 10px; background: #fafafa; border: 1.5px solid #e8e8e8; border-radius: 14px; padding: 10px 14px; transition: border-color 0.2s; }
+        .social-row:hover { border-color: #ccc; }
+        .social-ico { width: 36px; height: 36px; background: var(--red); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1rem; flex-shrink: 0; box-shadow: 0 3px 10px rgba(200,16,46,0.25); }
+        .social-input { flex: 1; border: none; outline: none; background: transparent; font-size: 0.87rem; font-family: 'Cairo', sans-serif; color: var(--black); }
+        .social-input::placeholder { color: #bbb; }
+        .btn-del { width: 32px; height: 32px; border: 1.5px solid #e0e0e0; border-radius: 8px; background: white; color: #bbb; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-size: 0.78rem; flex-shrink: 0; }
+        .btn-del:hover { border-color: var(--red); color: var(--red); background: rgba(200,16,46,0.05); }
+        .btn-add-line { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 11px; border: 1.5px dashed #d0d0d0; border-radius: 12px; background: transparent; color: #aaa; font-size: 0.83rem; font-weight: 700; font-family: 'Cairo', sans-serif; cursor: pointer; transition: all 0.2s; margin-top: 10px; }
+        .btn-add-line:hover { border-color: var(--red); color: var(--red); background: rgba(200,16,46,0.03); }
+
+        /* GENERAL PRODUCTS */
+        .gen-products { display: flex; flex-direction: column; gap: 10px; }
+        .gen-product-row { display: flex; align-items: center; gap: 10px; }
+        .gen-url-input { flex: 1; padding: 11px 15px; border: 1.5px solid #e0e0e0; border-radius: 12px; font-size: 0.87rem; font-family: 'Cairo', sans-serif; color: var(--black); background: #fff; outline: none; transition: all 0.2s; }
+        .gen-url-input:focus { border-color: var(--red); box-shadow: 0 0 0 4px rgba(200,16,46,0.07); }
+        .gen-url-input::placeholder { color: #ccc; }
+
+        /* PRODUCTS */
+        .product-card { background: #fafafa; border: 1.5px solid #e8e8e8; border-radius: 16px; padding: 18px; margin-bottom: 12px; transition: border-color 0.2s; }
+        .product-card:hover { border-color: #d0d0d0; }
+        .product-card-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+        .product-card-title { font-size: 0.8rem; font-weight: 800; color: var(--red); display: flex; align-items: center; gap: 6px; }
+        .product-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; align-items: center; }
+        .product-field-input { width: 100%; padding: 10px 13px; border: 1.5px solid #e0e0e0; border-radius: 10px; font-size: 0.87rem; font-family: 'Cairo', sans-serif; background: white; color: var(--black); outline: none; transition: border-color 0.2s; }
+        .product-field-input:focus { border-color: var(--red); }
+        .product-field-input::placeholder { color: #ccc; }
+        .product-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+        .badge-check { display: flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1.5px solid #e0e0e0; border-radius: 8px; cursor: pointer; font-size: 0.8rem; font-weight: 700; color: #777; background: white; transition: all 0.2s; user-select: none; }
+        .badge-check input { width: 14px; height: 14px; accent-color: var(--red); }
+        .badge-check:hover { border-color: var(--red); color: var(--red); }
+
+        /* ACTION BAR */
+        .action-bar { background: var(--dark); border-radius: 22px; padding: 32px 36px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-top: 30px; position: relative; overflow: hidden; }
+        .action-bar::before { content: ''; position: absolute; top: 0; right: 0; width: 250px; height: 100%; background: radial-gradient(ellipse at right, rgba(200,16,46,0.2), transparent 70%); }
+        .action-bar::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(200,16,46,0.5), transparent); }
+        .action-info { position: relative; z-index: 1; }
+        .action-info h3 { font-size: 1.1rem; font-weight: 900; color: white; margin-bottom: 5px; }
+        .action-info p { font-size: 0.8rem; color: rgba(255,255,255,0.35); }
+        .action-btns { display: flex; gap: 12px; position: relative; z-index: 1; flex-wrap: wrap; }
+        .btn-primary { display: inline-flex; align-items: center; gap: 10px; background: var(--red); color: white; border: none; border-radius: 50px; padding: 14px 30px; font-size: 0.95rem; font-weight: 800; font-family: 'Cairo', sans-serif; cursor: pointer; transition: all 0.25s; box-shadow: 0 5px 20px rgba(200,16,46,0.4); }
+        .btn-primary:hover { background: var(--red-dark); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(200,16,46,0.5); }
+        .btn-secondary { display: inline-flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.6); border: 1.5px solid rgba(255,255,255,0.1); border-radius: 50px; padding: 14px 24px; font-size: 0.88rem; font-weight: 700; font-family: 'Cairo', sans-serif; cursor: pointer; transition: all 0.25s; }
+        .btn-secondary:hover { background: rgba(255,255,255,0.12); color: white; border-color: rgba(255,255,255,0.2); }
+
+        /* FOOTER */
+        .site-footer { background: #f0f0f0; border-top: 1px solid #e0e0e0; text-align: center; padding: 20px; color: #aaa; font-size: 0.82rem; font-weight: 500; }
+
+        /* POPUP */
+        .popup-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.65); display: none; align-items: center; justify-content: center; z-index: 99999; backdrop-filter: blur(8px); }
+        .popup-card { background: white; border-radius: 24px; padding: 38px 28px; width: 90%; max-width: 380px; text-align: center; animation: popIn 0.3s cubic-bezier(0.34,1.56,0.64,1) both; box-shadow: 0 30px 70px rgba(0,0,0,0.2); }
+        @keyframes popIn { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .popup-icon-wrap { width: 72px; height: 72px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; font-size: 2.2rem; }
+        .popup-icon-wrap.success { background: rgba(200,16,46,0.08); color: var(--red); }
+        .popup-icon-wrap.error { background: rgba(200,16,46,0.08); color: var(--red); }
+        .popup-icon-wrap.warn { background: rgba(255,165,0,0.1); color: #f59e0b; }
+        .popup-title { font-size: 1.2rem; font-weight: 900; color: #111; margin-bottom: 8px; }
+        .popup-msg { color: #777; font-size: 0.88rem; line-height: 1.75; margin-bottom: 24px; }
+        .popup-actions { display: flex; gap: 10px; justify-content: center; }
+        .pop-btn { padding: 10px 24px; border-radius: 50px; font-size: 0.88rem; font-weight: 800; font-family: 'Cairo', sans-serif; cursor: pointer; border: none; transition: all 0.2s; }
+        .pop-btn-red { background: var(--red); color: white; }
+        .pop-btn-red:hover { background: var(--red-dark); }
+        .pop-btn-gray { background: #f0f0f0; color: #555; }
+        .pop-btn-gray:hover { background: #e0e0e0; }
+
+        /* HINT STRIP */
+        .hint-strip { display: flex; align-items: center; gap: 8px; background: rgba(200,16,46,0.05); border: 1px solid rgba(200,16,46,0.12); border-radius: 10px; padding: 10px 14px; margin-bottom: 14px; }
+        .hint-strip span { font-size: 0.77rem; color: #888; font-weight: 600; }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .hero-topbar { padding: 16px 20px; }
+            .hero-steps-row { display: none; }
+            .section-body { padding: 18px; }
+            .action-bar { flex-direction: column; text-align: center; padding: 24px 20px; }
+            .action-btns { width: 100%; }
+            .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+            .payment-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 480px) {
+            .hero-title { font-size: 2rem; letter-spacing: -0.5px; }
+            .logo-img { height: 52px; }
+            .hero-body { padding: 20px 16px 100px; }
+            .hero-cta { padding: 14px 28px; font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<section class="hero">
+    <canvas id="hero3d"></canvas>
+    <div class="hero-overlay"></div>
+
+    <div class="hero-topbar">
+        <img src="https://i.postimg.cc/qqL5cNz5/IMG_3669.png" alt="EasyGet" class="logo-img">
+        <div class="hero-badge"><div class="badge-dot"></div> بوابة البراندات</div>
+    </div>
+
+    <div class="hero-body">
+        <div class="hero-eyebrow">انضم لمنصة EasyGet</div>
+
+        <h1 class="hero-title">
+            <span class="line-red-main txt-anim-1">خلّي براندك يوصل</span>
+            <span class="line-red-main line-gap txt-anim-2" id="heroRedLine">لآلاف العملاء</span>
+        </h1>
+
+        <p class="hero-sub sub-anim">
+            ابعت بياناتك وفريقنا هيضيف براندك على المنصة<br>
+            في أقل وقت <strong>ممكن</strong> — سريع، سهل، ومجاني 🚀
+        </p>
+
+        <div class="hero-steps-row steps-anim">
+            <div class="step-item"><span class="step-num">1</span><span class="step-text">إملا البيانات</span></div>
+            <span class="step-arrow">←</span>
+            <div class="step-item"><span class="step-num">2</span><span class="step-text">ابعت الفورم</span></div>
+            <span class="step-arrow">←</span>
+            <div class="step-item"><span class="step-num">3</span><span class="step-text">فريقنا يراجع البراند</span></div>
+            <span class="step-arrow">←</span>
+            <div class="step-item"><span class="step-num">4</span><span class="step-text">براندك يبان في التطبيق🎉</span></div>
+        </div>
+
+        <a href="#form-start" class="hero-cta cta-anim">
+            <i class="fas fa-arrow-down"></i>
+            ابدأ إضافة براندك دلوقتي
+        </a>
+    </div>
+
+    <div class="hero-slash"></div>
+</section>
+
+<main class="main-wrap" id="form-start">
+
+    <!-- 1. Basic Info -->
+    <div class="form-section">
+        <div class="section-head">
+            <div class="section-num">1</div>
+            <div class="section-info">
+                <h2>بيانات البراند الأساسية</h2>
+                <p>اضغط على علامة ؟ جنب كل خانة عشان تعرف تملاها صح</p>
+            </div>
+        </div>
+        <div class="section-body">
+            <div class="fields-grid">
+
+                <div class="field-group">
+                    <div class="field-label-row">
+                        <label class="field-label"><i class="fas fa-store"></i> اسم البراند <span class="req">*</span></label>
+                        <div class="help-wrap">
+                            <button class="help-btn" onclick="toggleTip(this)">؟</button>
+                            <div class="tooltip-box">
+                                <div class="tip-title">📛 اسم البراند</div>
+                                اكتب الاسم التجاري بتاع براندك زي ما بيبان للعملاء. مثال: <strong>Fati's Kitchen</strong> أو <strong>El Masry Store</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="text" id="brandName" class="field-input" placeholder="مثال: Fati's Kitchen">
+                </div>
+
+                <div class="field-group">
+                    <div class="field-label-row">
+                        <label class="field-label"><i class="fas fa-shopping-cart"></i> رابط الطلب <span class="req">*</span></label>
+                        <div class="help-wrap">
+                            <button class="help-btn" onclick="toggleTip(this)">؟</button>
+                            <div class="tooltip-box">
+                                <div class="tip-title">🔗 رابط الطلب</div>
+                                ده الرابط اللي العميل هيضغط عليه عشان يطلب. ممكن يكون واتساب أو موقع أو صفحة. مثال: <strong>https://wa.me/201234567890</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="url" id="orderUrl" class="field-input" placeholder="https://wa.me/201234567890">
+                </div>
+
+                <div class="field-group">
+                    <div class="field-label-row">
+                        <label class="field-label"><i class="fas fa-image"></i> لينك اللوجو <span class="req">*</span></label>
+                        <div class="help-wrap">
+                            <button class="help-btn" onclick="toggleTip(this)">؟</button>
+                            <div class="tooltip-box">
+                                <div class="tip-title">🖼️ صورة اللوجو</div>
+                                ارفع اللوجو على <strong>postimg.cc</strong> أو <strong>imgbb.com</strong> وجيب الـ "Direct Link". لازم ينتهي بـ .jpg أو .png
+                            </div>
+                        </div>
+                    </div>
+                    <input type="url" id="imageUrl" class="field-input" placeholder="https://i.postimg.cc/xxx/logo.png">
+                </div>
+
+                <div class="field-group">
+                    <div class="field-label-row">
+                        <label class="field-label"><i class="fas fa-clock"></i> وقت التوصيل</label>
+                        <div class="help-wrap">
+                            <button class="help-btn" onclick="toggleTip(this)">؟</button>
+                            <div class="tooltip-box">
+                                <div class="tip-title">⏱️ وقت التوصيل</div>
+                                تقريباً الوقت من لما العميل يطلب لحد ما يوصله. مثال: <strong>30-45 دقيقة</strong> أو <strong>يوم عمل</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="text" id="deliveryTime" class="field-input" placeholder="مثال: 30-45 دقيقة">
+                </div>
+
+                <div class="field-group">
+                    <div class="field-label-row">
+                        <label class="field-label"><i class="fas fa-money-bill"></i> رسوم التوصيل</label>
+                        <div class="help-wrap">
+                            <button class="help-btn" onclick="toggleTip(this)">؟</button>
+                            <div class="tooltip-box">
+                                <div class="tip-title">💸 رسوم التوصيل</div>
+                                رسوم التوصيل الثابتة أو قول "مجاني". مثال: <strong>25 ج.م</strong> أو <strong>مجاني فوق 200 ج.م</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="text" id="deliveryFee" class="field-input" placeholder="مثال: 25 ج.م أو مجاني">
+                </div>
+
+                <div class="field-group">
+                    <div class="field-label-row">
+                        <label class="field-label"><i class="fas fa-tag"></i> أقل سعر</label>
+                        <div class="help-wrap">
+                            <button class="help-btn" onclick="toggleTip(this)">؟</button>
+                            <div class="tooltip-box">
+                                <div class="tip-title">🏷️ أقل سعر</div>
+                                أرخص منتج أو خدمة عندك بالجنيه. مثال: <strong>50</strong> يعني أقل منتج بـ 50 ج.م
+                            </div>
+                        </div>
+                    </div>
+                    <input type="number" id="minPrice" class="field-input" placeholder="مثال: 50">
+                </div>
+
+                <div class="field-group">
+                    <div class="field-label-row">
+                        <label class="field-label"><i class="fas fa-tags"></i> أعلى سعر</label>
+                        <div class="help-wrap">
+                            <button class="help-btn" onclick="toggleTip(this)">؟</button>
+                            <div class="tooltip-box">
+                                <div class="tip-title">💰 أعلى سعر</div>
+                                أغلى منتج أو خدمة عندك بالجنيه. مثال: <strong>500</strong> يعني أغلى منتج بـ 500 ج.م
+                            </div>
+                        </div>
+                    </div>
+                    <input type="number" id="maxPrice" class="field-input" placeholder="مثال: 500">
+                </div>
+
+                <div class="field-group">
+                    <div class="field-label-row">
+                        <label class="field-label"><i class="fas fa-map-marker-alt"></i> مناطق التوصيل</label>
+                        <div class="help-wrap">
+                            <button class="help-btn" onclick="toggleTip(this)">؟</button>
+                            <div class="tooltip-box">
+                                <div class="tip-title">📍 مناطق التوصيل</div>
+                                المحافظات أو المناطق اللي بتوصل فيها. مثال: <strong>القاهرة والجيزة فقط</strong> أو <strong>جميع المحافظات</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="text" id="deliveryAreas" class="field-input" placeholder="مثال: القاهرة والجيزة">
+                </div>
+
+                <div class="field-group full">
+                    <div class="field-label-row">
+                        <label class="field-label"><i class="fas fa-file-alt"></i> وصف البراند <span class="req">*</span></label>
+                        <div class="help-wrap">
+                            <button class="help-btn" onclick="toggleTip(this)">؟</button>
+                            <div class="tooltip-box">
+                                <div class="tip-title">📝 وصف البراند</div>
+                                جملتين أو تلاتة عن البراند — بيعمل إيه، أشهر منتجاته، وليه العميل يختاره. ده أول حاجة بيقراها العميل! مثال: <strong>بيتزا طازجة يومياً بعجينة يدوية وخامات مش هتلاقيها في أي مكان تاني</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <textarea id="description" class="field-input" placeholder="اكتب وصف مختصر وشيق للبراند — أشهر منتجاته، مميزاته، وليه العميل يطلب منه..."></textarea>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Payment -->
+    <div class="form-section">
+        <div class="section-head">
+            <div class="section-num">2</div>
+            <div class="section-info">
+                <h2>وسائل الدفع</h2>
+                <p>اختار الطرق المتاحة — ممكن تختار أكتر من طريقة</p>
+            </div>
+        </div>
+        <div class="section-body">
+            <div class="payment-grid">
+                <div class="pay-card active"><input type="checkbox" id="cash" value="الدفع عند الاستلام" checked><label for="cash"><i class="fas fa-money-bill-wave"></i> كاش عند الاستلام</label></div>
+                <div class="pay-card active"><input type="checkbox" id="card" value="بطاقات الدفع" checked><label for="card"><i class="fas fa-credit-card"></i> بطاقات الدفع</label></div>
+                <div class="pay-card"><input type="checkbox" id="vodafone" value="فودافون كاش"><label for="vodafone"><i class="fas fa-mobile-alt"></i> فودافون كاش</label></div>
+                <div class="pay-card"><input type="checkbox" id="instapay" value="انستاباي"><label for="instapay"><i class="fas fa-bolt"></i> انستاباي</label></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Social -->
+    <div class="form-section">
+        <div class="section-head">
+            <div class="section-num">3</div>
+            <div class="section-info">
+                <h2>وسائل التواصل الاجتماعي</h2>
+                <p>ضيف صفحات وقنوات التواصل الخاصة ببراندك</p>
+            </div>
+        </div>
+        <div class="section-body">
+            <div class="social-list" id="socialContainer"></div>
+            <button type="button" class="btn-add-line" onclick="addSocial()"><i class="fas fa-plus"></i> إضافة وسيلة تواصل</button>
+        </div>
+    </div>
+
+    <!-- 4. General Products -->
+    <div class="form-section">
+        <div class="section-head">
+            <div class="section-num">4</div>
+            <div class="section-info">
+                <h2>صور أشهر المنتجات أو العروض</h2>
+                <p>روابط صور المنتجات اللي هتبان للعملاء أول ما يدخلوا على البراند</p>
+            </div>
+        </div>
+        <div class="section-body">
+            <div class="hint-strip">
+                <span>💡 ارفع الصور على <strong>postimg.cc</strong> أو <strong>imgbb.com</strong> وحط الروابط المباشرة هنا</span>
+                <div class="help-wrap" style="margin-right:auto">
+                    <button class="help-btn" onclick="toggleTip(this)">؟</button>
+                    <div class="tooltip-box">
+                        <div class="tip-title">📸 ازاي تجيب رابط الصورة؟</div>
+                        1. روح على <strong>postimg.cc</strong><br>
+                        2. ارفع صورة المنتج<br>
+                        3. انسخ "Direct Link"<br>
+                        4. الصقه هنا — لازم ينتهي بـ .jpg أو .png
+                    </div>
+                </div>
+            </div>
+            <div class="gen-products" id="generalProductsContainer">
+                <div class="gen-product-row">
+                    <input type="url" class="gen-url-input" placeholder="https://i.postimg.cc/xxx/product1.jpg">
+                    <button type="button" class="btn-del" onclick="removeGeneralProduct(this)"><i class="fas fa-times"></i></button>
+                </div>
+            </div>
+            <button type="button" class="btn-add-line" onclick="addGeneralProduct()" style="margin-top:12px;"><i class="fas fa-plus"></i> إضافة صورة</button>
+        </div>
+    </div>
+
+    <!-- 5. Products -->
+    <div class="form-section">
+        <div class="section-head">
+            <div class="section-num">5</div>
+            <div class="section-info">
+                <h2>منتجات البراند</h2>
+                <p>ضيف تفاصيل كل منتج — اسمه وصورته وسعره</p>
+            </div>
+        </div>
+        <div class="section-body">
+            <div class="hint-strip">
+                <span>💡 كل منتج محتاج: اسم + رابط صورة + سعر</span>
+                <div class="help-wrap" style="margin-right:auto">
+                    <button class="help-btn" onclick="toggleTip(this)">؟</button>
+                    <div class="tooltip-box">
+                        <div class="tip-title">📦 تعليمات المنتجات</div>
+                        <strong>اسم المنتج:</strong> زي ما بيتقال للعملاء<br>
+                        <strong>رابط الصورة:</strong> نفس الطريقة زي صور البراند<br>
+                        <strong>السعر:</strong> بالجنيه المصري بس<br>
+                        <strong>جديد 🆕:</strong> لو المنتج اتضاف حديثاً<br>
+                        <strong>نفذ 🚫:</strong> لو المنتج خلص ومش متاح
+                    </div>
+                </div>
+            </div>
+            <div id="productsContainer">
+                <div class="product-card">
+                    <div class="product-card-head">
+                        <div class="product-card-title"><i class="fas fa-box"></i> منتج #1</div>
+                        <button type="button" class="btn-del" onclick="removeProduct(this)"><i class="fas fa-trash"></i></button>
+                    </div>
+                    <div class="product-fields">
+                        <input type="text" class="product-field-input product-name" placeholder="اسم المنتج">
+                        <input type="url" class="product-field-input product-image" placeholder="رابط الصورة">
+                        <input type="number" class="product-field-input product-price" placeholder="السعر (ج.م)">
+                        <div class="product-badges">
+                            <label class="badge-check"><input type="checkbox" class="product-new"> جديد 🆕</label>
+                            <label class="badge-check"><input type="checkbox" class="product-out"> نفذ 🚫</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn-add-line" onclick="addProduct()"><i class="fas fa-plus"></i> إضافة منتج جديد</button>
+        </div>
+    </div>
+
+    <div class="action-bar">
+        <div class="action-info">
+            <h3>جاهز تبعت بيانات براندك؟ 🚀</h3>
+            <p>هيوصلنا على طول وفريقنا هيراجع البراند في أقرب وقت!</p>
+        </div>
+        <div class="action-btns">
+            <button type="button" class="btn-primary" onclick="submitToEmail()"><i class="fas fa-paper-plane"></i> ابعت بيانات البراند</button>
+            <button type="button" class="btn-secondary" onclick="showRestartConfirm()"><i class="fas fa-redo-alt"></i> ابدأ من جديد</button>
+        </div>
+    </div>
+
+</main>
+
+<footer class="site-footer">جميع الحقوق محفوظة &copy; Mo Tc <span id="currentYear"></span></footer>
+
+<!-- HELP MODAL -->
+<div id="helpModalOverlay" onclick="closeHelpModal(event)">
+    <div id="helpModalCard">
+        <button id="helpModalClose" onclick="closeHelpModal(null, true)"><i class="fas fa-times"></i></button>
+        <div id="helpModalIconWrap">❓</div>
+        <div id="helpModalTitle"></div>
+        <div id="helpModalBody"></div>
+    </div>
+</div>
+
+<!-- POPUP -->
+<div class="popup-overlay" id="popupOverlay">
+    <div class="popup-card">
+        <div class="popup-icon-wrap" id="popupIcon"></div>
+        <div class="popup-title" id="popupTitle"></div>
+        <div class="popup-msg" id="popupMsg"></div>
+        <div class="popup-actions" id="popupActions"></div>
+    </div>
+</div>
+
+<script>
+    const ACCESS_KEY = '363a4f82-d24b-4095-85dd-fcb8d3605a84';
+
+    window.addEventListener('load', () => {
+        // trigger underline after text animation finishes (0.55s delay + 0.9s duration)
+        setTimeout(() => { document.getElementById('heroRedLine')?.classList.add('ready'); }, 1500);
+    });
+
+    // ── HELP MODAL ──
+    const ICON_MAP = {
+        '📛': '📛', '🔗': '🔗', '🖼️': '🖼️', '⏱️': '⏱️',
+        '💸': '💸', '🏷️': '🏷️', '💰': '💰', '📍': '📍',
+        '📝': '📝', '📸': '📸', '📦': '📦'
+    };
+
+    function toggleTip(btn) {
+        const tipBox = btn.nextElementSibling;
+        if (!tipBox || !tipBox.classList.contains('tooltip-box')) return;
+
+        // extract title and body from hidden tooltip-box
+        const titleEl = tipBox.querySelector('.tip-title');
+        const rawTitle = titleEl ? titleEl.textContent.trim() : '💡 شرح';
+        const rawBody  = tipBox.innerHTML
+            .replace(titleEl ? titleEl.outerHTML : '', '')
+            .trim();
+
+        // extract leading emoji as icon
+        const emojiMatch = rawTitle.match(/^(\S+)\s+(.*)/);
+        const icon  = emojiMatch ? emojiMatch[1] : '💡';
+        const title = emojiMatch ? emojiMatch[2] : rawTitle;
+
+        // populate modal
+        document.getElementById('helpModalIconWrap').textContent = icon;
+        document.getElementById('helpModalTitle').innerHTML = title;
+        document.getElementById('helpModalBody').innerHTML  = rawBody;
+
+        // open
+        document.getElementById('helpModalOverlay').classList.add('open');
+    }
+
+    function closeHelpModal(e, force) {
+        if (force || (e && e.target === document.getElementById('helpModalOverlay'))) {
+            document.getElementById('helpModalOverlay').classList.remove('open');
+        }
+    }
+
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closeHelpModal(null, true);
+    });
+
+    document.addEventListener('click', function(e) {
+        // legacy close for any stray tooltip-box.visible (none should exist now)
+        if (!e.target.closest('.help-wrap')) {
+            document.querySelectorAll('.tooltip-box.visible').forEach(t => {
+                t.classList.remove('visible');
+            });
+        }
+    });
+
+    let socialMediaTypes = [
+        {id:'instagram',name:'إنستجرام',icon:'fab fa-instagram',placeholder:'https://instagram.com/username'},
+        {id:'facebook',name:'فيسبوك',icon:'fab fa-facebook-f',placeholder:'https://facebook.com/username'},
+        {id:'tiktok',name:'تيك توك',icon:'fab fa-tiktok',placeholder:'https://tiktok.com/@username'},
+        {id:'whatsapp',name:'واتساب',icon:'fab fa-whatsapp',placeholder:'201234567890'},
+        {id:'phone',name:'تليفون',icon:'fas fa-phone',placeholder:'201234567890'},
+        {id:'website',name:'ويب سايت',icon:'fas fa-globe',placeholder:'https://example.com'}
+    ];
+    let availableSocialTypes = [...socialMediaTypes];
+    let selectedSocialTypes = [];
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        addSocialMedia('instagram'); addSocialMedia('facebook'); addSocialMedia('tiktok');
+        updateProductNumbers();
+        document.querySelectorAll('.pay-card input').forEach(cb => {
+            cb.addEventListener('change', function() { this.closest('.pay-card').classList.toggle('active', this.checked); });
+        });
+        checkForDataOnReload();
+    });
+
+    function checkForDataOnReload() {
+        const hasData = sessionStorage.getItem('hasFormData');
+        if (hasData === 'true' && hasAnyData()) {
+            showConfirmPopup('تحذير!','أنت متأكد هتبدأ في براند تاني؟ كل البيانات اللي أدخلتها هتتمسح ومش هترجع!',
+                () => { resetAllData(); sessionStorage.removeItem('hasFormData'); }, () => {});
+        }
+        setInterval(updateStorageState, 5000);
+    }
+
+    function updateStorageState() {
+        if (hasAnyData()) sessionStorage.setItem('hasFormData','true'); else sessionStorage.removeItem('hasFormData');
+    }
+
+    function hasAnyData() {
+        const ids=['brandName','orderUrl','imageUrl','description','deliveryTime','deliveryFee','minPrice','maxPrice','deliveryAreas'];
+        if (ids.some(id => document.getElementById(id).value.trim())) return true;
+        let s=false; selectedSocialTypes.forEach(t=>{if(document.getElementById(`social_${t.id}`)?.value.trim()) s=true;}); if(s) return true;
+        if([...document.querySelectorAll('.gen-url-input')].some(i=>i.value.trim())) return true;
+        return [...document.querySelectorAll('.product-card')].some(p=>p.querySelector('.product-name').value.trim()||p.querySelector('.product-image').value.trim()||p.querySelector('.product-price').value.trim());
+    }
+
+    function addSocial() {
+        if(availableSocialTypes.length===0){showPopup('error','تمام!','كل وسائل التواصل اتضافت بالفعل!');return;}
+        const sel=document.createElement('select');
+        sel.style.cssText=`width:100%;padding:11px 15px;border:1.5px dashed #d0d0d0;border-radius:12px;font-size:0.87rem;font-family:'Cairo',sans-serif;color:#888;background:white;outline:none;margin-bottom:2px;cursor:pointer;`;
+        sel.innerHTML='<option value="">اختر وسيلة تواصل...</option>';
+        availableSocialTypes.forEach(t=>{sel.innerHTML+=`<option value="${t.id}">${t.name}</option>`;});
+        sel.onchange=function(){if(this.value){addSocialMedia(this.value);this.remove();}};
+        document.getElementById('socialContainer').appendChild(sel); sel.focus();
+    }
+
+    function addSocialMedia(typeId) {
+        const type=socialMediaTypes.find(t=>t.id===typeId); if(!type) return;
+        availableSocialTypes=availableSocialTypes.filter(t=>t.id!==typeId); selectedSocialTypes.push(type);
+        const div=document.createElement('div'); div.className='social-row'; div.dataset.type=type.id;
+        div.innerHTML=`<div class="social-ico"><i class="${type.icon}"></i></div><input type="text" class="social-input" id="social_${type.id}" placeholder="${type.placeholder}"><button type="button" class="btn-del" onclick="removeSocialMedia('${type.id}')"><i class="fas fa-times"></i></button>`;
+        const c=document.getElementById('socialContainer'); const existSel=c.querySelector('select'); if(existSel) existSel.remove();
+        c.appendChild(div); updateStorageState();
+    }
+
+    function removeSocialMedia(typeId) {
+        const type=socialMediaTypes.find(t=>t.id===typeId); if(!type) return;
+        availableSocialTypes.push(type); selectedSocialTypes=selectedSocialTypes.filter(t=>t.id!==typeId);
+        document.querySelector(`.social-row[data-type="${typeId}"]`)?.remove(); updateStorageState();
+    }
+
+    function addGeneralProduct() {
+        const row=document.createElement('div'); row.className='gen-product-row';
+        row.innerHTML=`<input type="url" class="gen-url-input" placeholder="https://i.postimg.cc/xxx/product.jpg"><button type="button" class="btn-del" onclick="removeGeneralProduct(this)"><i class="fas fa-times"></i></button>`;
+        document.getElementById('generalProductsContainer').appendChild(row); updateStorageState();
+    }
+
+    function removeGeneralProduct(btn) {
+        if(document.querySelectorAll('.gen-product-row').length>1) btn.closest('.gen-product-row').remove();
+        else showPopup('error','خطأ','لازم يبقى في صورة واحدة على الأقل');
+        updateStorageState();
+    }
+
+    let productCount=1;
+    function updateProductNumbers() {
+        document.querySelectorAll('.product-card').forEach((card,i)=>{
+            const t=card.querySelector('.product-card-title'); if(t) t.innerHTML=`<i class="fas fa-box"></i> منتج #${i+1}`;
+        });
+    }
+
+    function addProduct() {
+        productCount++;
+        const div=document.createElement('div'); div.className='product-card';
+        div.innerHTML=`<div class="product-card-head"><div class="product-card-title"><i class="fas fa-box"></i> منتج #${productCount}</div><button type="button" class="btn-del" onclick="removeProduct(this)"><i class="fas fa-trash"></i></button></div><div class="product-fields"><input type="text" class="product-field-input product-name" placeholder="اسم المنتج"><input type="url" class="product-field-input product-image" placeholder="رابط الصورة"><input type="number" class="product-field-input product-price" placeholder="السعر (ج.م)"><div class="product-badges"><label class="badge-check"><input type="checkbox" class="product-new"> جديد 🆕</label><label class="badge-check"><input type="checkbox" class="product-out"> نفذ 🚫</label></div></div>`;
+        document.getElementById('productsContainer').appendChild(div); updateProductNumbers(); updateStorageState();
+    }
+
+    function removeProduct(btn) {
+        if(document.querySelectorAll('.product-card').length>1){btn.closest('.product-card').remove();updateProductNumbers();}
+        else showPopup('error','خطأ','لازم يبقى عندك منتج واحد على الأقل');
+        updateStorageState();
+    }
+
+    function checkIfAnyData() {
+        if(!['brandName','orderUrl','imageUrl','description'].some(id=>document.getElementById(id).value.trim())){
+            showPopup('error','مفيش بيانات!','هتبعت إيه؟ إملا البيانات الأساسية الأول 😅'); return false;
+        }
+        return true;
+    }
+
+    function validateBasicFields() {
+        return ['brandName','orderUrl','imageUrl','description'].every(id=>document.getElementById(id).value.trim());
+    }
+
+    function generateJSON() {
+        const brandName=document.getElementById('brandName').value.trim();
+        const brandData={name:brandName,orderUrl:document.getElementById('orderUrl').value.trim(),imageUrl:document.getElementById('imageUrl').value.trim(),description:document.getElementById('description').value.trim(),deliveryTime:document.getElementById('deliveryTime').value.trim(),deliveryFee:document.getElementById('deliveryFee').value.trim(),minPrice:parseInt(document.getElementById('minPrice').value)||0,maxPrice:parseInt(document.getElementById('maxPrice').value)||0,deliveryAreas:document.getElementById('deliveryAreas').value.trim(),paymentMethods:Array.from(document.querySelectorAll('.pay-card input:checked')).map(cb=>cb.value),socialMedia:{},products:[],productsList:[]};
+        selectedSocialTypes.forEach(type=>{const val=document.getElementById(`social_${type.id}`)?.value.trim();if(val){if(type.id==='phone') brandData.socialMedia[type.id]=val.replace(/\D/g,'');else if(type.id==='whatsapp') brandData.socialMedia[type.id]=`https://wa.me/${val.replace(/\D/g,'')}`;else brandData.socialMedia[type.id]=val;}});
+        document.querySelectorAll('.gen-url-input').forEach(i=>{const u=i.value.trim();if(u) brandData.products.push(u);});
+        document.querySelectorAll('.product-card').forEach(card=>{const name=card.querySelector('.product-name').value.trim(),image=card.querySelector('.product-image').value.trim(),price=card.querySelector('.product-price').value.trim();if(name&&image&&price){const obj={name_product:name,imageUrl:image,price:price};if(card.querySelector('.product-new').checked) obj.is_new=true;if(card.querySelector('.product-out').checked) obj.is_out_of_stock=true;brandData.productsList.push(obj);}});
+        const brandKey=brandName.toLowerCase().replace(/\s+/g,'_').replace(/[^a-z0-9_]/g,'')||'brand';
+        return JSON.stringify({[brandKey]:brandData},null,2);
+    }
+
+    function showPopup(type,title,msg,actions=null) {
+        const map={success:{cls:'success',icon:'fa-check-circle'},error:{cls:'error',icon:'fa-times-circle'},warn:{cls:'warn',icon:'fa-exclamation-triangle'}};
+        const t=map[type]||map.error;
+        document.getElementById('popupIcon').className=`popup-icon-wrap ${t.cls}`;
+        document.getElementById('popupIcon').innerHTML=`<i class="fas ${t.icon}"></i>`;
+        document.getElementById('popupTitle').textContent=title;
+        document.getElementById('popupMsg').textContent=msg;
+        document.getElementById('popupActions').innerHTML=actions||`<button class="pop-btn pop-btn-red" onclick="closePopup()">تمام</button>`;
+        document.getElementById('popupOverlay').style.display='flex';
+    }
+
+    function showConfirmPopup(title,msg,onOk,onCancel) {
+        window._popOk=onOk; window._popCancel=onCancel;
+        showPopup('warn',title,msg,`<button class="pop-btn pop-btn-red" onclick="window._popOk&&window._popOk();closePopup();"><i class="fas fa-check"></i> أيوه، متأكد</button><button class="pop-btn pop-btn-gray" onclick="window._popCancel&&window._popCancel();closePopup();">إلغاء</button>`);
+    }
+
+    function closePopup(){document.getElementById('popupOverlay').style.display='none';}
+
+    function resetAllData() {
+        ['brandName','orderUrl','imageUrl','description','deliveryTime','deliveryFee','minPrice','maxPrice','deliveryAreas'].forEach(id=>document.getElementById(id).value='');
+        document.querySelectorAll('.pay-card input').forEach(cb=>{cb.checked=(cb.id==='cash'||cb.id==='card');cb.closest('.pay-card').classList.toggle('active',cb.checked);});
+        document.getElementById('socialContainer').innerHTML=''; availableSocialTypes=[...socialMediaTypes]; selectedSocialTypes=[];
+        addSocialMedia('instagram'); addSocialMedia('facebook'); addSocialMedia('tiktok');
+        document.getElementById('generalProductsContainer').innerHTML=`<div class="gen-product-row"><input type="url" class="gen-url-input" placeholder="https://i.postimg.cc/xxx/product1.jpg"><button type="button" class="btn-del" onclick="removeGeneralProduct(this)"><i class="fas fa-times"></i></button></div>`;
+        document.getElementById('productsContainer').innerHTML=`<div class="product-card"><div class="product-card-head"><div class="product-card-title"><i class="fas fa-box"></i> منتج #1</div><button type="button" class="btn-del" onclick="removeProduct(this)"><i class="fas fa-trash"></i></button></div><div class="product-fields"><input type="text" class="product-field-input product-name" placeholder="اسم المنتج"><input type="url" class="product-field-input product-image" placeholder="رابط الصورة"><input type="number" class="product-field-input product-price" placeholder="السعر (ج.م)"><div class="product-badges"><label class="badge-check"><input type="checkbox" class="product-new"> جديد 🆕</label><label class="badge-check"><input type="checkbox" class="product-out"> نفذ 🚫</label></div></div></div>`;
+        productCount=1; sessionStorage.removeItem('hasFormData');
+    }
+
+    function showRestartConfirm() {
+        if(hasAnyData()) showConfirmPopup('هتبدأ من الأول؟','كل البيانات اللي أدخلتها هتتمسح ومش هترجع!',()=>resetAllData());
+        else showPopup('success','الصفحة فاضية!','مفيش بيانات أصلاً، ابدأ إملا 😊');
+    }
+
+    async function submitToEmail() {
+        if(!checkIfAnyData()) return;
+        if(!validateBasicFields()){showPopup('error','بيانات ناقصة','لازم تكتب الحقول الأربعة: الاسم، رابط الطلب، اللوجو، والوصف');return;}
+        const jsonData=generateJSON();
+        const formData=new FormData();
+        formData.append('access_key',ACCESS_KEY); formData.append('subject','براند جديد وصل!'); formData.append('from_name','Easyget App'); formData.append('json_data',jsonData); formData.append('reply_to','easyget.app1@gmail.com');
+        formData.append('message',`<h2>براند جديد وصل!</h2><pre style="background:#f4f4f4;padding:15px;border-radius:8px;direction:ltr;text-align:left;">${jsonData}</pre>`);
+        try {
+            const res=await fetch('https://api.web3forms.com/submit',{method:'POST',body:formData});
+            const data=await res.json();
+            if(data.success) showPopup('success','اتبعت بنجاح! 🎉','وصلنا بيانات براندك! فريقنا هيتواصل معاك في أقرب وقت.');
+            else showPopup('error','خطأ في الإرسال',data.message||'حاول مرة تانية');
+        } catch { showPopup('error','خطأ في الاتصال','تأكد من اتصالك بالإنترنت وحاول تاني'); }
+    }
+</script>
+
+<script>
+// ===== THREE.JS 3D SHOPPING HERO =====
+(function() {
+    const canvas = document.getElementById('hero3d');
+    if (!canvas || typeof THREE === 'undefined') return;
+
+    const hero = canvas.closest('.hero') || canvas.parentElement;
+    let W = hero.offsetWidth, H = hero.offsetHeight;
+
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(W, H);
+    renderer.setClearColor(0xffffff, 0);
+    renderer.shadowMap.enabled = true;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(62, W / H, 0.1, 400);
+    camera.position.set(0, 0, 36);
+
+    // ---- Lighting ----
+    scene.add(new THREE.AmbientLight(0xfff5f5, 0.9));
+    const sun = new THREE.DirectionalLight(0xffffff, 1.4);
+    sun.position.set(15, 25, 20); scene.add(sun);
+    const fill = new THREE.DirectionalLight(0xffccd3, 0.6);
+    fill.position.set(-20, -10, 10); scene.add(fill);
+    const redPt = new THREE.PointLight(0xC8102E, 3, 80);
+    redPt.position.set(0, 5, 18); scene.add(redPt);
+    const whitePt = new THREE.PointLight(0xffe0e6, 2, 60);
+    whitePt.position.set(-10, -8, 12); scene.add(whitePt);
+
+    // ---- Materials ----
+    function mat(color, metal=0.6, rough=0.2, opacity=1) {
+        const m = new THREE.MeshStandardMaterial({ color, metalness:metal, roughness:rough });
+        if (opacity < 1) { m.transparent=true; m.opacity=opacity; }
+        return m;
+    }
+    const mRed     = mat(0xC8102E, 0.7, 0.15);
+    const mRedLight = mat(0xff4d6d, 0.5, 0.2);
+    const mWhite   = mat(0xffffff, 0.4, 0.1, 0.9);
+    const mPink    = mat(0xffccd3, 0.3, 0.25, 0.85);
+    const mCream   = mat(0xfff0f2, 0.2, 0.3, 0.8);
+    const mGold    = mat(0xf5c518, 0.85, 0.1);
+    const mGlass   = mat(0xffe8ec, 0.9, 0.0, 0.55);
+
+    function randR(a,b){ return Math.random()*(b-a)+a; }
+
+    const objects = [];
+
+    // ─── SHOPPING BAG ───
+    function makeBag(x, y, z, scale=1, matBase=mRed) {
+        const g = new THREE.Group();
+
+        // body (rounded box via scaled sphere + box combo)
+        const body = new THREE.Mesh(new THREE.BoxGeometry(1.4,1.7,0.7), matBase);
+        body.position.y = -0.1;
+        g.add(body);
+
+        // top flap
+        const flap = new THREE.Mesh(new THREE.BoxGeometry(1.4,0.25,0.72), mat(0x9B0B22,0.7,0.15));
+        flap.position.y = 0.73;
+        g.add(flap);
+
+        // handles (two torus arcs)
+        const hGeo = new THREE.TorusGeometry(0.28, 0.055, 8, 20, Math.PI);
+        const hMat = mat(0x222222, 0.8, 0.1);
+        const h1 = new THREE.Mesh(hGeo, hMat);
+        h1.position.set(-0.3, 1.05, 0); h1.rotation.z = Math.PI;
+        g.add(h1);
+        const h2 = new THREE.Mesh(hGeo, hMat);
+        h2.position.set(0.3, 1.05, 0); h2.rotation.z = Math.PI;
+        g.add(h2);
+
+        // logo square on bag
+        const logo = new THREE.Mesh(new THREE.PlaneGeometry(0.5,0.3), mat(0xffffff,0.1,0.5,0.9));
+        logo.position.set(0, -0.05, 0.36);
+        g.add(logo);
+
+        g.position.set(x,y,z);
+        g.scale.setScalar(scale);
+        g.userData = { rx:randR(0.002,0.006), ry:randR(0.003,0.009), rz:randR(0.001,0.004), vy:randR(-0.002,0.002), vx:randR(-0.003,0.003), fo:Math.random()*Math.PI*2 };
+        scene.add(g); objects.push(g);
+    }
+
+    // ─── GIFT BOX ───
+    function makeGift(x, y, z, scale=1, col=0xC8102E) {
+        const g = new THREE.Group();
+        const boxM = mat(col, 0.5, 0.2);
+        const box = new THREE.Mesh(new THREE.BoxGeometry(1.3,1.3,1.3), boxM);
+        g.add(box);
+
+        // ribbon vertical
+        const ribbonM = mGold;
+        const rv = new THREE.Mesh(new THREE.BoxGeometry(0.18,1.35,1.35), ribbonM);
+        g.add(rv);
+        const rh = new THREE.Mesh(new THREE.BoxGeometry(1.35,0.18,1.35), ribbonM);
+        g.add(rh);
+
+        // bow loops
+        const bowGeo = new THREE.TorusGeometry(0.22, 0.07, 6, 12, Math.PI);
+        const b1 = new THREE.Mesh(bowGeo, ribbonM);
+        b1.position.set(-0.22, 0.72, 0); b1.rotation.z = -0.4;
+        g.add(b1);
+        const b2 = new THREE.Mesh(bowGeo, ribbonM);
+        b2.position.set(0.22, 0.72, 0); b2.rotation.z = 0.4+Math.PI;
+        g.add(b2);
+
+        g.position.set(x,y,z);
+        g.scale.setScalar(scale);
+        g.userData = { rx:randR(0.002,0.007), ry:randR(0.004,0.010), rz:0, vy:randR(-0.002,0.002), vx:randR(-0.003,0.003), fo:Math.random()*Math.PI*2 };
+        scene.add(g); objects.push(g);
+    }
+
+    // ─── CLOTHING HANGER ───
+    function makeHanger(x, y, z, scale=1) {
+        const g = new THREE.Group();
+        const m = mat(0xC8102E, 0.8, 0.1);
+
+        // hook (torus quarter)
+        const hook = new THREE.Mesh(new THREE.TorusGeometry(0.18,0.055,8,20, Math.PI*0.6), m);
+        hook.position.y = 0.85; hook.rotation.z = -0.5;
+        g.add(hook);
+
+        // bar - use CylinderGeometry instead of CapsuleGeometry
+        const bar = new THREE.Mesh(new THREE.CylinderGeometry(0.05,0.05,2.4,12), m);
+        bar.rotation.z = Math.PI/2; bar.position.y = -0.05;
+        g.add(bar);
+
+        // left arm
+        const la = new THREE.Mesh(new THREE.CylinderGeometry(0.04,0.04,1.3,8), m);
+        la.rotation.z = 0.45; la.position.set(-0.7,-0.45,0);
+        g.add(la);
+        // right arm
+        const ra = new THREE.Mesh(new THREE.CylinderGeometry(0.04,0.04,1.3,8), m);
+        ra.rotation.z = -0.45; ra.position.set(0.7,-0.45,0);
+        g.add(ra);
+
+        g.position.set(x,y,z);
+        g.scale.setScalar(scale);
+        g.userData = { rx:0, ry:randR(0.004,0.012), rz:randR(-0.003,0.003), vy:randR(-0.0015,0.0015), vx:randR(-0.002,0.002), fo:Math.random()*Math.PI*2 };
+        scene.add(g); objects.push(g);
+    }
+
+    // ─── FOOD BOX / TAKEOUT ───
+    function makeFoodBox(x, y, z, scale=1) {
+        const g = new THREE.Group();
+        const boxM = mat(0xffffff, 0.2, 0.3, 0.92);
+        const box = new THREE.Mesh(new THREE.BoxGeometry(1.5,1.1,1.0), boxM);
+        box.position.y = -0.1;
+        g.add(box);
+
+        // lid slightly bigger
+        const lid = new THREE.Mesh(new THREE.BoxGeometry(1.6,0.22,1.1), mat(0xC8102E,0.5,0.2));
+        lid.position.y = 0.55;
+        g.add(lid);
+
+        // stripe decoration
+        const stripe = new THREE.Mesh(new THREE.BoxGeometry(1.52,0.18,1.02), mat(0xff4d6d,0.3,0.3,0.8));
+        stripe.position.y = 0.18;
+        g.add(stripe);
+
+        g.position.set(x,y,z);
+        g.scale.setScalar(scale);
+        g.userData = { rx:randR(0.001,0.004), ry:randR(0.003,0.008), rz:0, vy:randR(-0.002,0.002), vx:randR(-0.002,0.003), fo:Math.random()*Math.PI*2 };
+        scene.add(g); objects.push(g);
+    }
+
+    // ─── STAR (sale/offer) ───
+    function makeStar(x, y, z, scale=1) {
+        const g = new THREE.Group();
+        // approximate star with rotated boxes
+        const sm = mat(0xf5c518, 0.8, 0.1);
+        for (let i=0; i<5; i++) {
+            const bar = new THREE.Mesh(new THREE.BoxGeometry(0.25,1.0,0.2), sm);
+            bar.rotation.z = (i/5)*Math.PI*2;
+            g.add(bar);
+        }
+        const center = new THREE.Mesh(new THREE.SphereGeometry(0.3,8,8), mat(0xf5c518,0.9,0.05));
+        g.add(center);
+
+        g.position.set(x,y,z);
+        g.scale.setScalar(scale);
+        g.userData = { rx:0.001, ry:randR(0.008,0.018), rz:randR(0.005,0.012), vy:randR(-0.002,0.002), vx:randR(-0.002,0.003), fo:Math.random()*Math.PI*2 };
+        scene.add(g); objects.push(g);
+    }
+
+    // ─── PRICE TAG ───
+    function makeTag(x, y, z, scale=1) {
+        const g = new THREE.Group();
+        const tagM = mat(0xffffff, 0.1, 0.4, 0.88);
+        const body = new THREE.Mesh(new THREE.BoxGeometry(1.0,1.4,0.08), tagM);
+        g.add(body);
+
+        // hole at top
+        const hole = new THREE.Mesh(new THREE.TorusGeometry(0.1,0.04,8,16), mat(0xC8102E,0.6,0.2));
+        hole.position.y = 0.56;
+        g.add(hole);
+
+        // string
+        const str = new THREE.Mesh(new THREE.CylinderGeometry(0.03,0.03,0.5,6), mat(0xC8102E,0.4,0.3));
+        str.position.y = 0.92;
+        g.add(str);
+
+        // red stripe
+        const stripe = new THREE.Mesh(new THREE.BoxGeometry(1.02,0.22,0.1), mat(0xC8102E,0.5,0.2));
+        stripe.position.y = -0.1;
+        g.add(stripe);
+
+        g.position.set(x,y,z);
+        g.scale.setScalar(scale);
+        g.userData = { rx:randR(0.001,0.004), ry:randR(0.005,0.012), rz:randR(0.002,0.006), vy:randR(-0.0015,0.002), vx:randR(-0.002,0.003), fo:Math.random()*Math.PI*2 };
+        scene.add(g); objects.push(g);
+    }
+
+    // ─── ROUND PILL / COSMETIC ───
+    function makePill(x,y,z,scale=1){
+        const g = new THREE.Group();
+        // Use Sphere + Cylinder combo instead of Capsule
+        const body = new THREE.Mesh(new THREE.CylinderGeometry(0.35,0.35,1.0,16), mat(0xffccd3,0.6,0.1,0.9));
+        const top = new THREE.Mesh(new THREE.SphereGeometry(0.35,16,8,0,Math.PI*2,0,Math.PI/2), mat(0xffccd3,0.6,0.1,0.9));
+        top.position.y = 0.5;
+        const bot = new THREE.Mesh(new THREE.SphereGeometry(0.35,16,8,0,Math.PI*2,Math.PI/2,Math.PI/2), mat(0xffccd3,0.6,0.1,0.9));
+        bot.position.y = -0.5;
+        g.add(body); g.add(top); g.add(bot);
+        const cap = new THREE.Mesh(new THREE.CylinderGeometry(0.36,0.36,0.55,16), mat(0xC8102E,0.7,0.1));
+        cap.position.y = 0.52;
+        g.add(cap);
+        g.position.set(x,y,z); g.scale.setScalar(scale);
+        g.userData = { rx:randR(0.003,0.008), ry:randR(0.004,0.010), rz:randR(0.001,0.004), vy:randR(-0.002,0.002), vx:randR(-0.003,0.003), fo:Math.random()*Math.PI*2 };
+        scene.add(g); objects.push(g);
+    }
+
+    // ─── PLACE OBJECTS — widely spread, balanced ───
+    // Bags — corners and edges
+    makeBag(-18, 7,  -6,  1.3, mRed);
+    makeBag( 17, -5, -8,  1.1, mPink);
+    makeBag(-20, -8, -10, 0.9, mRedLight);
+    makeBag( 20,  9, -9,  1.0, mCream);
+    makeBag(  0,  11, -12, 0.85, mWhite);
+    makeBag(-10, -11, -8, 1.0, mRed);
+
+    // Gifts — spread diagonally
+    makeGift( 10,  8, -7,  1.2, 0xC8102E);
+    makeGift(-15, -4, -9,  1.0, 0xff4d6d);
+    makeGift( 22, -2, -11, 0.9, 0x9B0B22);
+    makeGift( -4,  12, -13, 0.8, 0xffccd3);
+    makeGift( 14, -11, -10, 0.95, 0xC8102E);
+
+    // Hangers — left/right sides, high/low
+    makeHanger(  5, -10, -6,  1.4);
+    makeHanger(-22,  3,  -9,  1.1);
+    makeHanger( 22,  5,  -7,  1.0);
+    makeHanger( -8,  10, -11, 0.9);
+    makeHanger( 16,  12, -13, 0.85);
+
+    // Food boxes — scattered
+    makeFoodBox( -6,   5,  -5,  1.2);
+    makeFoodBox( 18,  -8,  -9,  1.0);
+    makeFoodBox(-17, -10,  -8,  0.9);
+    makeFoodBox(  8,  -12, -11, 0.85);
+
+    // Stars — accent positions
+    makeStar( 12,  2,  -4, 1.0);
+    makeStar(-20,  8,  -8, 0.8);
+    makeStar(  2, -7,  -5, 0.9);
+    makeStar( -9,  -2, -7, 0.75);
+
+    // Price tags
+    makeTag(-12,  3,  -4, 1.1);
+    makeTag( 15,  9,  -8, 0.9);
+    makeTag(-18, -7,  -9, 1.0);
+    makeTag(  7,  13, -12, 0.8);
+    makeTag( 21,  0,  -10, 0.85);
+
+    // Cosmetics
+    makePill( 20,  7,  -7, 1.1);
+    makePill( -9, -13, -8, 0.9);
+    makePill(  3,  10, -6, 1.0);
+    makePill(-22,  0,  -11, 0.85);
+
+    // ---- Particles ----
+    const pCount = 200;
+    const pGeo = new THREE.BufferGeometry();
+    const pPos = new Float32Array(pCount * 3);
+    for (let i=0; i<pCount*3; i+=3) {
+        pPos[i]   = randR(-35,35);
+        pPos[i+1] = randR(-22,22);
+        pPos[i+2] = randR(-18,4);
+    }
+    pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+    const pts = new THREE.Points(pGeo, new THREE.PointsMaterial({ color:0xC8102E, size:0.1, transparent:true, opacity:0.35 }));
+    scene.add(pts);
+
+    // ---- Mouse ----
+    let mx=0, my=0;
+    document.addEventListener('mousemove', e => {
+        mx = (e.clientX/window.innerWidth-0.5)*2;
+        my = -(e.clientY/window.innerHeight-0.5)*2;
+    });
+
+    // ---- Resize ----
+    window.addEventListener('resize', () => {
+        W=hero.offsetWidth; H=hero.offsetHeight;
+        camera.aspect=W/H; camera.updateProjectionMatrix();
+        renderer.setSize(W,H);
+    });
+
+    // ---- Animate ----
+    let t=0;
+    function animate() {
+        requestAnimationFrame(animate);
+        t += 0.007;
+
+        objects.forEach(obj => {
+            const d = obj.userData;
+            obj.position.x += d.vx;
+            obj.position.y += d.vy + Math.sin(t + d.fo) * 0.004;
+            obj.rotation.x += d.rx;
+            obj.rotation.y += d.ry;
+            obj.rotation.z += d.rz;
+
+            if (obj.position.x >  28) obj.position.x = -28;
+            if (obj.position.x < -28) obj.position.x =  28;
+            if (obj.position.y >  18) obj.position.y = -18;
+            if (obj.position.y < -18) obj.position.y =  18;
+        });
+
+        camera.position.x += (mx * 2.5 - camera.position.x) * 0.018;
+        camera.position.y += (my * 1.8 - camera.position.y) * 0.018;
+        camera.lookAt(0, 0, 0);
+
+        pts.rotation.y += 0.001;
+        redPt.intensity = 2.5 + Math.sin(t*1.8)*0.8;
+
+        renderer.render(scene, camera);
+    }
+    animate();
+})();
+</script>
+</body>
+</html>
