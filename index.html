@@ -1,2 +1,19 @@
-ERROR for site owner:
-Invalid domain for site key
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <script>
+    var recaptchaWidgetId = null;
+    function onRecaptchaLoad() {
+      recaptchaWidgetId = grecaptcha.render('recaptcha-widget', {
+        sitekey: '6LdQSYssAAAAAHXoqipabIoU9MXmr65EvvgPkTlr'
+      });
+    }
+  </script>
+  <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
+</head>
+<body>
+  <h2>reCAPTCHA Test</h2>
+  <div id="recaptcha-widget"></div>
+</body>
+</html>
