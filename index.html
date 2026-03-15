@@ -91,8 +91,8 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-h
 .help-btn{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--text3);background:transparent;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;color:var(--text3);font-size:11px;font-weight:800;transition:var(--tr);flex-shrink:0;font-family:'Cairo',sans-serif;}
 .help-btn:hover{border-color:var(--brand);color:var(--brand);background:var(--brand-soft);}
 .tooltip-wrap{position:relative;display:inline-flex;align-items:center;}
-.tooltip-box{position:absolute;top:calc(100% + 8px);right:0;background:#1a1a2e;color:#fff;border-radius:12px;padding:10px 14px;font-size:12.5px;font-weight:500;line-height:1.65;min-width:220px;max-width:280px;box-shadow:0 8px 24px rgba(0,0,0,0.3);z-index:999;display:none;animation:tipIn 0.16s ease;text-align:right;}
-.tooltip-box::before{content:'';position:absolute;top:-5px;right:6px;width:10px;height:10px;background:#1a1a2e;transform:rotate(45deg);border-radius:2px;}
+/* tooltip uses fixed positioning set by JS to avoid overflow on mobile */
+.tooltip-box{position:fixed;background:#1a1a2e;color:#fff;border-radius:12px;padding:10px 14px;font-size:12.5px;font-weight:500;line-height:1.65;width:240px;max-width:calc(100vw - 24px);box-shadow:0 8px 24px rgba(0,0,0,0.35);z-index:9999;display:none;animation:tipIn 0.16s ease;text-align:right;pointer-events:none;}
 .tooltip-box.show{display:block;}
 @keyframes tipIn{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:translateY(0);}}
 
@@ -215,11 +215,20 @@ select.fi{cursor:pointer;appearance:none;}
 @media(max-width:640px){
   .grid-2,.grid-3{grid-template-columns:1fr;}
   .hero{padding:40px 16px 52px;}
-  .form-body{padding:16px;}
-  .main-wrap{margin-top:-20px;}
+  .hero-steps{gap:7px;}
+  .step-pill{padding:7px 12px;font-size:12px;}
+  .form-body{padding:14px;}
+  .main-wrap{margin-top:-20px;padding:0 10px;}
   .payment-opts{flex-direction:column;}
   .pr-grid{grid-template-columns:1fr;}
   .support-row{flex-direction:column;}
+  .sec-head{padding:14px 16px;}
+  .topbar{padding:0 14px;}
+  .topbar-badge{font-size:11px;padding:4px 10px;}
+  .fg label{font-size:12px;gap:4px;}
+  .sub-chip{font-size:12px;padding:6px 11px;}
+  .success-screen{padding:40px 20px;}
+  .success-id-box{font-size:11.5px;word-break:break-all;}
 }
 </style>
 </head>
@@ -549,8 +558,8 @@ select.fi{cursor:pointer;appearance:none;}
         <a href="https://wa.me/201125933983" target="_blank" class="support-btn wa">
           <span class="mi">chat</span>واتساب <span class="wa-rec">موصي به</span>
         </a>
-        <a href="mailto:easyget.app1@gmail.com" class="support-btn em">
-          <span class="mi">mail_outline</span>easyget.app1@gmail.com
+        <a href="/cdn-cgi/l/email-protection#c5a0a4b6bca2a0b1eba4b5b5f485a2a8a4aca9eba6aaa8" class="support-btn em">
+          <span class="mi">mail_outline</span><span class="__cf_email__" data-cfemail="bedbdfcdc7d9dbca90dfcece8ffed9d3dfd7d290ddd1d3">[email&#160;protected]</span>
         </a>
       </div>
     </div>
@@ -587,7 +596,7 @@ select.fi{cursor:pointer;appearance:none;}
 </div><!-- /main-wrap -->
 <div class="toast-c" id="tc"></div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ══════════════════════════════════════════
 // SUBCATEGORY DATA — exact IDs from Flutter code
 // ══════════════════════════════════════════
@@ -729,14 +738,31 @@ function toggleTerms() {
   document.getElementById('terms-check').classList.toggle('checked', termsOk);
 }
 
-// ── Tooltip ──
+// ── Tooltip (fixed positioning to avoid overflow on mobile) ──
 function tip(id, e) {
   e.stopPropagation();
   const el = document.getElementById(id);
   if (!el) return;
   const wasOpen = el.classList.contains('show');
   document.querySelectorAll('.tooltip-box.show').forEach(t => t.classList.remove('show'));
-  if (!wasOpen) el.classList.add('show');
+  if (!wasOpen) {
+    // position using fixed coords from the button
+    const btn = e.currentTarget;
+    const rect = btn.getBoundingClientRect();
+    const tipW = 240;
+    const margin = 8;
+    // try to place below the button
+    let top = rect.bottom + margin;
+    let left = rect.right - tipW; // align right edge to button right
+    // clamp within viewport
+    if (left < margin) left = margin;
+    if (left + tipW > window.innerWidth - margin) left = window.innerWidth - tipW - margin;
+    // if too low, show above
+    if (top + 100 > window.innerHeight) top = rect.top - 100 - margin;
+    el.style.top = top + 'px';
+    el.style.left = left + 'px';
+    el.classList.add('show');
+  }
 }
 document.addEventListener('click', () =>
   document.querySelectorAll('.tooltip-box.show').forEach(t => t.classList.remove('show'))
@@ -906,12 +932,4 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!e.target.classList.contains('fi')) return;
     e.target.classList.remove('err');
     const k = e.target.id?.replace('f-','');
-    if (k) showErr(k, false);
-    if (['f-facebook','f-instagram','f-tiktok','f-other-social','f-phone'].includes(e.target.id)) {
-      if (countSocialFilled() >= 3) document.getElementById('err-social').classList.remove('show');
-    }
-  });
-});
-</script>
-</body>
-</html>
+    if (k) showErr(k, f
