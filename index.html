@@ -1222,13 +1222,20 @@
       <span class="mi">chat</span> واتساب
       <span class="recommended-badge">موصى به</span>
     </a>
-    <a href="/cdn-cgi/l/email-protection#543135272d3331207a35242465143339353d387a373b39" class="support-link email">
+    <a href="#" id="email-support-link" class="support-link email">
       <span class="mi">email</span> إيميل
     </a>
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
+  // ✅ SECURITY: بناء رابط الإيميل بـ JS لمنع harvesting
+  (function() {
+    const u = 'easyget.app1';
+    const d = 'gmail.com';
+    const el = document.getElementById('email-support-link');
+    if (el) el.href = 'mailto:' + u + '@' + d;
+  })();
   // ✅ SECURITY: منع تسرب معلومات الخطأ في console العام
   (function() {
     const originalError = console.error;
