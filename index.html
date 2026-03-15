@@ -10,7 +10,6 @@
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
   const firebaseConfig = {
     apiKey: "AIzaSyDHbiCGUqJJJsI3ZoQYgpbeQ9tFc3j9rEQ",
     authDomain: "easyget-e3991.firebaseapp.com",
@@ -20,10 +19,8 @@
     appId: "1:1006561049306:web:1faf8796a6d3dc34a543e3",
     measurementId: "G-VKV8185R8R"
   };
-
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
-
   window._registerBrand = async function(data) {
     return await addDoc(collection(db, 'brands'), {
       ...data,
@@ -36,412 +33,193 @@
 
 <style>
 :root {
-  --brand: #D4162A;
-  --brand-dark: #A81020;
-  --brand-light: #FF3347;
-  --brand-glow: rgba(212,22,42,0.15);
-  --brand-soft: rgba(212,22,42,0.07);
-  --bg: #F1F3F8;
-  --surface: #FFF;
-  --surface2: #F8F9FD;
-  --border: rgba(0,0,0,0.08);
-  --border2: rgba(0,0,0,0.12);
-  --text: #0E0E1A;
-  --text2: #4A4A6A;
-  --text3: #9898B8;
-  --radius: 16px;
-  --shadow: 0 4px 24px rgba(0,0,0,0.08);
-  --shadow-lg: 0 12px 48px rgba(0,0,0,0.13);
-  --tr: all 0.2s cubic-bezier(0.4,0,0.2,1);
+  --brand:#D4162A; --brand-dark:#A81020; --brand-light:#FF3347;
+  --brand-glow:rgba(212,22,42,0.15); --brand-soft:rgba(212,22,42,0.07);
+  --bg:#F1F3F8; --surface:#FFF; --surface2:#F8F9FD;
+  --border:rgba(0,0,0,0.08); --border2:rgba(0,0,0,0.12);
+  --text:#0E0E1A; --text2:#4A4A6A; --text3:#9898B8;
+  --shadow-lg:0 12px 48px rgba(0,0,0,0.13);
+  --tr:all 0.2s cubic-bezier(0.4,0,0.2,1);
 }
-
-* { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; }
-
-body {
-  font-family:'Cairo',sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-}
-
-::-webkit-scrollbar{width:4px;}
-::-webkit-scrollbar-thumb{background:var(--brand);border-radius:2px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+::-webkit-scrollbar{width:4px;} ::-webkit-scrollbar-thumb{background:var(--brand);border-radius:2px;}
 .mi{font-family:'Material Icons Round';font-weight:normal;font-style:normal;font-size:20px;line-height:1;display:inline-block;white-space:nowrap;direction:ltr;-webkit-font-smoothing:antialiased;user-select:none;}
 
 /* ── TOPBAR ── */
-.topbar {
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  padding: 0 24px;
-  height: 58px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  box-shadow: 0 1px 8px rgba(0,0,0,0.05);
-}
-.brand-logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
-}
-.brand-logo img { width:32px;height:32px;border-radius:9px;object-fit:contain; }
-.brand-logo-name { font-family:'Tajawal',sans-serif;font-size:21px;font-weight:800;color:var(--text); }
-.topbar-sep { flex:1; }
-.topbar-badge {
-  background: var(--brand-soft);
-  color: var(--brand);
-  border: 1px solid rgba(212,22,42,0.2);
-  border-radius: 25px;
-  padding: 5px 14px;
-  font-size: 12.5px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-.topbar-badge .mi { font-size:15px; }
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;height:58px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:200;box-shadow:0 1px 8px rgba(0,0,0,0.05);}
+.brand-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.brand-logo img{width:32px;height:32px;border-radius:9px;object-fit:contain;}
+.brand-logo-name{font-family:'Tajawal',sans-serif;font-size:21px;font-weight:800;color:var(--text);}
+.topbar-sep{flex:1;}
+.topbar-badge{background:var(--brand-soft);color:var(--brand);border:1px solid rgba(212,22,42,0.2);border-radius:25px;padding:5px 14px;font-size:12.5px;font-weight:700;display:flex;align-items:center;gap:5px;}
 
 /* ── HERO ── */
-.hero {
-  background: linear-gradient(145deg, #0f0f1a 0%, #1a0810 55%, #0a0a12 100%);
-  padding: 56px 24px 64px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-.hero::before {
-  content:'';
-  position:absolute;
-  width:600px;height:600px;
-  border-radius:50%;
-  background: radial-gradient(circle, rgba(212,22,42,0.18) 0%, transparent 68%);
-  top:-200px;left:50%;transform:translateX(-50%);
-  pointer-events:none;
-}
-.hero::after {
-  content:'';
-  position:absolute;
-  width:300px;height:300px;
-  border-radius:50%;
-  background: radial-gradient(circle, rgba(212,22,42,0.1) 0%, transparent 70%);
-  bottom:-80px;right:-60px;
-  pointer-events:none;
-}
-.hero-inner { position:relative;z-index:1; }
-.hero-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(212,22,42,0.18);
-  border: 1px solid rgba(212,22,42,0.35);
-  border-radius: 30px;
-  padding: 6px 16px;
-  color: #FF8090;
-  font-size: 13px;
-  font-weight: 700;
-  margin-bottom: 20px;
-}
-.hero-tag .mi { font-size:15px; }
-.hero-title {
-  font-family: 'Tajawal', sans-serif;
-  font-size: clamp(26px, 5vw, 40px);
-  font-weight: 900;
-  color: #fff;
-  line-height: 1.3;
-  margin-bottom: 14px;
-}
-.hero-title span { color: var(--brand-light); }
-.hero-desc {
-  font-size: 15px;
-  color: rgba(255,255,255,0.5);
-  max-width: 480px;
-  margin: 0 auto 28px;
-  line-height: 1.8;
-}
-.hero-steps {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-.step-pill {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 12px;
-  padding: 8px 16px;
-  color: rgba(255,255,255,0.7);
-  font-size: 13px;
-  font-weight: 600;
-}
-.step-pill .mi { font-size:16px;color:var(--brand-light); }
+.hero{background:linear-gradient(145deg,#0f0f1a 0%,#1a0810 55%,#0a0a12 100%);padding:56px 24px 64px;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(212,22,42,0.18) 0%,transparent 68%);top:-200px;left:50%;transform:translateX(-50%);pointer-events:none;}
+.hero::after{content:'';position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(212,22,42,0.1) 0%,transparent 70%);bottom:-80px;right:-60px;pointer-events:none;}
+.hero-inner{position:relative;z-index:1;}
+.hero-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(212,22,42,0.18);border:1px solid rgba(212,22,42,0.35);border-radius:30px;padding:6px 16px;color:#FF8090;font-size:13px;font-weight:700;margin-bottom:20px;}
+.hero-title{font-family:'Tajawal',sans-serif;font-size:clamp(26px,5vw,40px);font-weight:900;color:#fff;line-height:1.3;margin-bottom:14px;}
+.hero-title span{color:var(--brand-light);}
+.hero-desc{font-size:15px;color:rgba(255,255,255,0.5);max-width:480px;margin:0 auto 28px;line-height:1.8;}
+.hero-steps{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;}
+.step-pill{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:8px 16px;color:rgba(255,255,255,0.7);font-size:13px;font-weight:600;}
+.step-pill .mi{font-size:16px;color:var(--brand-light);}
 
-/* ── MAIN LAYOUT ── */
-.main-wrap {
-  max-width: 860px;
-  margin: -30px auto 60px;
-  padding: 0 16px;
-  position: relative;
-  z-index: 10;
-}
+/* ── LAYOUT ── */
+.main-wrap{max-width:880px;margin:-30px auto 60px;padding:0 16px;position:relative;z-index:10;}
+.form-card{background:var(--surface);border-radius:22px;border:1px solid var(--border);box-shadow:var(--shadow-lg);overflow:hidden;}
+.sec-head{display:flex;align-items:center;gap:10px;padding:18px 24px;border-bottom:1px solid var(--border);background:var(--surface2);}
+.sec-icon{width:38px;height:38px;border-radius:10px;background:var(--brand-soft);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.sec-icon .mi{color:var(--brand);font-size:19px;}
+.sec-title{font-size:15px;font-weight:800;color:var(--text);}
+.sec-desc{font-size:12px;color:var(--text3);margin-top:1px;}
+.form-body{padding:24px;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+.sec-divider{height:1px;background:linear-gradient(90deg,transparent,var(--border2),transparent);margin:8px 0;}
 
-/* ── FORM CARD ── */
-.form-card {
-  background: var(--surface);
-  border-radius: 22px;
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-lg);
-  overflow: hidden;
-}
+/* ── FORM GROUP ── */
+.fg{display:flex;flex-direction:column;gap:7px;}
+.fg label{font-size:12.5px;font-weight:700;color:var(--text2);display:flex;align-items:center;gap:5px;flex-wrap:wrap;}
+.req{color:var(--brand);}
+.opt-badge{font-size:10.5px;color:var(--text3);background:var(--surface2);border:1px solid var(--border2);border-radius:20px;padding:1px 8px;font-weight:600;}
 
-/* Section header */
-.sec-head {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 18px 24px;
-  border-bottom: 1px solid var(--border);
-  background: var(--surface2);
-}
-.sec-icon {
-  width: 38px;height:38px;border-radius:10px;
-  background: var(--brand-soft);
-  display: flex;align-items:center;justify-content:center;
-  flex-shrink:0;
-}
-.sec-icon .mi { color:var(--brand);font-size:19px; }
-.sec-title { font-size:15px;font-weight:800;color:var(--text); }
-.sec-desc { font-size:12px;color:var(--text3);margin-top:1px; }
+/* ── TOOLTIP ── */
+.help-btn{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--text3);background:transparent;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;color:var(--text3);font-size:11px;font-weight:800;transition:var(--tr);flex-shrink:0;font-family:'Cairo',sans-serif;}
+.help-btn:hover{border-color:var(--brand);color:var(--brand);background:var(--brand-soft);}
+.tooltip-wrap{position:relative;display:inline-flex;align-items:center;}
+.tooltip-box{position:absolute;top:calc(100% + 8px);right:0;background:#1a1a2e;color:#fff;border-radius:12px;padding:10px 14px;font-size:12.5px;font-weight:500;line-height:1.65;min-width:220px;max-width:280px;box-shadow:0 8px 24px rgba(0,0,0,0.3);z-index:999;display:none;animation:tipIn 0.16s ease;text-align:right;}
+.tooltip-box::before{content:'';position:absolute;top:-5px;right:6px;width:10px;height:10px;background:#1a1a2e;transform:rotate(45deg);border-radius:2px;}
+.tooltip-box.show{display:block;}
+@keyframes tipIn{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:translateY(0);}}
 
-/* Form body */
-.form-body { padding: 24px; }
+/* ── INPUTS ── */
+.fi{width:100%;background:var(--surface2);border:1.5px solid var(--border2);border-radius:11px;padding:11px 14px;font-family:'Cairo',sans-serif;font-size:14px;color:var(--text);outline:none;transition:var(--tr);}
+.fi:focus{border-color:var(--brand);background:var(--surface);box-shadow:0 0 0 3px var(--brand-glow);}
+.fi::placeholder{color:var(--text3);}
+textarea.fi{resize:vertical;min-height:90px;line-height:1.6;}
+select.fi{cursor:pointer;appearance:none;}
+.fi-wrap{position:relative;}
+.fi-wrap .fi-icon{position:absolute;top:50%;transform:translateY(-50%);right:13px;color:var(--text3);font-size:17px;pointer-events:none;}
+.fi-wrap .fi{padding-right:42px;}
+.fi.err{border-color:#F87171;}
 
-/* Grid */
-.grid-2 { display:grid;grid-template-columns:1fr 1fr;gap:16px; }
-.grid-3 { display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px; }
-.full { grid-column: 1 / -1; }
+/* ── SUBCATEGORY CHIPS ── */
+.sub-chips-wrap{display:none;margin-bottom:16px;}
+.sub-chips-wrap.show{display:block;}
+.sub-chips-label{font-size:12.5px;color:var(--text2);margin-bottom:9px;font-weight:700;display:flex;align-items:center;gap:5px;}
+.sub-chips{display:flex;flex-wrap:wrap;gap:7px;}
+.sub-chip{padding:7px 14px;border-radius:20px;border:1.5px solid var(--border2);background:var(--surface2);font-family:'Cairo',sans-serif;font-size:13px;font-weight:700;color:var(--text2);cursor:pointer;transition:var(--tr);}
+.sub-chip:hover{border-color:var(--brand);color:var(--brand);}
+.sub-chip.sel{background:var(--brand);color:#fff;border-color:var(--brand);}
 
-/* Form group */
-.fg { display:flex;flex-direction:column;gap:7px; }
-.fg label {
-  font-size:12.5px;font-weight:700;color:var(--text2);
-  display:flex;align-items:center;gap:5px;
-}
-.fg label .mi { font-size:14px;color:var(--brand); }
-.req { color:var(--brand); }
+/* ── PAYMENT ── */
+.payment-opts{display:flex;gap:10px;flex-wrap:wrap;}
+.pay-opt{display:flex;align-items:center;gap:7px;background:var(--surface2);border:1.5px solid var(--border2);border-radius:10px;padding:9px 14px;cursor:pointer;transition:var(--tr);user-select:none;font-size:13.5px;font-weight:600;color:var(--text2);}
+.pay-opt input{display:none;}
+.pay-opt.checked{background:var(--brand-soft);border-color:rgba(212,22,42,0.4);color:var(--brand);}
+.pay-check{width:18px;height:18px;border-radius:5px;border:2px solid var(--border2);background:var(--surface);display:flex;align-items:center;justify-content:center;transition:var(--tr);flex-shrink:0;}
+.pay-opt.checked .pay-check{background:var(--brand);border-color:var(--brand);}
+.pay-check .mi{font-size:12px;color:transparent;}
+.pay-opt.checked .pay-check .mi{color:#fff;}
 
-/* Inputs */
-.fi {
-  width:100%;
-  background: var(--surface2);
-  border: 1.5px solid var(--border2);
-  border-radius: 11px;
-  padding: 11px 14px;
-  font-family:'Cairo',sans-serif;
-  font-size:14px;
-  color:var(--text);
-  outline:none;
-  transition: var(--tr);
-}
-.fi:focus {
-  border-color: var(--brand);
-  background: var(--surface);
-  box-shadow: 0 0 0 3px var(--brand-glow);
-}
-.fi::placeholder { color:var(--text3); }
-textarea.fi { resize:vertical;min-height:90px;line-height:1.6; }
-select.fi { cursor:pointer;appearance:none; }
-
-/* Input with icon */
-.fi-wrap { position:relative; }
-.fi-wrap .fi-icon {
-  position:absolute;top:50%;transform:translateY(-50%);
-  right:13px;color:var(--text3);font-size:17px;pointer-events:none;
-}
-.fi-wrap .fi { padding-right:42px; }
-
-/* Section divider */
-.sec-divider {
-  height:1px;
-  background: linear-gradient(90deg, transparent, var(--border2), transparent);
-  margin: 8px 0;
-}
-
-/* Products dynamic section */
-.products-list { display:flex;flex-direction:column;gap:10px;margin-bottom:12px; }
-.product-row {
-  display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;
-  background:var(--surface2);border-radius:12px;padding:12px 14px;
-  border:1.5px solid var(--border);
-  animation: fadeIn 0.2s ease;
-}
+/* ── PRODUCTS ── */
+.products-list{display:flex;flex-direction:column;gap:10px;margin-bottom:12px;}
+.product-row{background:var(--surface2);border-radius:12px;padding:14px;border:1.5px solid var(--border);animation:fadeIn 0.2s ease;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
-.product-row .fi { background:var(--surface);border-color:var(--border); }
-.product-row .fi:focus { border-color:var(--brand); }
-.btn-rm-product {
-  width:34px;height:34px;border-radius:9px;border:none;
-  background:transparent;cursor:pointer;transition:var(--tr);
-  color:var(--text3);display:flex;align-items:center;justify-content:center;
-  align-self:flex-end;
-}
-.btn-rm-product:hover { background:#FEF2F2;color:var(--brand); }
-.btn-rm-product .mi { font-size:18px; }
+.pr-grid{display:grid;grid-template-columns:1fr 90px;gap:10px;margin-bottom:10px;}
+.pr-img-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:flex-end;}
+.product-row .fi{background:var(--surface);}
+.btn-rm-product{width:34px;height:34px;border-radius:9px;border:none;background:transparent;cursor:pointer;transition:var(--tr);color:var(--text3);display:flex;align-items:center;justify-content:center;}
+.btn-rm-product:hover{background:#FEE2E2;color:var(--brand);}
+.btn-add-row{display:flex;align-items:center;justify-content:center;gap:6px;background:var(--brand-soft);border:1.5px dashed rgba(212,22,42,0.3);border-radius:11px;padding:10px 18px;font-family:'Cairo',sans-serif;font-size:13.5px;font-weight:700;color:var(--brand);cursor:pointer;transition:var(--tr);width:100%;}
+.btn-add-row:hover{background:var(--brand-glow);}
 
-.btn-add-product {
-  display:flex;align-items:center;gap:6px;
-  background:var(--brand-soft);border:1.5px dashed rgba(212,22,42,0.3);
-  border-radius:11px;padding:10px 18px;
-  font-family:'Cairo',sans-serif;font-size:13.5px;font-weight:700;
-  color:var(--brand);cursor:pointer;transition:var(--tr);width:100%;
-  justify-content:center;
-}
-.btn-add-product:hover { background:var(--brand-glow); }
-.btn-add-product .mi { font-size:18px; }
+/* ── IMG URLS ── */
+.img-urls-list{display:flex;flex-direction:column;gap:8px;margin-bottom:10px;}
+.img-url-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;}
+.btn-rm-url{width:34px;height:34px;border-radius:9px;border:none;background:transparent;cursor:pointer;transition:var(--tr);color:var(--text3);display:flex;align-items:center;justify-content:center;}
+.btn-rm-url:hover{background:#FEE2E2;color:var(--brand);}
 
-/* Image URLs section */
-.img-urls-list { display:flex;flex-direction:column;gap:8px;margin-bottom:10px; }
-.img-url-row {
-  display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;
-}
-.btn-rm-url {
-  width:34px;height:34px;border-radius:9px;border:none;
-  background:transparent;cursor:pointer;transition:var(--tr);
-  color:var(--text3);display:flex;align-items:center;justify-content:center;
-}
-.btn-rm-url:hover { background:#FEF2F2;color:var(--brand); }
-.btn-rm-url .mi { font-size:18px; }
+/* ── ERRORS ── */
+.field-err{font-size:11.5px;color:#B91C1C;display:none;align-items:center;gap:4px;margin-top:3px;}
+.field-err .mi{font-size:14px;}
+.field-err.show{display:flex;}
 
-/* Payment checkboxes */
-.payment-opts {
-  display:flex;gap:10px;flex-wrap:wrap;
-}
-.pay-opt {
-  display:flex;align-items:center;gap:7px;
-  background:var(--surface2);border:1.5px solid var(--border2);
-  border-radius:10px;padding:9px 14px;cursor:pointer;transition:var(--tr);
-  user-select:none;font-size:13.5px;font-weight:600;color:var(--text2);
-}
-.pay-opt input[type=checkbox] { display:none; }
-.pay-opt.checked {
-  background:var(--brand-soft);border-color:rgba(212,22,42,0.4);color:var(--brand);
-}
-.pay-check {
-  width:18px;height:18px;border-radius:5px;border:2px solid var(--border2);
-  background:var(--surface);display:flex;align-items:center;justify-content:center;
-  transition:var(--tr);flex-shrink:0;
-}
-.pay-opt.checked .pay-check {
-  background:var(--brand);border-color:var(--brand);
-}
-.pay-check .mi { font-size:12px;color:transparent; }
-.pay-opt.checked .pay-check .mi { color:#fff; }
+/* ── SOCIAL NOTE ── */
+.social-note{font-size:13px;color:var(--brand);background:var(--brand-soft);border:1px solid rgba(212,22,42,0.15);border-radius:9px;padding:9px 13px;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.social-note .mi{font-size:17px;}
 
-/* Submit section */
-.submit-section {
-  padding: 20px 24px 24px;
-  border-top: 1px solid var(--border);
-  background: var(--surface2);
-}
-.terms-row {
-  display:flex;align-items:flex-start;gap:10px;
-  margin-bottom:16px;cursor:pointer;
-}
-.terms-row input { display:none; }
-.terms-check {
-  width:20px;height:20px;border-radius:6px;border:2px solid var(--border2);
-  background:var(--surface);display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;margin-top:1px;transition:var(--tr);cursor:pointer;
-}
-.terms-check.checked { background:var(--brand);border-color:var(--brand); }
-.terms-check .mi { font-size:13px;color:transparent; }
-.terms-check.checked .mi { color:#fff; }
-.terms-text { font-size:13px;color:var(--text2);line-height:1.6; }
-.terms-text a { color:var(--brand);text-decoration:none;font-weight:700; }
+/* ── UPLOAD GUIDE ── */
+.upload-guide{background:var(--surface2);border:1.5px solid var(--border2);border-radius:12px;padding:14px 16px;margin-bottom:16px;}
+.ug-title{font-size:13px;font-weight:800;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.ug-title .mi{color:var(--brand);font-size:17px;}
+.ug-step{display:flex;align-items:flex-start;gap:9px;font-size:12.5px;color:var(--text2);margin-bottom:7px;}
+.ug-step:last-child{margin-bottom:0;}
+.ug-num{width:20px;height:20px;border-radius:50%;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;margin-top:1px;}
 
-.btn-submit {
-  width:100%;
-  background: linear-gradient(135deg, var(--brand), #FF3347);
-  color:#fff;border:none;border-radius:13px;
-  padding:15px 24px;
-  font-family:'Cairo',sans-serif;font-size:16px;font-weight:800;
-  cursor:pointer;transition:var(--tr);
-  display:flex;align-items:center;justify-content:center;gap:9px;
-  box-shadow: 0 6px 24px var(--brand-glow);
-}
-.btn-submit:hover { transform:translateY(-2px);box-shadow:0 10px 32px rgba(212,22,42,0.3); }
-.btn-submit:active { transform:translateY(0); }
-.btn-submit:disabled { opacity:0.6;cursor:not-allowed;transform:none; }
-.btn-submit .mi { font-size:20px; }
+/* ── SUPPORT ── */
+.support-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:4px;}
+.support-btn{display:flex;align-items:center;gap:8px;padding:11px 18px;border-radius:12px;text-decoration:none;font-family:'Cairo',sans-serif;font-size:13.5px;font-weight:700;transition:var(--tr);}
+.support-btn.wa{background:#dcfce7;color:#15803d;border:1.5px solid #86efac;}
+.support-btn.wa:hover{background:#bbf7d0;}
+.support-btn.em{background:#eff6ff;color:#1d4ed8;border:1.5px solid #93c5fd;}
+.support-btn.em:hover{background:#dbeafe;}
+.wa-rec{font-size:10.5px;background:#15803d;color:#fff;border-radius:20px;padding:2px 8px;font-weight:800;}
 
-/* Validation error */
-.field-err { font-size:11.5px;color:#B91C1C;display:none;align-items:center;gap:4px;margin-top:2px; }
-.field-err .mi { font-size:14px; }
-.field-err.show { display:flex; }
-.fi.err { border-color:#F87171; }
+/* ── SUBMIT ── */
+.submit-section{padding:20px 24px 24px;border-top:1px solid var(--border);background:var(--surface2);}
+.terms-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:16px;cursor:pointer;}
+.terms-check{width:20px;height:20px;border-radius:6px;border:2px solid var(--border2);background:var(--surface);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;transition:var(--tr);}
+.terms-check.checked{background:var(--brand);border-color:var(--brand);}
+.terms-check .mi{font-size:13px;color:transparent;}
+.terms-check.checked .mi{color:#fff;}
+.terms-text{font-size:13px;color:var(--text2);line-height:1.65;}
+.terms-text a{color:var(--brand);text-decoration:none;font-weight:700;}
+.btn-submit{width:100%;background:linear-gradient(135deg,var(--brand),#FF3347);color:#fff;border:none;border-radius:13px;padding:15px 24px;font-family:'Cairo',sans-serif;font-size:16px;font-weight:800;cursor:pointer;transition:var(--tr);display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 6px 24px var(--brand-glow);}
+.btn-submit:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(212,22,42,0.3);}
+.btn-submit:disabled{opacity:0.6;cursor:not-allowed;transform:none;}
 
-/* ── SUCCESS SCREEN ── */
-.success-screen {
-  display:none;
-  flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;padding:64px 32px;
-  min-height:500px;
-}
-.success-screen.show { display:flex; }
-.success-anim {
-  width:88px;height:88px;border-radius:50%;
-  background:linear-gradient(135deg,#22c55e,#16a34a);
-  display:flex;align-items:center;justify-content:center;
-  margin-bottom:24px;
-  animation:popIn 0.5s cubic-bezier(0.34,1.56,0.64,1);
-  box-shadow:0 8px 30px rgba(34,197,94,0.3);
-}
-@keyframes popIn{from{opacity:0;transform:scale(0.5);}to{opacity:1;transform:scale(1);}}
-.success-anim .mi { font-size:42px;color:#fff; }
-.success-title { font-family:'Tajawal',sans-serif;font-size:26px;font-weight:900;color:var(--text);margin-bottom:10px; }
-.success-msg { font-size:14.5px;color:var(--text2);max-width:400px;line-height:1.75;margin-bottom:28px; }
-.success-id {
-  background:var(--surface2);border:1.5px solid var(--border2);
-  border-radius:12px;padding:12px 22px;
-  font-size:13px;color:var(--text3);margin-bottom:24px;
-  display:flex;align-items:center;gap:8px;
-}
-.success-id span { font-weight:800;color:var(--brand);font-size:14px; }
-.btn-back {
-  background:var(--brand-soft);color:var(--brand);border:1.5px solid rgba(212,22,42,0.25);
-  border-radius:11px;padding:11px 26px;
-  font-family:'Cairo',sans-serif;font-size:14px;font-weight:800;
-  cursor:pointer;transition:var(--tr);display:flex;align-items:center;gap:7px;
-}
-.btn-back:hover { background:var(--brand);color:#fff; }
+/* ── SUCCESS ── */
+.success-screen{display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 32px;min-height:460px;}
+.success-screen.show{display:flex;}
+.success-anim{width:88px;height:88px;border-radius:50%;background:linear-gradient(135deg,var(--brand),var(--brand-dark));display:flex;align-items:center;justify-content:center;margin-bottom:22px;animation:popIn 0.5s cubic-bezier(0.34,1.56,0.64,1);box-shadow:0 8px 30px var(--brand-glow);}
+@keyframes popIn{from{opacity:0;transform:scale(0.4);}to{opacity:1;transform:scale(1);}}
+.success-anim .mi{font-size:42px;color:#fff;}
+.success-title{font-family:'Tajawal',sans-serif;font-size:26px;font-weight:900;color:var(--text);margin-bottom:10px;}
+.success-msg{font-size:14.5px;color:var(--text2);max-width:420px;line-height:1.8;margin-bottom:18px;}
+.success-id-box{background:var(--surface2);border:1.5px solid var(--border2);border-radius:12px;padding:11px 20px;font-size:12.5px;color:var(--text3);margin-bottom:6px;display:flex;align-items:center;gap:8px;word-break:break-all;}
+.success-id-box .id-val{font-weight:800;color:var(--brand);font-size:13px;}
+.success-note{font-size:12px;color:var(--text3);margin-bottom:22px;display:flex;align-items:center;gap:5px;}
+.success-note .mi{font-size:15px;color:var(--brand);}
+.btn-back{background:var(--brand-soft);color:var(--brand);border:1.5px solid rgba(212,22,42,0.25);border-radius:11px;padding:11px 26px;font-family:'Cairo',sans-serif;font-size:14px;font-weight:800;cursor:pointer;transition:var(--tr);display:flex;align-items:center;gap:7px;}
+.btn-back:hover{background:var(--brand);color:#fff;}
+
+/* ── PREV SUBMISSION BANNER ── */
+.prev-banner{background:var(--brand-soft);border:1.5px solid rgba(212,22,42,0.18);border-radius:12px;padding:12px 16px;margin-bottom:14px;font-size:13px;color:var(--text2);display:flex;align-items:center;gap:10px;}
 
 /* ── TOAST ── */
-.toast-c { position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:9999;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none; }
-.tst { background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:12px 16px;box-shadow:0 8px 32px rgba(0,0,0,0.12);display:flex;align-items:center;gap:11px;min-width:260px;max-width:380px;transform:translateY(16px) scale(0.96);opacity:0;transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);pointer-events:auto; }
-.tst.show { transform:translateY(0) scale(1);opacity:1; }
-.ti { width:32px;height:32px;border-radius:9px;flex-shrink:0;display:flex;align-items:center;justify-content:center; }
-.ti .mi { font-size:17px; }
+.toast-c{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:9999;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none;}
+.tst{background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:12px 16px;box-shadow:0 8px 32px rgba(0,0,0,0.12);display:flex;align-items:center;gap:11px;min-width:260px;max-width:380px;transform:translateY(16px) scale(0.96);opacity:0;transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);pointer-events:auto;}
+.tst.show{transform:translateY(0) scale(1);opacity:1;}
+.ti{width:32px;height:32px;border-radius:9px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.ti .mi{font-size:17px;}
 .ts{background:#DCFCE7;color:#16a34a;} .te{background:#FEE2E2;color:#B91C1C;} .ti-i{background:#EFF6FF;color:#2563EB;} .tw{background:#FEF9C3;color:#92400e;}
-.tb { flex:1; } .tt { font-size:13px;font-weight:800;color:var(--text); } .tm { font-size:11.5px;color:var(--text2);margin-top:1px; }
-
-/* Spinner */
+.tb{flex:1;} .tt{font-size:13px;font-weight:800;color:var(--text);} .tm{font-size:11.5px;color:var(--text2);margin-top:1px;}
 .spinner{width:20px;height:20px;border:2.5px solid rgba(255,255,255,0.4);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;display:inline-block;}
 @keyframes spin{to{transform:rotate(360deg);}}
 
-/* ── RESPONSIVE ── */
 @media(max-width:640px){
-  .grid-2,.grid-3 { grid-template-columns:1fr; }
-  .full { grid-column:1; }
-  .hero { padding:40px 16px 52px; }
-  .form-body { padding:16px; }
-  .main-wrap { margin-top:-20px; }
-  .payment-opts { flex-direction:column; }
+  .grid-2,.grid-3{grid-template-columns:1fr;}
+  .hero{padding:40px 16px 52px;}
+  .form-body{padding:16px;}
+  .main-wrap{margin-top:-20px;}
+  .payment-opts{flex-direction:column;}
+  .pr-grid{grid-template-columns:1fr;}
+  .support-row{flex-direction:column;}
 }
 </style>
 </head>
@@ -460,7 +238,7 @@ select.fi { cursor:pointer;appearance:none; }
 <!-- HERO -->
 <div class="hero">
   <div class="hero-inner">
-    <div class="hero-tag"><span class="mi">rocket_launch</span>انضم لحبايب EasyGet</div>
+    <div class="hero-tag"><span class="mi">rocket_launch</span>انضم لعيلة EasyGet</div>
     <div class="hero-title">سجّل <span>براندك</span> وابدأ<br>تستقبل أوردرات دلوقتي</div>
     <div class="hero-desc">اعمل حسابك، انتظر موافقة الإدارة، وابدأ رحلتك مع منصة EasyGet.</div>
     <div class="hero-steps">
@@ -471,278 +249,322 @@ select.fi { cursor:pointer;appearance:none; }
   </div>
 </div>
 
-<!-- MAIN FORM -->
 <div class="main-wrap">
+  <!-- Previous submission banner (injected by JS if exists) -->
+  <div id="prev-banner-wrap"></div>
+
   <div class="form-card" id="main-form-card">
 
-    <!-- ─── BASIC INFO ─── -->
+    <!-- ══════ 1. BASIC INFO ══════ -->
     <div class="sec-head">
       <div class="sec-icon"><span class="mi">store</span></div>
-      <div>
-        <div class="sec-title">بيانات البراند الأساسية</div>
-        <div class="sec-desc">المعلومات الرئيسية اللي هتظهر على صفحة براندك</div>
-      </div>
+      <div><div class="sec-title">بيانات البراند الأساسية</div><div class="sec-desc">المعلومات الرئيسية اللي هتظهر على صفحة براندك</div></div>
     </div>
     <div class="form-body">
-      <div class="grid-2" style="margin-bottom:14px">
+
+      <div class="grid-2" style="margin-bottom:16px">
+        <!-- Name -->
         <div class="fg">
-          <label><span class="mi">badge</span>اسم البراند <span class="req">*</span></label>
-          <div class="fi-wrap">
-            <span class="mi fi-icon">storefront</span>
-            <input class="fi" id="f-name" type="text" placeholder="مثال: Fati's Donuts">
-          </div>
+          <label>
+            <span class="mi">badge</span>اسم البراند <span class="req">*</span>
+            <div class="tooltip-wrap"><button class="help-btn" onclick="tip('tip-name',event)">?</button>
+            <div class="tooltip-box" id="tip-name">اكتب الاسم التجاري للبراند زي ما بيظهر للعملاء، مثلاً: Fati's Donuts</div></div>
+          </label>
+          <div class="fi-wrap"><span class="mi fi-icon">storefront</span><input class="fi" id="f-name" type="text" placeholder="مثال: Fati's Donuts"></div>
           <div class="field-err" id="err-name"><span class="mi">error_outline</span>اسم البراند مطلوب</div>
         </div>
+        <!-- Logo -->
         <div class="fg">
-          <label><span class="mi">category</span>الفئة الرئيسية <span class="req">*</span></label>
-          <div class="fi-wrap">
-            <span class="mi fi-icon">expand_more</span>
-            <select class="fi" id="f-category" style="padding-right:42px">
-              <option value="">اختار الفئة...</option>
-              <option value="أكل">🍔 أكل</option>
-              <option value="ملابس">👗 ملابس</option>
-              <option value="إلكترونيات">📱 إلكترونيات</option>
-              <option value="صحة وجمال">💄 صحة وجمال</option>
-              <option value="منزل وديكور">🏠 منزل وديكور</option>
-              <option value="رياضة">⚽ رياضة</option>
-              <option value="أطفال">🧸 أطفال</option>
-              <option value="كتب وتعليم">📚 كتب وتعليم</option>
-              <option value="أخرى">🛒 أخرى</option>
-            </select>
-          </div>
-          <div class="field-err" id="err-category"><span class="mi">error_outline</span>اختار الفئة</div>
-        </div>
-      </div>
-
-      <div class="grid-2" style="margin-bottom:14px">
-        <div class="fg">
-          <label><span class="mi">label</span>الفئة الفرعية</label>
-          <input class="fi" id="f-subcategory" type="text" placeholder="مثال: sweets, burgers, fashion...">
-        </div>
-        <div class="fg">
-          <label><span class="mi">image</span>رابط صورة البراند (Logo) <span class="req">*</span></label>
-          <input class="fi" id="f-imageUrl" type="url" placeholder="https://...">
+          <label>
+            <span class="mi">image</span>رابط صورة البراند (Logo) <span class="req">*</span>
+            <div class="tooltip-wrap"><button class="help-btn" onclick="tip('tip-logo',event)">?</button>
+            <div class="tooltip-box" id="tip-logo">ارفع الصورة على postimages.org أو imgbb.com ثم انسخ الـ Direct Link والصقه هنا</div></div>
+          </label>
+          <input class="fi" id="f-imageUrl" type="url" placeholder="https://i.postimg.cc/...">
           <div class="field-err" id="err-imageUrl"><span class="mi">error_outline</span>رابط الصورة مطلوب</div>
         </div>
       </div>
 
-      <div class="fg full" style="margin-bottom:14px">
-        <label><span class="mi">description</span>وصف البراند <span class="req">*</span></label>
-        <textarea class="fi" id="f-description" placeholder="اكتب وصف قصير عن براندك، منتجاتك، وما يميزك..." style="min-height:80px"></textarea>
+      <!-- Main Category -->
+      <div class="fg" style="margin-bottom:16px">
+        <label>
+          <span class="mi">category</span>الفئة الرئيسية <span class="req">*</span>
+          <div class="tooltip-wrap"><button class="help-btn" onclick="tip('tip-cat',event)">?</button>
+          <div class="tooltip-box" id="tip-cat">اختار الفئة الرئيسية اللي براندك بيندرج تحتها، وبعدين هتظهر لك الفئات الفرعية</div></div>
+        </label>
+        <div class="fi-wrap">
+          <span class="mi fi-icon">expand_more</span>
+          <select class="fi" id="f-category" onchange="onCatChange(this.value)" style="padding-right:42px">
+            <option value="">اختار الفئة الرئيسية...</option>
+            <option value="ملابس">👗 ملابس</option>
+            <option value="أكل">🍔 أكل</option>
+            <option value="البيت">🏠 البيت</option>
+            <option value="إلكترونيات">📱 إلكترونيات</option>
+            <option value="العناية">💄 العناية</option>
+            <option value="المكتبة">📚 المكتبة</option>
+            <option value="متنوع">🛒 متنوع</option>
+          </select>
+        </div>
+        <div class="field-err" id="err-category"><span class="mi">error_outline</span>اختار الفئة</div>
+      </div>
+
+      <!-- Subcategory chips -->
+      <div class="sub-chips-wrap" id="sub-chips-wrap">
+        <div class="sub-chips-label">
+          <span class="mi" style="font-size:14px;color:var(--brand)">label</span>
+          الفئة الفرعية <span class="req">*</span>
+        </div>
+        <div class="sub-chips" id="sub-chips"></div>
+        <div class="field-err" id="err-subcategory" style="margin-top:7px"><span class="mi">error_outline</span>اختار فئة فرعية</div>
+      </div>
+
+      <!-- Description -->
+      <div class="fg" style="margin-top:4px">
+        <label>
+          <span class="mi">description</span>وصف البراند <span class="req">*</span>
+          <div class="tooltip-wrap"><button class="help-btn" onclick="tip('tip-desc',event)">?</button>
+          <div class="tooltip-box" id="tip-desc">اكتب وصف قصير عن براندك: إيه اللي بتقدمه، وإيه اللي بيميزك؟</div></div>
+        </label>
+        <textarea class="fi" id="f-description" placeholder="مثال: دونات لذيذة وطازجة تتصنع بالسعادة والحب، متاحة يومياً بنكهات متنوعة..." style="min-height:80px"></textarea>
         <div class="field-err" id="err-description"><span class="mi">error_outline</span>الوصف مطلوب</div>
       </div>
-    </div>
 
+    </div>
     <div class="sec-divider"></div>
 
-    <!-- ─── DELIVERY & PRICING ─── -->
+    <!-- ══════ 2. DELIVERY & PRICING ══════ -->
     <div class="sec-head">
       <div class="sec-icon"><span class="mi">local_shipping</span></div>
-      <div>
-        <div class="sec-title">التوصيل والأسعار</div>
-        <div class="sec-desc">معلومات التوصيل ونطاق الأسعار</div>
-      </div>
+      <div><div class="sec-title">التوصيل والأسعار</div><div class="sec-desc">معلومات التوصيل ونطاق الأسعار</div></div>
     </div>
     <div class="form-body">
-      <div class="grid-3" style="margin-bottom:14px">
+
+      <div class="grid-3" style="margin-bottom:16px">
         <div class="fg">
-          <label><span class="mi">location_on</span>مناطق التوصيل <span class="req">*</span></label>
+          <label>
+            <span class="mi">location_on</span>مناطق التوصيل <span class="req">*</span>
+            <div class="tooltip-wrap"><button class="help-btn" onclick="tip('tip-areas',event)">?</button>
+            <div class="tooltip-box" id="tip-areas">اكتب المناطق اللي بتوصّل إليها، مثلاً: القاهرة والجيزة، أو جميع المحافظات</div></div>
+          </label>
           <input class="fi" id="f-deliveryAreas" type="text" placeholder="مثال: جميع المحافظات">
           <div class="field-err" id="err-deliveryAreas"><span class="mi">error_outline</span>مناطق التوصيل مطلوبة</div>
         </div>
         <div class="fg">
-          <label><span class="mi">payments</span>رسوم التوصيل</label>
+          <label>
+            <span class="mi">payments</span>رسوم التوصيل <span class="opt-badge">اختياري</span>
+            <div class="tooltip-wrap"><button class="help-btn" onclick="tip('tip-fee',event)">?</button>
+            <div class="tooltip-box" id="tip-fee">تكلفة التوصيل بالجنيه، مثلاً: ج.م 25 — أو اكتب "مجاني"</div></div>
+          </label>
           <input class="fi" id="f-deliveryFee" type="text" placeholder="مثال: ج.م 25">
         </div>
         <div class="fg">
-          <label><span class="mi">schedule</span>وقت التوصيل</label>
+          <label>
+            <span class="mi">schedule</span>وقت التوصيل <span class="opt-badge">اختياري</span>
+            <div class="tooltip-wrap"><button class="help-btn" onclick="tip('tip-time',event)">?</button>
+            <div class="tooltip-box" id="tip-time">المدة المتوقعة للتوصيل، مثلاً: 3-5 ساعات أو 24-48 ساعة</div></div>
+          </label>
           <input class="fi" id="f-deliveryTime" type="text" placeholder="مثال: 3-5 ساعات">
         </div>
       </div>
 
-      <div class="grid-2" style="margin-bottom:14px">
+      <div class="grid-2" style="margin-bottom:16px">
         <div class="fg">
-          <label><span class="mi">trending_down</span>أقل سعر (بالجنيه)</label>
+          <label>
+            <span class="mi">trending_down</span>أقل سعر (ج.م) <span class="opt-badge">اختياري</span>
+            <div class="tooltip-wrap"><button class="help-btn" onclick="tip('tip-min',event)">?</button>
+            <div class="tooltip-box" id="tip-min">أقل سعر لمنتج عندك، هيظهر كـ "يبدأ من ج.م ..." في صفحة البراند</div></div>
+          </label>
           <input class="fi" id="f-minPrice" type="number" min="0" placeholder="مثال: 35">
         </div>
         <div class="fg">
-          <label><span class="mi">trending_up</span>أعلى سعر (بالجنيه)</label>
+          <label>
+            <span class="mi">trending_up</span>أعلى سعر (ج.م) <span class="opt-badge">اختياري</span>
+            <div class="tooltip-wrap"><button class="help-btn" onclick="tip('tip-max',event)">?</button>
+            <div class="tooltip-box" id="tip-max">أعلى سعر لمنتج عندك، هيظهر كـ "حتى ج.م ..." في صفحة البراند</div></div>
+          </label>
           <input class="fi" id="f-maxPrice" type="number" min="0" placeholder="مثال: 895">
         </div>
       </div>
 
-      <!-- Payment methods -->
-      <div class="fg" style="margin-bottom:6px">
-        <label><span class="mi">credit_card</span>طرق الدفع</label>
-        <div class="payment-opts" id="payment-opts">
-          <label class="pay-opt" onclick="togglePay(this)">
-            <input type="checkbox" value="الدفع عند الاستلام">
-            <div class="pay-check"><span class="mi">check</span></div>
-            <span>الدفع عند الاستلام</span>
-          </label>
-          <label class="pay-opt" onclick="togglePay(this)">
-            <input type="checkbox" value="فيزا/ماستر">
-            <div class="pay-check"><span class="mi">check</span></div>
-            <span>فيزا / ماستركارد</span>
-          </label>
-          <label class="pay-opt" onclick="togglePay(this)">
-            <input type="checkbox" value="فودافون كاش">
-            <div class="pay-check"><span class="mi">check</span></div>
-            <span>فودافون كاش</span>
-          </label>
-          <label class="pay-opt" onclick="togglePay(this)">
-            <input type="checkbox" value="انستاباي">
-            <div class="pay-check"><span class="mi">check</span></div>
-            <span>انستاباي</span>
-          </label>
+      <div class="fg">
+        <label>
+          <span class="mi">credit_card</span>طرق الدفع <span class="opt-badge">اختياري</span>
+          <div class="tooltip-wrap"><button class="help-btn" onclick="tip('tip-pay',event)">?</button>
+          <div class="tooltip-box" id="tip-pay">اختار كل طرق الدفع المتاحة عندك — ممكن تختار أكتر من طريقة</div></div>
+        </label>
+        <div class="payment-opts">
+          <label class="pay-opt" onclick="togglePay(this)"><input type="checkbox" value="الدفع عند الاستلام"><div class="pay-check"><span class="mi">check</span></div><span>الدفع عند الاستلام</span></label>
+          <label class="pay-opt" onclick="togglePay(this)"><input type="checkbox" value="فيزا/ماستر"><div class="pay-check"><span class="mi">check</span></div><span>فيزا / ماستركارد</span></label>
+          <label class="pay-opt" onclick="togglePay(this)"><input type="checkbox" value="فودافون كاش"><div class="pay-check"><span class="mi">check</span></div><span>فودافون كاش</span></label>
+          <label class="pay-opt" onclick="togglePay(this)"><input type="checkbox" value="انستاباي"><div class="pay-check"><span class="mi">check</span></div><span>انستاباي</span></label>
         </div>
       </div>
-    </div>
 
+    </div>
     <div class="sec-divider"></div>
 
-    <!-- ─── PRODUCTS ─── -->
+    <!-- ══════ 3. PRODUCTS ══════ -->
     <div class="sec-head">
       <div class="sec-icon"><span class="mi">inventory_2</span></div>
-      <div>
-        <div class="sec-title">المنتجات</div>
-        <div class="sec-desc">أضف أشهر منتجاتك مع الأسعار</div>
-      </div>
+      <div><div class="sec-title">المنتجات</div><div class="sec-desc">لازم تضيف منتج واحد على الأقل</div></div>
     </div>
     <div class="form-body">
       <div class="products-list" id="products-list"></div>
-      <button class="btn-add-product" onclick="addProductRow()">
-        <span class="mi">add_circle</span>أضف منتج
-      </button>
+      <div class="field-err" id="err-products" style="margin-bottom:10px"><span class="mi">error_outline</span>لازم تضيف منتج واحد على الأقل قبل الإرسال</div>
+      <button class="btn-add-row" onclick="addProductRow()"><span class="mi">add_circle</span>أضف منتج</button>
     </div>
-
     <div class="sec-divider"></div>
 
-    <!-- ─── LINKS & SOCIAL ─── -->
+    <!-- ══════ 4. GALLERY ══════ -->
     <div class="sec-head">
-      <div class="sec-icon"><span class="mi">link</span></div>
-      <div>
-        <div class="sec-title">الروابط والسوشيال ميديا</div>
-        <div class="sec-desc">روابط الطلب وحسابات السوشيال</div>
-      </div>
+      <div class="sec-icon"><span class="mi">photo_library</span></div>
+      <div><div class="sec-title">صور أشهر منتجات البراند</div><div class="sec-desc">روابط صور المنتجات اللي هتظهر في صفحة البراند</div></div>
     </div>
     <div class="form-body">
+      <div class="upload-guide">
+        <div class="ug-title"><span class="mi">help_outline</span>إزاي ترفع صور المنتجات؟</div>
+        <div class="ug-step"><div class="ug-num">1</div><span>افتح موقع رفع الصور: <a href="https://postimages.org" target="_blank" style="color:var(--brand);font-weight:700;">postimages.org</a> أو <a href="https://imgbb.com" target="_blank" style="color:var(--brand);font-weight:700;">imgbb.com</a></span></div>
+        <div class="ug-step"><div class="ug-num">2</div><span>اختار صورة المنتج من جهازك وارفعها على الموقع</span></div>
+        <div class="ug-step"><div class="ug-num">3</div><span>بعد الرفع، انسخ الـ <strong>Direct Link</strong> (الرابط المباشر للصورة) وضعه في الخانة تحت</span></div>
+      </div>
+      <div class="img-urls-list" id="img-urls-list"></div>
+      <button class="btn-add-row" onclick="addImgUrl()">
+        <span class="mi">add_photo_alternate</span>أضف رابط صورة
+        <span class="opt-badge" style="margin-right:4px">اختياري</span>
+      </button>
+    </div>
+    <div class="sec-divider"></div>
+
+    <!-- ══════ 5. LINKS & SOCIAL ══════ -->
+    <div class="sec-head">
+      <div class="sec-icon"><span class="mi">link</span></div>
+      <div><div class="sec-title">الروابط والسوشيال ميديا</div><div class="sec-desc">لازم ثلاثة حسابات سوشيال ميديا على الأقل</div></div>
+    </div>
+    <div class="form-body">
+
+      <div class="social-note">
+        <span class="mi">info</span>
+        كل حقول السوشيال <strong>اختيارية</strong> بس لازم تملي <strong>3 على الأقل</strong> منهم — دي متطلبات التسجيل
+      </div>
+      <div class="field-err" id="err-social" style="margin-bottom:14px"><span class="mi">error_outline</span>لازم تضيف 3 حسابات سوشيال ميديا على الأقل</div>
+
       <div class="grid-2" style="margin-bottom:14px">
         <div class="fg">
-          <label><span class="mi">shopping_cart</span>رابط الأوردر (Order URL) <span class="req">*</span></label>
-          <div class="fi-wrap">
-            <span class="mi fi-icon">open_in_new</span>
-            <input class="fi" id="f-orderUrl" type="url" placeholder="https://...">
-          </div>
+          <label>
+            <span class="mi">shopping_cart</span>رابط الأوردر (Order URL) <span class="req">*</span>
+            <div class="tooltip-wrap"><button class="help-btn" onclick="tip('tip-order',event)">?</button>
+            <div class="tooltip-box" id="tip-order">الرابط اللي العميل هيضغط عليه لطلب من براندك — موقعك أو أي رابط توصيل</div></div>
+          </label>
+          <div class="fi-wrap"><span class="mi fi-icon">open_in_new</span><input class="fi" id="f-orderUrl" type="url" placeholder="https://..."></div>
           <div class="field-err" id="err-orderUrl"><span class="mi">error_outline</span>رابط الأوردر مطلوب</div>
         </div>
         <div class="fg">
-          <label><span class="mi">language</span>الموقع الإلكتروني</label>
-          <div class="fi-wrap">
-            <span class="mi fi-icon">public</span>
-            <input class="fi" id="f-website" type="url" placeholder="https://...">
-          </div>
+          <label><span class="mi">language</span>الموقع الإلكتروني <span class="opt-badge">اختياري</span></label>
+          <div class="fi-wrap"><span class="mi fi-icon">public</span><input class="fi" id="f-website" type="url" placeholder="https://..."></div>
         </div>
       </div>
 
       <div class="grid-2" style="margin-bottom:14px">
         <div class="fg">
           <label>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="#1877F2" style="flex-shrink:0"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-            فيسبوك
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            فيسبوك <span class="opt-badge">اختياري</span>
           </label>
-          <div class="fi-wrap">
-            <span class="mi fi-icon">link</span>
-            <input class="fi" id="f-facebook" type="url" placeholder="https://facebook.com/...">
-          </div>
+          <div class="fi-wrap"><span class="mi fi-icon">link</span><input class="fi" id="f-facebook" type="url" placeholder="https://facebook.com/..."></div>
         </div>
         <div class="fg">
           <label>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="#E1306C" style="flex-shrink:0"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-            إنستاغرام
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#E1306C"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            إنستاغرام <span class="opt-badge">اختياري</span>
           </label>
-          <div class="fi-wrap">
-            <span class="mi fi-icon">link</span>
-            <input class="fi" id="f-instagram" type="url" placeholder="https://instagram.com/...">
-          </div>
+          <div class="fi-wrap"><span class="mi fi-icon">link</span><input class="fi" id="f-instagram" type="url" placeholder="https://instagram.com/..."></div>
         </div>
       </div>
 
-      <div class="grid-2" style="margin-bottom:6px">
+      <div class="grid-2" style="margin-bottom:14px">
         <div class="fg">
           <label>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="#000" style="flex-shrink:0"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.28 6.28 0 00-.79-.05A6.34 6.34 0 003.15 15.3a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.17a8.16 8.16 0 004.78 1.52V7.27a4.85 4.85 0 01-1.01-.58z"/></svg>
-            تيك توك
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#000"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.28 6.28 0 00-.79-.05A6.34 6.34 0 003.15 15.3a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.17a8.16 8.16 0 004.78 1.52V7.27a4.85 4.85 0 01-1.01-.58z"/></svg>
+            تيك توك <span class="opt-badge">اختياري</span>
           </label>
-          <div class="fi-wrap">
-            <span class="mi fi-icon">link</span>
-            <input class="fi" id="f-tiktok" type="url" placeholder="https://tiktok.com/@...">
-          </div>
+          <div class="fi-wrap"><span class="mi fi-icon">link</span><input class="fi" id="f-tiktok" type="url" placeholder="https://tiktok.com/@..."></div>
         </div>
         <div class="fg">
-          <label><span class="mi">phone</span>رقم الواتساب / الهاتف</label>
-          <div class="fi-wrap">
-            <span class="mi fi-icon">call</span>
-            <input class="fi" id="f-phone" type="tel" placeholder="+20 1xx xxx xxxx">
-          </div>
+          <label><span class="mi">link</span>رابط آخر (Snapchat / X ...) <span class="opt-badge">اختياري</span></label>
+          <div class="fi-wrap"><span class="mi fi-icon">link</span><input class="fi" id="f-other-social" type="url" placeholder="https://..."></div>
         </div>
       </div>
-    </div>
 
-    <div class="sec-divider"></div>
-
-    <!-- ─── GALLERY IMAGES ─── -->
-    <div class="sec-head">
-      <div class="sec-icon"><span class="mi">photo_library</span></div>
-      <div>
-        <div class="sec-title">صور الجاليري</div>
-        <div class="sec-desc">روابط صور المنتجات اللي هتظهر في صفحة البراند</div>
+      <div class="fg">
+        <label>
+          <span class="mi">phone</span>رقم الواتساب / الهاتف <span class="opt-badge">اختياري</span>
+          <div class="tooltip-wrap"><button class="help-btn" onclick="tip('tip-wphone',event)">?</button>
+          <div class="tooltip-box" id="tip-wphone">رقم التواصل مع العملاء — هيظهر على صفحة البراند للتواصل المباشر</div></div>
+        </label>
+        <div class="fi-wrap"><span class="mi fi-icon">call</span><input class="fi" id="f-phone" type="tel" placeholder="+20 1xx xxx xxxx"></div>
       </div>
-    </div>
-    <div class="form-body">
-      <div class="img-urls-list" id="img-urls-list"></div>
-      <button class="btn-add-product" onclick="addImgUrl()" style="margin-bottom:0">
-        <span class="mi">add_photo_alternate</span>أضف رابط صورة
-      </button>
-    </div>
 
+    </div>
     <div class="sec-divider"></div>
 
-    <!-- ─── CONTACT PERSON ─── -->
+    <!-- ══════ 6. CONTACT PERSON ══════ -->
     <div class="sec-head">
       <div class="sec-icon"><span class="mi">person</span></div>
-      <div>
-        <div class="sec-title">بيانات التواصل</div>
-        <div class="sec-desc">معلومات الشخص المسؤول عن البراند</div>
-      </div>
+      <div><div class="sec-title">بيانات المسؤول</div><div class="sec-desc">بيانات الشخص المسؤول — للتواصل الداخلي فقط، مش هتظهر للعملاء</div></div>
     </div>
     <div class="form-body">
-      <div class="grid-2" style="margin-bottom:14px">
+      <div class="grid-2">
         <div class="fg">
-          <label><span class="mi">person_outline</span>اسم المسؤول <span class="req">*</span></label>
-          <input class="fi" id="f-contactName" type="text" placeholder="اسمك الكامل">
+          <label>
+            <span class="mi">person_outline</span>اسم المسؤول <span class="req">*</span>
+            <div class="tooltip-wrap"><button class="help-btn" onclick="tip('tip-cname',event)">?</button>
+            <div class="tooltip-box" id="tip-cname">اسمك الكامل — الإدارة هتستخدمه للتواصل معاك عند مراجعة الطلب</div></div>
+          </label>
+          <input class="fi" id="f-contactName" type="text" placeholder="الاسم الكامل">
           <div class="field-err" id="err-contactName"><span class="mi">error_outline</span>الاسم مطلوب</div>
         </div>
         <div class="fg">
-          <label><span class="mi">mail_outline</span>الإيميل <span class="req">*</span></label>
-          <input class="fi" id="f-contactEmail" type="email" placeholder="contact@brand.com">
-          <div class="field-err" id="err-contactEmail"><span class="mi">error_outline</span>الإيميل مطلوب</div>
+          <label>
+            <span class="mi">phone_iphone</span>رقم موبايل المسؤول <span class="req">*</span>
+            <div class="tooltip-wrap"><button class="help-btn" onclick="tip('tip-cphone',event)">?</button>
+            <div class="tooltip-box" id="tip-cphone">رقم موبايلك الشخصي — فريق EasyGet هيتواصل معاك على الرقم ده لإبلاغك بنتيجة المراجعة</div></div>
+          </label>
+          <div class="fi-wrap"><span class="mi fi-icon">call</span><input class="fi" id="f-contactPhone" type="tel" placeholder="+20 1xx xxx xxxx"></div>
+          <div class="field-err" id="err-contactPhone"><span class="mi">error_outline</span>رقم الموبايل مطلوب</div>
         </div>
       </div>
     </div>
+    <div class="sec-divider"></div>
 
-    <!-- ─── SUBMIT ─── -->
+    <!-- ══════ 7. SUPPORT ══════ -->
+    <div class="sec-head">
+      <div class="sec-icon"><span class="mi">support_agent</span></div>
+      <div><div class="sec-title">تواصل مع الدعم الفني</div><div class="sec-desc">لو محتاج مساعدة في التسجيل أو عندك أي سؤال</div></div>
+    </div>
+    <div class="form-body">
+      <div style="font-size:13.5px;color:var(--text2);margin-bottom:16px;line-height:1.75;">
+        فريق EasyGet موجود عشان يساعدك في أي خطوة من خطوات التسجيل. تواصل معنا وهنرد عليك في أقرب وقت.
+      </div>
+      <div class="support-row">
+        <a href="https://wa.me/201125933983" target="_blank" class="support-btn wa">
+          <span class="mi">chat</span>واتساب <span class="wa-rec">موصي به</span>
+        </a>
+        <a href="mailto:easyget.app1@gmail.com" class="support-btn em">
+          <span class="mi">mail_outline</span>easyget.app1@gmail.com
+        </a>
+      </div>
+    </div>
+    <div class="sec-divider"></div>
+
+    <!-- ══════ SUBMIT ══════ -->
     <div class="submit-section">
       <div class="terms-row" onclick="toggleTerms()">
         <div class="terms-check" id="terms-check"><span class="mi">check</span></div>
-        <div class="terms-text">
-          وافق على <a href="#" onclick="return false">شروط وأحكام EasyGet</a> وأؤكد إن البيانات المدخلة صحيحة. الإدارة محتاجة تراجع وتوافق على البراند قبل ما يظهر على المنصة.
-        </div>
+        <div class="terms-text">وافق على <a href="#" onclick="return false">شروط وأحكام EasyGet</a> وأؤكد إن البيانات المدخلة صحيحة. الإدارة هتراجع وتوافق على البراند قبل ما يظهر على المنصة.</div>
       </div>
       <div class="field-err" id="err-terms" style="margin-bottom:12px"><span class="mi">error_outline</span>لازم توافق على الشروط الأول</div>
       <button class="btn-submit" id="btn-submit" onclick="submitForm()">
-        <span class="mi">send</span>
-        <span id="btn-txt">أرسل طلب التسجيل</span>
+        <span class="mi">send</span><span>أرسل طلب التسجيل</span>
       </button>
     </div>
 
@@ -750,246 +572,344 @@ select.fi { cursor:pointer;appearance:none; }
     <div class="success-screen" id="success-screen">
       <div class="success-anim"><span class="mi">check</span></div>
       <div class="success-title">🎉 تم استقبال طلبك!</div>
-      <div class="success-msg">
-        شكراً! تم حفظ بيانات براندك بنجاح. الإدارة هتراجع طلبك وهيتواصلوا معاك خلال 24-48 ساعة.
+      <div class="success-msg">شكراً! تم حفظ بيانات براندك بنجاح. الإدارة هتراجع طلبك وهيتواصلوا معاك خلال 24-48 ساعة.</div>
+      <div class="success-id-box">
+        <span class="mi" style="color:var(--brand);flex-shrink:0">tag</span>
+        رقم الطلب: <span class="id-val" id="success-id-val">—</span>
       </div>
-      <div class="success-id">
-        رقم الطلب: <span id="success-id-val">—</span>
+      <div class="success-note">
+        <span class="mi">info</span>احتفظ برقم الطلب — الرقم ده محفوظ وهيظهر لو فتحت الصفحة من متصفح تاني
       </div>
       <button class="btn-back" onclick="resetForm()"><span class="mi">add</span>سجّل براند تاني</button>
     </div>
 
   </div><!-- /form-card -->
-</div>
-
+</div><!-- /main-wrap -->
 <div class="toast-c" id="tc"></div>
 
 <script>
-// ─── Dynamic rows ───
-let productCount = 0;
-let imgUrlCount = 0;
-let termsChecked = false;
+// ══════════════════════════════════════════
+// SUBCATEGORY DATA — exact IDs from Flutter code
+// ══════════════════════════════════════════
+const SUB_CATS = {
+  'ملابس':[
+    {id:'mens_clothing',name:'لبس رجالي'},{id:'womens_clothing',name:'لبس نسائي'},
+    {id:'kids_clothing',name:'لبس أطفالي'},{id:'sportswear',name:'لبس رياضي'},
+    {id:'Headscarf',name:'زي شرعي وحجاب'},{id:'shoes',name:'أحذية'},
+    {id:'glasses',name:'نظارات'},{id:'watches',name:'ساعات'},
+    {id:'underwear',name:'ملابس داخلية'},{id:'caps',name:'كابات'},
+    {id:'Beachwear',name:'ميوهات'},{id:'belts',name:'أحزمة'},
+    {id:'wallets',name:'محافظ'},{id:'bagswomen',name:'شنط حريمي'},
+    {id:'bags-work',name:'شنط'},{id:'accessories_clothing',name:'إكسسوارات'},
+  ],
+  'أكل':[
+    {id:'home_food',name:'أكل بيتي'},{id:'fast_food',name:'وجبات سريعة'},
+    {id:'healthy_food',name:'أكل صحي'},{id:'fruits_vegetables',name:'فاكهة وخضروات'},
+    {id:'bakery',name:'مخبوزات'},{id:'home',name:'حاجات البيت'},
+    {id:'nuts',name:'سناكس وكدة'},{id:'sweets',name:'حلويات زيك'},
+    {id:'drinks',name:'مشروبات'},
+  ],
+  'البيت':[
+    {id:'furniture',name:'العفش'},{id:'electrical appliances',name:'أجهزة كهربائية'},
+    {id:'office_furniture',name:'للمكتب'},{id:'company',name:'للشركة'},
+    {id:'home_textiles',name:'مفروشات'},{id:'garden_balcony',name:'الحديقة'},
+    {id:'decor',name:'الديكور'},{id:'lighting',name:'الإضاءة'},
+    {id:'kitchen',name:'المطبخ'},{id:'bedroom',name:'أوض النوم'},
+    {id:'bathroom',name:'الحمام'},
+  ],
+  'إلكترونيات':[
+    {id:'phones',name:'موبايلات'},{id:'laptops',name:'لابتوبات'},
+    {id:'headphones',name:'سماعات'},{id:'accessories_electronics',name:'إكسسوارات'},
+    {id:'camera',name:'الكاميرات'},{id:'cctv',name:'كاميرات مراقبة'},
+    {id:'mobile_cases',name:'جرابات موبايل'},{id:'mouse_keyboard',name:'الكمبيوتر'},
+    {id:'gaming',name:'ألعاب الفديو'},
+  ],
+  'العناية':[
+    {id:'skincare',name:'العناية بالبشرة'},{id:'haircare',name:'العناية بالشعر'},
+    {id:'personal care',name:'العناية الشخصية'},{id:'makeup',name:'مكياج'},
+    {id:'perfumes',name:'البرفيوم'},{id:'shaving_tools',name:'أدوات حلاقة'},
+    {id:'health',name:'الصحة'},
+  ],
+  'المكتبة':[
+    {id:'books',name:'كتب'},{id:'pens',name:'إكسسوارات'},
+    {id:'stickers',name:'استيكرات روشة'},{id:'school_bags',name:'شنط مدرسية'},
+    {id:'school_supplies',name:'أدوات مدرسية'},{id:'office_furniture',name:'كراسي مكتب'},
+    {id:'home_artifacts',name:'تحف وفنون'},{id:'art',name:'الرسم'},
+    {id:'supplies',name:'مستلزمات'},
+  ],
+  'متنوع':[
+    {id:'gifts',name:'هدايا لحبايبك'},{id:'games',name:'ألعاب'},
+    {id:'tools',name:'أدوات تصليح'},{id:'printers',name:'الطباعة'},
+    {id:'handmade',name:'هاند ميد'},{id:'graduation',name:'التخرج'},
+    {id:'flowers_chocolate',name:'ورد وشوكولاتة'},{id:'summer',name:'المصيف'},
+    {id:'occasions',name:'مناسبات'},{id:'travel_essentials',name:'السفر'},
+    {id:'newborn',name:'مولود جديد'},{id:'car_items',name:'حاجات العربية'},
+    {id:'sports',name:'الرياضة والجيم'},{id:'kids',name:'حاجات الأطفال'},
+    {id:'pets',name:'حاجات الحيوانات'},
+  ],
+};
+
+let selectedSubcat = '';
+
+function onCatChange(cat) {
+  selectedSubcat = '';
+  const wrap = document.getElementById('sub-chips-wrap');
+  const el = document.getElementById('sub-chips');
+  if (!cat || !SUB_CATS[cat]) { wrap.classList.remove('show'); return; }
+  el.innerHTML = SUB_CATS[cat].map(s =>
+    `<div class="sub-chip" data-id="${s.id}" onclick="pickSubcat(this,'${s.id}')">${s.name}</div>`
+  ).join('');
+  wrap.classList.add('show');
+  showErr('subcategory', false);
+}
+
+function pickSubcat(el, id) {
+  document.querySelectorAll('.sub-chip').forEach(c => c.classList.remove('sel'));
+  el.classList.add('sel');
+  selectedSubcat = id;
+  showErr('subcategory', false);
+}
+
+// ── Dynamic rows ──
+let pCount = 0, iCount = 0;
 
 function addProductRow() {
-  productCount++;
-  const id = productCount;
+  pCount++;
+  const n = pCount;
   const row = document.createElement('div');
-  row.className = 'product-row';
-  row.id = `pr-${id}`;
+  row.className = 'product-row'; row.id = `pr-${n}`;
   row.innerHTML = `
-    <div class="fg" style="gap:5px">
-      <label style="font-size:12px;color:var(--text3)">اسم المنتج</label>
-      <input class="fi" placeholder="مثال: دونات كلاسيك" data-pr-name="${id}">
+    <div class="pr-grid">
+      <div class="fg" style="gap:5px">
+        <label style="font-size:12px;color:var(--text3)">اسم المنتج <span style="color:var(--brand)">*</span></label>
+        <input class="fi" placeholder="مثال: دونات كلاسيك" data-pr-name="${n}">
+      </div>
+      <div class="fg" style="gap:5px">
+        <label style="font-size:12px;color:var(--text3)">السعر (ج.م)</label>
+        <input class="fi" type="number" min="0" placeholder="50" data-pr-price="${n}">
+      </div>
     </div>
-    <div class="fg" style="gap:5px;width:100px">
-      <label style="font-size:12px;color:var(--text3)">السعر (ج.م)</label>
-      <input class="fi" type="number" min="0" placeholder="50" data-pr-price="${id}">
-    </div>
-    <div class="fg" style="gap:5px;width:110px">
-      <label style="font-size:12px;color:var(--text3)">رابط صورة المنتج</label>
-      <input class="fi" placeholder="https://..." data-pr-img="${id}">
-    </div>
-    <button class="btn-rm-product" onclick="removeRow('pr-${id}')"><span class="mi">delete_outline</span></button>
-  `;
+    <div class="pr-img-row">
+      <div class="fg" style="gap:5px">
+        <label style="font-size:12px;color:var(--text3)">
+          رابط صورة المنتج
+          <div class="tooltip-wrap" style="display:inline-flex">
+            <button class="help-btn" onclick="tip('tip-pi${n}',event)">?</button>
+            <div class="tooltip-box" id="tip-pi${n}">افتح postimages.org → اختار الصورة → ارفعها → انسخ الـ Direct Link والصقه هنا</div>
+          </div>
+        </label>
+        <input class="fi" placeholder="https://..." data-pr-img="${n}">
+      </div>
+      <button class="btn-rm-product" onclick="removeRow('pr-${n}')" title="حذف المنتج"><span class="mi">delete_outline</span></button>
+    </div>`;
   document.getElementById('products-list').appendChild(row);
+  document.getElementById('err-products').classList.remove('show');
 }
 
 function addImgUrl() {
-  imgUrlCount++;
-  const id = imgUrlCount;
+  iCount++;
+  const n = iCount;
   const row = document.createElement('div');
-  row.className = 'img-url-row';
-  row.id = `iu-${id}`;
+  row.className = 'img-url-row'; row.id = `iu-${n}`;
   row.innerHTML = `
-    <input class="fi" type="url" placeholder="https://..." data-img-url="${id}">
-    <button class="btn-rm-url" onclick="removeRow('iu-${id}')"><span class="mi">close</span></button>
-  `;
+    <input class="fi" type="url" placeholder="Direct Link — مثال: https://i.postimg.cc/..." data-img-url="${n}">
+    <button class="btn-rm-url" onclick="removeRow('iu-${n}')"><span class="mi">close</span></button>`;
   document.getElementById('img-urls-list').appendChild(row);
 }
 
-function removeRow(id) {
-  document.getElementById(id)?.remove();
-}
+function removeRow(id) { document.getElementById(id)?.remove(); }
 
-// ─── Payment checkboxes ───
-function togglePay(el) {
-  el.classList.toggle('checked');
-}
+// ── Payment ──
+function togglePay(el) { el.classList.toggle('checked'); }
 
-// ─── Terms ───
+// ── Terms ──
+let termsOk = false;
 function toggleTerms() {
-  termsChecked = !termsChecked;
-  document.getElementById('terms-check').classList.toggle('checked', termsChecked);
+  termsOk = !termsOk;
+  document.getElementById('terms-check').classList.toggle('checked', termsOk);
 }
 
-// ─── Validation ───
-function showErr(id, show) {
-  const el = document.getElementById('err-' + id);
-  if (el) el.classList.toggle('show', show);
-  const inp = document.getElementById('f-' + id);
-  if (inp) inp.classList.toggle('err', show);
+// ── Tooltip ──
+function tip(id, e) {
+  e.stopPropagation();
+  const el = document.getElementById(id);
+  if (!el) return;
+  const wasOpen = el.classList.contains('show');
+  document.querySelectorAll('.tooltip-box.show').forEach(t => t.classList.remove('show'));
+  if (!wasOpen) el.classList.add('show');
+}
+document.addEventListener('click', () =>
+  document.querySelectorAll('.tooltip-box.show').forEach(t => t.classList.remove('show'))
+);
+
+// ── Error helpers ──
+function showErr(k, show) {
+  document.getElementById('err-'+k)?.classList.toggle('show', show);
+  document.getElementById('f-'+k)?.classList.toggle('err', show);
 }
 
+function countSocialFilled() {
+  return ['f-facebook','f-instagram','f-tiktok','f-other-social','f-phone']
+    .filter(id => document.getElementById(id)?.value.trim()).length;
+}
+
+// ── Validate ──
 function validate() {
   let ok = true;
-  const required = ['name','category','imageUrl','description','deliveryAreas','orderUrl','contactName','contactEmail'];
-  required.forEach(k => {
-    const val = document.getElementById('f-' + k)?.value.trim();
-    if (!val) { showErr(k, true); ok = false; }
-    else showErr(k, false);
+  ['name','category','imageUrl','description','deliveryAreas','orderUrl','contactName'].forEach(k => {
+    const v = document.getElementById('f-'+k)?.value.trim();
+    if (!v) { showErr(k, true); ok = false; } else showErr(k, false);
   });
-  // email format
-  const email = document.getElementById('f-contactEmail')?.value.trim();
-  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    document.getElementById('err-contactEmail').querySelector('span:last-child') ?
-      (document.getElementById('err-contactEmail').lastChild.textContent = ' الإيميل غير صحيح') : null;
-    showErr('contactEmail', true); ok = false;
-  }
-  // terms
-  if (!termsChecked) {
-    document.getElementById('err-terms').classList.add('show');
-    ok = false;
-  } else {
-    document.getElementById('err-terms').classList.remove('show');
-  }
+  // Contact phone
+  if (!document.getElementById('f-contactPhone')?.value.trim()) { showErr('contactPhone', true); ok = false; }
+  else showErr('contactPhone', false);
+  // Subcategory
+  if (!selectedSubcat) { showErr('subcategory', true); ok = false; } else showErr('subcategory', false);
+  // Products
+  const hasProduct = [...document.querySelectorAll('[data-pr-name]')].some(el => el.value.trim());
+  if (!hasProduct) { document.getElementById('err-products').classList.add('show'); ok = false; }
+  else document.getElementById('err-products').classList.remove('show');
+  // Social min 3
+  if (countSocialFilled() < 3) { document.getElementById('err-social').classList.add('show'); ok = false; }
+  else document.getElementById('err-social').classList.remove('show');
+  // Terms
+  if (!termsOk) { document.getElementById('err-terms').classList.add('show'); ok = false; }
+  else document.getElementById('err-terms').classList.remove('show');
   return ok;
 }
 
-// ─── Collect data ───
+// ── Collect ──
 function collectData() {
-  const v = id => document.getElementById('f-' + id)?.value.trim() || '';
-  const n = id => parseFloat(document.getElementById('f-' + id)?.value) || 0;
-
-  // Payment methods
+  const v = id => document.getElementById('f-'+id)?.value.trim() || '';
   const pays = [...document.querySelectorAll('.pay-opt.checked input')].map(i => i.value);
-
-  // Products
   const productsList = [];
-  document.querySelectorAll('[data-pr-name]').forEach(nameEl => {
-    const id = nameEl.dataset.prName;
-    const name = nameEl.value.trim();
-    const price = parseFloat(document.querySelector(`[data-pr-price="${id}"]`)?.value) || 0;
-    const imageUrl = document.querySelector(`[data-pr-img="${id}"]`)?.value.trim() || '';
-    if (name) productsList.push({ name_product: name, price, imageUrl });
+  document.querySelectorAll('[data-pr-name]').forEach(el => {
+    const id = el.dataset.prName;
+    const name = el.value.trim();
+    if (!name) return;
+    productsList.push({
+      name_product: name,
+      price: parseFloat(document.querySelector(`[data-pr-price="${id}"]`)?.value) || 0,
+      imageUrl: document.querySelector(`[data-pr-img="${id}"]`)?.value.trim() || ''
+    });
   });
-
-  // Gallery images
-  const products = [];
-  document.querySelectorAll('[data-img-url]').forEach(el => {
-    const url = el.value.trim();
-    if (url) products.push(url);
-  });
-
+  const products = [...document.querySelectorAll('[data-img-url]')]
+    .map(el => el.value.trim()).filter(Boolean);
   return {
-    name: v('name'),
-    category: v('category'),
-    subcategory: v('subcategory'),
-    description: v('description'),
-    imageUrl: v('imageUrl'),
-    deliveryAreas: v('deliveryAreas'),
-    deliveryFee: v('deliveryFee'),
+    name: v('name'), category: v('category'), subcategory: selectedSubcat,
+    description: v('description'), imageUrl: v('imageUrl'),
+    deliveryAreas: v('deliveryAreas'), deliveryFee: v('deliveryFee'),
     deliveryTime: v('deliveryTime'),
-    minPrice: n('minPrice') || undefined,
-    maxPrice: n('maxPrice') || undefined,
-    paymentMethods: pays.join(' - '),
-    orderUrl: v('orderUrl'),
+    minPrice: parseFloat(document.getElementById('f-minPrice')?.value) || null,
+    maxPrice: parseFloat(document.getElementById('f-maxPrice')?.value) || null,
+    paymentMethods: pays.join(' - '), orderUrl: v('orderUrl'),
     socialMedia: {
-      website: v('website'),
-      facebook: v('facebook'),
-      instagram: v('instagram'),
-      tiktok: v('tiktok'),
-      phone: v('phone')
+      website: v('website'), facebook: v('facebook'), instagram: v('instagram'),
+      tiktok: v('tiktok'), other: v('other-social'), phone: v('phone')
     },
-    website: v('website'),
-    productsList,
-    products,
-    contactName: v('contactName'),
-    contactEmail: v('contactEmail'),
+    website: v('website'), productsList, products,
+    contactName: v('contactName'), contactPhone: v('contactPhone'),
   };
 }
 
-// ─── Submit ───
+// ── Submit ──
 async function submitForm() {
   if (!validate()) {
     toast('في بيانات ناقصة', 'اكمل الحقول المطلوبة الأول', 'warning');
-    // scroll to first error
-    const firstErr = document.querySelector('.fi.err, .field-err.show');
-    if (firstErr) firstErr.scrollIntoView({ behavior:'smooth', block:'center' });
+    const first = document.querySelector('.fi.err, .field-err.show');
+    if (first) first.scrollIntoView({ behavior:'smooth', block:'center' });
     return;
   }
-
   const btn = document.getElementById('btn-submit');
   btn.innerHTML = '<span class="spinner"></span><span>بيتبعت...</span>';
   btn.disabled = true;
-
   try {
     const data = collectData();
     if (typeof window._registerBrand !== 'function') throw new Error('Firebase not ready');
-    const docRef = await window._registerBrand(data);
-    toast('تم الإرسال بنجاح!', 'طلبك اتحفظ وهيتراجع', 'success');
-    showSuccess(docRef.id);
+    const ref = await window._registerBrand(data);
+    // Persist to localStorage
+    const prev = JSON.parse(localStorage.getItem('eg-brands') || '[]');
+    prev.push({ id: ref.id, name: data.name, date: new Date().toISOString() });
+    localStorage.setItem('eg-brands', JSON.stringify(prev));
+    toast('تم الإرسال!', 'طلبك اتحفظ وهيتراجع', 'success');
+    showSuccess(ref.id);
   } catch(e) {
     console.error(e);
     toast('حصل خطأ', 'تحقق من الاتصال وحاول تاني', 'error');
-    btn.innerHTML = '<span class="mi">send</span><span id="btn-txt">أرسل طلب التسجيل</span>';
+    btn.innerHTML = '<span class="mi">send</span><span>أرسل طلب التسجيل</span>';
     btn.disabled = false;
   }
 }
 
+// ── Show success (persistent) ──
 function showSuccess(docId) {
-  // Hide form sections, show success
-  document.querySelectorAll('.sec-head, .form-body, .sec-divider, .submit-section').forEach(el => {
-    el.style.display = 'none';
-  });
-  const s = document.getElementById('success-screen');
-  s.classList.add('show');
-  document.getElementById('success-id-val').textContent = docId.substring(0,12) + '...';
+  document.querySelectorAll('#main-form-card .sec-head, #main-form-card .form-body, #main-form-card .sec-divider, #main-form-card .submit-section')
+    .forEach(el => el.style.display = 'none');
+  document.getElementById('success-screen').classList.add('show');
+  document.getElementById('success-id-val').textContent = docId;
   window.scrollTo({ top: 0, behavior:'smooth' });
 }
 
+// ── Reset ──
 function resetForm() {
-  document.getElementById('main-form-card').querySelectorAll('.sec-head, .form-body, .sec-divider, .submit-section').forEach(el => {
-    el.style.display = '';
-  });
+  document.querySelectorAll('#main-form-card .sec-head, #main-form-card .form-body, #main-form-card .sec-divider, #main-form-card .submit-section')
+    .forEach(el => el.style.display = '');
   document.getElementById('success-screen').classList.remove('show');
-  document.getElementById('main-form-card').querySelectorAll('.fi').forEach(el => el.value = '');
+  document.querySelectorAll('.fi').forEach(el => el.value = '');
   document.getElementById('products-list').innerHTML = '';
   document.getElementById('img-urls-list').innerHTML = '';
   document.querySelectorAll('.pay-opt').forEach(el => el.classList.remove('checked'));
-  termsChecked = false;
+  document.getElementById('sub-chips-wrap').classList.remove('show');
+  document.getElementById('sub-chips').innerHTML = '';
+  selectedSubcat = ''; termsOk = false;
   document.getElementById('terms-check').classList.remove('checked');
+  document.querySelectorAll('.field-err').forEach(el => el.classList.remove('show'));
+  document.querySelectorAll('.fi.err').forEach(el => el.classList.remove('err'));
   const btn = document.getElementById('btn-submit');
   btn.innerHTML = '<span class="mi">send</span><span>أرسل طلب التسجيل</span>';
   btn.disabled = false;
-  document.querySelectorAll('.field-err').forEach(el => el.classList.remove('show'));
-  document.querySelectorAll('.fi.err').forEach(el => el.classList.remove('err'));
+  addProductRow(); addImgUrl();
 }
 
-// ─── Toast ───
+// ── Check prev submissions (persistent across browsers via localStorage) ──
+function checkPrev() {
+  const prev = JSON.parse(localStorage.getItem('eg-brands') || '[]');
+  if (!prev.length) return;
+  const last = prev[prev.length - 1];
+  const wrap = document.getElementById('prev-banner-wrap');
+  wrap.innerHTML = `
+    <div class="prev-banner">
+      <span class="mi" style="color:var(--brand);font-size:20px;flex-shrink:0">info</span>
+      <div>سبق وسجّلت براند باسم <strong style="color:var(--text)">${last.name}</strong> — رقم الطلب: <span style="color:var(--brand);font-weight:800;font-size:12px;word-break:break-all">${last.id}</span></div>
+    </div>`;
+}
+
+// ── Toast ──
 function toast(title, msg, type) {
-  type = type || 'info';
-  const icons = { success:'check_circle', error:'error', info:'info', warning:'warning_amber' };
-  const cls = { success:'ts', error:'te', info:'ti-i', warning:'tw' };
+  const icons = {success:'check_circle',error:'error',info:'info',warning:'warning_amber'};
+  const cls   = {success:'ts',error:'te',info:'ti-i',warning:'tw'};
   const c = document.getElementById('tc');
   const el = document.createElement('div');
   el.className = 'tst';
   el.innerHTML = `<div class="ti ${cls[type]||'ti-i'}"><span class="mi">${icons[type]||'info'}</span></div><div class="tb"><div class="tt">${title}</div>${msg?`<div class="tm">${msg}</div>`:''}</div>`;
   c.appendChild(el);
-  requestAnimationFrame(()=> setTimeout(()=>el.classList.add('show'),10));
-  setTimeout(()=>{ el.classList.remove('show'); setTimeout(()=>el.remove(),350); },3800);
+  requestAnimationFrame(() => setTimeout(() => el.classList.add('show'), 10));
+  setTimeout(() => { el.classList.remove('show'); setTimeout(() => el.remove(), 350); }, 3800);
 }
 
-// ─── Add initial empty rows for UX ───
+// ── Init ──
 document.addEventListener('DOMContentLoaded', () => {
   addProductRow();
   addImgUrl();
-  // Wire enter on fields
-  document.querySelectorAll('.fi').forEach(el => {
-    el.addEventListener('input', () => {
-      el.classList.remove('err');
-      const fieldId = el.id?.replace('f-','');
-      if (fieldId) showErr(fieldId, false);
-    });
+  checkPrev();
+  document.addEventListener('input', e => {
+    if (!e.target.classList.contains('fi')) return;
+    e.target.classList.remove('err');
+    const k = e.target.id?.replace('f-','');
+    if (k) showErr(k, false);
+    if (['f-facebook','f-instagram','f-tiktok','f-other-social','f-phone'].includes(e.target.id)) {
+      if (countSocialFilled() >= 3) document.getElementById('err-social').classList.remove('show');
+    }
   });
 });
 </script>
