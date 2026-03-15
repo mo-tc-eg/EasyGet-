@@ -761,7 +761,7 @@
     }
 #recaptcha-container {
   display: flex !important;
-  justify-content: flex-start !important;
+  justify-content: flex-end !important;
   min-height: 78px;
   margin-bottom: 16px;
 }
@@ -935,22 +935,22 @@
           <span class="mi help-icon" onclick="showHelp('اختار طرق الدفع المتاحة عندك')">help_outline</span>
         </div>
         <div class="payment-opts" id="payment-opts">
-          <label class="pay-opt" onclick="togglePay(this)">
+          <label class="pay-opt">
             <input type="checkbox" value="الدفع عند الاستلام">
             <div class="pay-check"><span class="mi">check</span></div>
             <span>الدفع عند الاستلام</span>
           </label>
-          <label class="pay-opt" onclick="togglePay(this)">
+          <label class="pay-opt">
             <input type="checkbox" value="فيزا/ماستر">
             <div class="pay-check"><span class="mi">check</span></div>
             <span>فيزا / ماستركارد</span>
           </label>
-          <label class="pay-opt" onclick="togglePay(this)">
+          <label class="pay-opt">
             <input type="checkbox" value="فودافون كاش">
             <div class="pay-check"><span class="mi">check</span></div>
             <span>فودافون كاش</span>
           </label>
-          <label class="pay-opt" onclick="togglePay(this)">
+          <label class="pay-opt">
             <input type="checkbox" value="انستاباي">
             <div class="pay-check"><span class="mi">check</span></div>
             <span>انستاباي</span>
@@ -1471,12 +1471,6 @@
     if (el) el.remove();
   }
 
-  function togglePay(el) {
-    el.classList.toggle('checked');
-    const checkbox = el.querySelector('input[type="checkbox"]');
-    if (checkbox) checkbox.checked = el.classList.contains('checked');
-  }
-
   function toggleTerms() {
     termsChecked = !termsChecked;
     document.getElementById('terms-check').classList.toggle('checked', termsChecked);
@@ -1777,6 +1771,15 @@
     addProductRow();
     addImgUrl();
 
+    document.querySelectorAll('.pay-opt').forEach(function(el) {
+      el.addEventListener('click', function(e) {
+        e.preventDefault();
+        this.classList.toggle('checked');
+        const checkbox = this.querySelector('input[type="checkbox"]');
+        if (checkbox) checkbox.checked = this.classList.contains('checked');
+      });
+    });
+
     let docId = null;
     try {
       docId = localStorage.getItem('easyget_last_docId');
@@ -1810,18 +1813,9 @@
     });
   });
 
-  document.addEventListener('click', function(e) {
-    const payOpt = e.target.closest('.pay-opt');
-    if (payOpt) {
-      const checkbox = payOpt.querySelector('input[type="checkbox"]');
-      if (checkbox) checkbox.checked = payOpt.classList.contains('checked');
-    }
-  });
-
   window.addProductRow = addProductRow;
   window.addImgUrl = addImgUrl;
   window.removeRow = removeRow;
-  window.togglePay = togglePay;
   window.toggleTerms = toggleTerms;
   window.submitForm = submitForm;
 </script>
