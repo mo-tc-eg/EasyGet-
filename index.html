@@ -3,25 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- ✅ SECURITY: Content Security Policy - منع تنفيذ السكريبتات غير الموثوقة -->
-  <meta http-equiv="Content-Security-Policy" content="
-    default-src 'self';
-    script-src 'self' 'unsafe-inline' https://www.gstatic.com https://apis.google.com https://www.google.com https://www.recaptcha.net;
-    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-    font-src 'self' https://fonts.gstatic.com;
-    img-src 'self' data: https: blob:;
-    connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://*.firebasedatabase.app https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://www.google.com https://www.recaptcha.net;
-    frame-src https://www.google.com https://www.recaptcha.net;
-    object-src 'none';
-    base-uri 'self';
-    form-action 'self';
-  ">
+  <!-- ✅ SECURITY: Content Security Policy -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://apis.google.com https://www.google.com https://www.recaptcha.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://*.firebasedatabase.app https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://www.google.com https://www.recaptcha.net https://www.gstatic.com; frame-src https://www.google.com https://www.recaptcha.net; object-src 'none'; base-uri 'self'; form-action 'self';">
   <!-- ✅ SECURITY: منع تخمين نوع المحتوى -->
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
-  <!-- ✅ SECURITY: منع تضمين الصفحة في iframe -->
-  <meta http-equiv="X-Frame-Options" content="DENY">
-  <!-- ✅ SECURITY: تفعيل XSS Protection في المتصفحات القديمة -->
-  <meta http-equiv="X-XSS-Protection" content="1; mode=block">
   <!-- ✅ SECURITY: منع تسريب المعلومات عبر Referrer -->
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>سجّل براندك | EasyGet</title>
