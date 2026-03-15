@@ -1884,4 +1884,34 @@
   window.removeRow = removeRow;
   window.togglePay = togglePay;
   window.toggleTerms = toggleTerms;
-  window.submitForm =
+  window.submitForm = submitForm;
+</script>
+
+<!-- ✅ FIX: التأكد من ظهور reCAPTCHA حتى لو لم يتحمل تلقائياً -->
+<script>
+  (function() {
+    function renderRecaptcha() {
+      if (typeof grecaptcha !== 'undefined') {
+        var recaptchaDiv = document.querySelector('.g-recaptcha');
+        if (recaptchaDiv && recaptchaDiv.children.length === 0) {
+          try {
+            grecaptcha.render(recaptchaDiv, {
+              'sitekey': recaptchaDiv.getAttribute('data-sitekey')
+            });
+          } catch (e) {
+            console.warn('reCAPTCHA render failed (might be already rendered)');
+          }
+        }
+      }
+    }
+    // محاولة فورية
+    renderRecaptcha();
+    // محاولة بعد تأخير قصير
+    setTimeout(renderRecaptcha, 500);
+    // محاولة عند تحميل الصفحة بالكامل
+    window.addEventListener('load', renderRecaptcha);
+  })();
+</script>
+
+</body>
+</html>
