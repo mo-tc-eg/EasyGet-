@@ -10,18 +10,7 @@
   <title>سجّل براندك | EasyGet</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-  <!-- ✅ SECURITY: reCAPTCHA callback - لازم يكون قبل تحميل السكريبت -->
-  <script>
-    var recaptchaWidgetId = null;
-    function onRecaptchaLoad() {
-      recaptchaWidgetId = grecaptcha.render('recaptcha-widget', {
-        sitekey: '6LdQSYssAAAAAHXoqipabIoU9MXmr65EvvgPkTlr',
-        hl: 'ar'
-      });
-    }
-  </script>
-  <!-- ✅ SECURITY: reCAPTCHA v2 -->
-  <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
   <!-- Firebase SDK (modular) -->
   <script type="module">
@@ -1175,7 +1164,7 @@
       <div class="field-err" id="err-terms" style="margin-bottom:12px"><span class="mi">error_outline</span>لازم توافق على الشروط الأول</div>
       <!-- ✅ SECURITY: reCAPTCHA v2 widget -->
       <div id="recaptcha-container" style="margin-bottom:16px;display:flex;justify-content:flex-end;min-height:78px;">
-        <div id="recaptcha-widget"></div>
+        <div class="g-recaptcha" data-sitekey="6LdQSYssAAAAAHXoqipabIoU9MXmr65EvvgPkTlr"></div>
       </div>
       <div class="field-err" id="err-recaptcha" style="margin-bottom:12px"><span class="mi">error_outline</span>يرجى التحقق من أنك لست روبوت</div>
       <button class="btn-submit" id="btn-submit" onclick="submitForm()">
@@ -1680,7 +1669,7 @@
 
     try {
       // ✅ SECURITY: التحقق من reCAPTCHA v2
-      const recaptchaResponse = (typeof grecaptcha !== 'undefined' && recaptchaWidgetId !== null) ? grecaptcha.getResponse(recaptchaWidgetId) : '';
+      const recaptchaResponse = (typeof grecaptcha !== 'undefined') ? grecaptcha.getResponse() : '';
       if (!recaptchaResponse) {
         document.getElementById('err-recaptcha').classList.add('show');
         btn.innerHTML = '<span class="mi">send</span><span>أرسل طلب التسجيل</span>';
@@ -1699,7 +1688,7 @@
         localStorage.setItem('easyget_last_docId', docRef.id);
       } catch(e) { /* localStorage ليست ضرورية */ }
       toast('تم الإرسال بنجاح!', 'طلبك اتحفظ وهيتراجع', 'success');
-      if (typeof grecaptcha !== "undefined" && recaptchaWidgetId !== null) grecaptcha.reset(recaptchaWidgetId);
+      if (typeof grecaptcha !== "undefined") grecaptcha.reset();
       showSuccess(docRef.id);
     } catch(e) {
       // ✅ SECURITY: عرض رسائل خطأ آمنة دون كشف تفاصيل النظام
@@ -1710,7 +1699,7 @@
       } else {
         toast('حصل خطأ', 'تحقق من الاتصال وحاول تاني', 'error');
       }
-      if (typeof grecaptcha !== "undefined" && recaptchaWidgetId !== null) grecaptcha.reset(recaptchaWidgetId);
+      if (typeof grecaptcha !== "undefined") grecaptcha.reset();
       const submitBtn = document.createElement('span');
       submitBtn.className = 'mi';
       submitBtn.textContent = 'send';
@@ -1758,7 +1747,7 @@
       localStorage.removeItem('easyget_last_submission');
       localStorage.removeItem('easyget_last_docId');
     } catch(e) { /* تجاهل */ }
-    if (typeof grecaptcha !== "undefined" && recaptchaWidgetId !== null) grecaptcha.reset(recaptchaWidgetId);
+    if (typeof grecaptcha !== "undefined") grecaptcha.reset();
   }
 
   async function showStatusScreenFromFirestore(docId) {
