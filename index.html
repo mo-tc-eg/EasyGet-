@@ -3,22 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- ✅ SECURITY: منع تخمين نوع المحتوى -->
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
-  <!-- ✅ SECURITY: منع تسريب المعلومات عبر Referrer -->
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>سجّل براندك | EasyGet</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <script src="https://www.google.com/recaptcha/api.js?hl=ar" async defer></script>
 
-  <!-- Firebase SDK (modular) -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getFirestore, collection, addDoc, serverTimestamp, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-    // ✅ SECURITY: إعدادات Firebase العامة - هذه القيم مصممة للاستخدام من جانب العميل
-    // يجب تأمين البيانات باستخدام قواعد Firestore Security Rules على لوحة Firebase Console
     const firebaseConfig = {
       apiKey: "AIzaSyDHbiCGUqJJJsI3ZoQYgpbeQ9tFc3j9rEQ",
       authDomain: "easyget-e3991.firebaseapp.com",
@@ -32,10 +27,9 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // ✅ SECURITY: حد أقصى للطلبات لمنع Spam/DoS
     const RATE_LIMIT_KEY = 'eg_rl';
     const RATE_LIMIT_MAX = 3;
-    const RATE_LIMIT_WINDOW = 3600000; // ساعة واحدة
+    const RATE_LIMIT_WINDOW = 3600000;
 
     function checkRateLimit() {
       try {
@@ -51,11 +45,10 @@
         localStorage.setItem(RATE_LIMIT_KEY, JSON.stringify(data));
         return true;
       } catch (e) {
-        return true; // في حالة الخطأ، نسمح بالمرور
+        return true;
       }
     }
 
-    // ✅ SECURITY: تنظيف النصوص من HTML لمنع XSS
     function sanitizeString(str) {
       if (typeof str !== 'string') return '';
       return str
@@ -66,17 +59,15 @@
         .replace(/'/g, '&#x27;')
         .replace(/\//g, '&#x2F;')
         .trim()
-        .substring(0, 500); // حد أقصى لطول النص
+        .substring(0, 500);
     }
 
-    // ✅ SECURITY: التحقق من صحة الروابط
     function sanitizeUrl(url) {
       if (!url || typeof url !== 'string') return '';
       const trimmed = url.trim();
       if (!trimmed) return '';
       try {
         const parsed = new URL(trimmed);
-        // السماح فقط بـ HTTP و HTTPS
         if (!['http:', 'https:'].includes(parsed.protocol)) return '';
         return trimmed.substring(0, 500);
       } catch (e) {
@@ -84,14 +75,11 @@
       }
     }
 
-    // ✅ SECURITY: التحقق من رقم الهاتف
     function sanitizePhone(phone) {
       if (!phone || typeof phone !== 'string') return '';
-      // السماح فقط بالأرقام والمسافات و + و - و ()
       return phone.replace(/[^\d\s\+\-\(\)]/g, '').trim().substring(0, 20);
     }
 
-    // ✅ SECURITY: تنظيف بيانات المنتجات
     function sanitizeProductsList(list) {
       if (!Array.isArray(list)) return [];
       return list.slice(0, 50).map(p => ({
@@ -101,26 +89,22 @@
       })).filter(p => p.name_product);
     }
 
-    // ✅ SECURITY: تنظيف قائمة الصور
     function sanitizeProductImages(arr) {
       if (!Array.isArray(arr)) return [];
       return arr.slice(0, 20).map(u => sanitizeUrl(u)).filter(Boolean);
     }
 
-    // ✅ SECURITY: تنظيف طرق الدفع
     function sanitizePaymentMethods(str) {
       if (!str || typeof str !== 'string') return '';
       const allowed = ['الدفع عند الاستلام', 'فيزا/ماستر', 'فودافون كاش', 'انستاباي'];
       return str.split(' - ').filter(m => allowed.includes(m.trim())).join(' - ');
     }
 
-    // ✅ SECURITY: تنظيف الفئات
     function sanitizeCategory(val) {
       const allowed = ['أكل', 'ملابس', 'إلكترونيات', 'العناية', 'البيت', 'المكتبة', 'متنوع'];
       return allowed.includes(val) ? val : '';
     }
 
-    // ✅ SECURITY: تنظيف جميع البيانات قبل الحفظ في Firestore
     function sanitizeData(data) {
       return {
         name: sanitizeString(data.name),
@@ -152,7 +136,6 @@
       };
     }
 
-    // ✅ SECURITY: CSRF Token - لمنع الطلبات غير المصرح بها
     function generateCsrfToken() {
       const array = new Uint8Array(32);
       crypto.getRandomValues(array);
@@ -168,28 +151,21 @@
       return token;
     }
 
-    // تهيئة CSRF Token عند التحميل
     getCsrfToken();
 
     window._registerBrand = async function(data) {
-      // ✅ SECURITY: التحقق من Rate Limit
       if (!checkRateLimit()) {
         throw new Error('RATE_LIMIT_EXCEEDED');
       }
 
-      // ✅ SECURITY: التحقق من CSRF Token
       const storedToken = sessionStorage.getItem('eg_csrf');
       if (!storedToken || storedToken !== data._csrfToken) {
         throw new Error('CSRF_VALIDATION_FAILED');
       }
 
-      // ✅ SECURITY: تنظيف البيانات قبل الحفظ
       const cleanData = sanitizeData(data);
 
-      // ✅ SECURITY: حذف CSRF Token من البيانات قبل الحفظ
       delete cleanData._csrfToken;
-      // ✅ SECURITY: حفظ reCAPTCHA token للمراجعة (اختياري - يمكن استخدامه في Cloud Function لاحقاً)
-      // لا نحذفه حتى يمكن التحقق منه لاحقاً على السيرفر
       const recaptchaToken = cleanData._recaptchaToken || '';
       delete cleanData._recaptchaToken;
 
@@ -202,7 +178,6 @@
     };
 
     window._getBrandStatus = async function(docId) {
-      // ✅ SECURITY: التحقق من صحة docId
       if (!docId || typeof docId !== 'string' || !/^[a-zA-Z0-9]{10,30}$/.test(docId)) {
         return null;
       }
@@ -210,7 +185,6 @@
         const docRef = doc(db, 'brands', docId);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-          // ✅ SECURITY: إرجاع البيانات الضرورية فقط
           const d = docSnap.data();
           return {
             isActive: d.isActive,
@@ -221,13 +195,11 @@
           return null;
         }
       } catch (e) {
-        // ✅ SECURITY: عدم كشف تفاصيل الخطأ للمستخدم
         console.error('Status fetch error');
         return null;
       }
     };
 
-    // ✅ SECURITY: تصدير CSRF Token للاستخدام في نموذج الإرسال
     window._getCsrfToken = getCsrfToken;
   </script>
 
@@ -804,7 +776,6 @@
 
 <div class="topbar">
   <a class="brand-logo" href="#">
-    <!-- ✅ SECURITY: إضافة crossorigin و referrerpolicy للصور الخارجية -->
     <img src="https://i.postimg.cc/qqL5cNz5/IMG-3669.png" alt="EasyGet" crossorigin="anonymous" referrerpolicy="no-referrer">
     <div class="brand-logo-name">EasyGet</div>
   </a>
@@ -844,7 +815,6 @@
           </div>
           <div class="fi-wrap">
             <span class="mi fi-icon">storefront</span>
-            <!-- ✅ SECURITY: إضافة maxlength و autocomplete مناسب -->
             <input class="fi" id="f-name" type="text" placeholder="مثال: Fati's Donuts" maxlength="100" autocomplete="organization">
           </div>
           <div class="field-err" id="err-name"><span class="mi">error_outline</span>اسم البراند مطلوب</div>
@@ -887,7 +857,6 @@
             <label><span class="mi">image</span>رابط صورة البراند (Logo) <span class="req">*</span></label>
             <span class="mi help-icon" onclick="showHelp('ارفع الصورة على موقع رفع صور وانسخ الرابط هنا')">help_outline</span>
           </div>
-          <!-- ✅ SECURITY: maxlength للروابط -->
           <input class="fi" id="f-imageUrl" type="url" placeholder="https://..." maxlength="500">
           <div class="field-err" id="err-imageUrl"><span class="mi">error_outline</span>رابط الصورة مطلوب</div>
         </div>
@@ -898,7 +867,6 @@
           <label><span class="mi">description</span>وصف البراند <span class="req">*</span></label>
           <span class="mi help-icon" onclick="showHelp('اكتب نبذة بسيطة عن براندك ومنتجاته')">help_outline</span>
         </div>
-        <!-- ✅ SECURITY: maxlength للنصوص الطويلة -->
         <textarea class="fi" id="f-description" placeholder="اكتب وصف قصير عن براندك، منتجاتك، وما يميزك..." style="min-height:80px" maxlength="1000"></textarea>
         <div class="field-err" id="err-description"><span class="mi">error_outline</span>الوصف مطلوب</div>
       </div>
@@ -945,7 +913,6 @@
             <label><span class="mi">trending_down</span>أقل سعر (بالجنيه)</label>
             <span class="mi help-icon" onclick="showHelp('أقل سعر لمنتج عندك')">help_outline</span>
           </div>
-          <!-- ✅ SECURITY: تقييد مدخلات الأرقام -->
           <input class="fi" id="f-minPrice" type="number" min="0" max="9999999" placeholder="مثال: 35">
         </div>
         <div class="fg">
@@ -1087,7 +1054,6 @@
           </div>
           <div class="fi-wrap">
             <span class="mi fi-icon">call</span>
-            <!-- ✅ SECURITY: maxlength لأرقام الهاتف -->
             <input class="fi" id="f-phone" type="tel" placeholder="+20 1xx xxx xxxx" maxlength="20">
           </div>
         </div>
@@ -1162,7 +1128,6 @@
         </div>
       </div>
       <div class="field-err" id="err-terms" style="margin-bottom:12px"><span class="mi">error_outline</span>لازم توافق على الشروط الأول</div>
-      <!-- ✅ SECURITY: reCAPTCHA v2 widget -->
       <div id="recaptcha-container" style="margin-bottom:16px;display:flex;justify-content:flex-end;min-height:78px;">
         <div class="g-recaptcha" data-sitekey="6LdQSYssAAAAAHXoqipabIoU9MXmr65EvvgPkTlr"></div>
       </div>
@@ -1214,7 +1179,6 @@
     <span class="mi">support_agent</span> للتواصل مع الدعم الفني
   </div>
   <div class="support-icons">
-    <!-- ✅ SECURITY: إضافة rel="noopener noreferrer" لجميع الروابط الخارجية -->
     <a href="https://wa.me/201125933983" target="_blank" rel="noopener noreferrer" class="support-link whatsapp">
       <span class="mi">chat</span> واتساب
       <span class="recommended-badge">موصى به</span>
@@ -1226,18 +1190,15 @@
 </div>
 
 <script>
-  // ✅ SECURITY: بناء رابط الإيميل بـ JS لمنع harvesting
   (function() {
     const u = 'easyget.app1';
     const d = 'gmail.com';
     const el = document.getElementById('email-support-link');
     if (el) el.href = 'mailto:' + u + '@' + d;
   })();
-  // ✅ SECURITY: منع تسرب معلومات الخطأ في console العام
   (function() {
     const originalError = console.error;
     console.error = function(...args) {
-      // فقط في بيئة التطوير - في الإنتاج يمكن تعطيل هذا بالكامل
       if (typeof args[0] === 'string' && args[0].includes('Firebase')) {
         originalError.call(console, 'Service error occurred');
         return;
@@ -1246,12 +1207,10 @@
     };
   })();
 
-  // ─── Dynamic rows ───
   let productCount = 0;
   let imgUrlCount = 0;
   let termsChecked = false;
 
-  // ✅ SECURITY: حد أقصى لعدد المنتجات والصور
   const MAX_PRODUCTS = 50;
   const MAX_IMAGES = 20;
 
@@ -1348,7 +1307,6 @@
     ]
   };
 
-  // ✅ SECURITY: دالة تنظيف آمنة للنصوص قبل إدراجها في DOM
   function safeText(str) {
     if (typeof str !== 'string') return '';
     const div = document.createElement('div');
@@ -1362,14 +1320,12 @@
     const subSelect = document.getElementById('f-subcategory');
     if (!subSelect) return;
 
-    // ✅ SECURITY: التحقق من أن الفئة المختارة ضمن القائمة المسموح بها
     const allowedCategories = Object.keys(subcategoryMap);
     if (!allowedCategories.includes(category)) {
       subSelect.innerHTML = '<option value="">أختر الفئة الرئيسية أولاً</option>';
       return;
     }
 
-    // ✅ SECURITY: مسح المحتوى القديم بالكامل
     while (subSelect.firstChild) subSelect.removeChild(subSelect.firstChild);
 
     const defaultOption = document.createElement('option');
@@ -1380,7 +1336,6 @@
     const subs = subcategoryMap[category] || [['أخرى', 'other']];
     subs.forEach(([arabic, eng]) => {
       const opt = document.createElement('option');
-      // ✅ SECURITY: استخدام textContent بدلاً من innerHTML لمنع XSS
       opt.value = eng;
       opt.textContent = arabic;
       subSelect.appendChild(opt);
@@ -1388,7 +1343,6 @@
   }
 
   function addProductRow() {
-    // ✅ SECURITY: حد أقصى لعدد المنتجات
     const existingRows = document.querySelectorAll('[data-pr-name]');
     if (existingRows.length >= MAX_PRODUCTS) {
       toast('تنبيه', 'وصلت للحد الأقصى من المنتجات', 'warning');
@@ -1401,7 +1355,6 @@
     row.className = 'product-row';
     row.id = `pr-${id}`;
 
-    // ✅ SECURITY: بناء DOM بشكل آمن بدلاً من innerHTML مع بيانات ديناميكية
     const nameGroup = document.createElement('div');
     nameGroup.className = 'fg';
     nameGroup.style.gap = '5px';
@@ -1473,7 +1426,6 @@
   }
 
   function addImgUrl() {
-    // ✅ SECURITY: حد أقصى لعدد الصور
     const existingUrls = document.querySelectorAll('[data-img-url]');
     if (existingUrls.length >= MAX_IMAGES) {
       toast('تنبيه', 'وصلت للحد الأقصى من الصور', 'warning');
@@ -1486,7 +1438,6 @@
     row.className = 'img-url-row';
     row.id = `iu-${id}`;
 
-    // ✅ SECURITY: بناء DOM بشكل آمن
     const input = document.createElement('input');
     input.className = 'fi';
     input.type = 'url';
@@ -1510,28 +1461,23 @@
   }
 
   function removeRow(id) {
-    // ✅ SECURITY: التحقق من صحة ID قبل الحذف
     if (typeof id !== 'string' || !/^(pr|iu)-\d+$/.test(id)) return;
     const el = document.getElementById(id);
     if (el) el.remove();
   }
 
-  // ─── Payment checkboxes ───
   function togglePay(el) {
     el.classList.toggle('checked');
     const checkbox = el.querySelector('input[type="checkbox"]');
     if (checkbox) checkbox.checked = el.classList.contains('checked');
   }
 
-  // ─── Terms ───
   function toggleTerms() {
     termsChecked = !termsChecked;
     document.getElementById('terms-check').classList.toggle('checked', termsChecked);
   }
 
-  // ─── Validation ───
   function showErr(id, show) {
-    // ✅ SECURITY: التحقق من أن ID آمن
     if (!/^[a-zA-Z0-9_-]+$/.test(id)) return;
     const el = document.getElementById('err-' + id);
     if (el) el.classList.toggle('show', show);
@@ -1548,7 +1494,6 @@
       else showErr(k, false);
     });
 
-    // ✅ SECURITY: التحقق من صحة الروابط
     const urlFields = ['imageUrl', 'orderUrl'];
     urlFields.forEach(k => {
       const val = document.getElementById('f-' + k)?.value.trim();
@@ -1594,7 +1539,6 @@
     return ok;
   }
 
-  // ─── Collect data ───
   function collectData() {
     const v = id => document.getElementById('f-' + id)?.value.trim() || '';
     const n = id => parseFloat(document.getElementById('f-' + id)?.value) || 0;
@@ -1604,7 +1548,6 @@
     const productsList = [];
     document.querySelectorAll('[data-pr-name]').forEach(nameEl => {
       const id = nameEl.dataset.prName;
-      // ✅ SECURITY: التحقق من صحة ID
       if (!/^\d+$/.test(id)) return;
       const name = nameEl.value.trim();
       const price = parseFloat(document.querySelector(`[data-pr-price="${CSS.escape(id)}"]`)?.value) || 0;
@@ -1619,7 +1562,6 @@
     });
 
     const whatsappNumber = v('whatsapp');
-    // ✅ SECURITY: تنظيف رقم واتساب قبل بناء الرابط
     const cleanWhatsapp = whatsappNumber.replace(/[^0-9]/g, '');
     const whatsappLink = cleanWhatsapp ? `https://wa.me/${cleanWhatsapp}` : '';
 
@@ -1650,12 +1592,10 @@
       products,
       contactName: v('contactName'),
       contactPhone: v('contactPhone'),
-      // ✅ SECURITY: إرفاق CSRF Token مع البيانات
       _csrfToken: window._getCsrfToken ? window._getCsrfToken() : ''
     };
   }
 
-  // ─── Submit ───
   async function submitForm() {
     if (!validate()) {
       const firstErr = document.querySelector('.fi.err, .field-err.show');
@@ -1668,7 +1608,6 @@
     btn.disabled = true;
 
     try {
-      // ✅ SECURITY: التحقق من reCAPTCHA v2
       const recaptchaResponse = (typeof grecaptcha !== 'undefined') ? grecaptcha.getResponse() : '';
       if (!recaptchaResponse) {
         document.getElementById('err-recaptcha').classList.add('show');
@@ -1686,12 +1625,11 @@
       try {
         localStorage.setItem('easyget_last_submission', Date.now().toString());
         localStorage.setItem('easyget_last_docId', docRef.id);
-      } catch(e) { /* localStorage ليست ضرورية */ }
+      } catch(e) { }
       toast('تم الإرسال بنجاح!', 'طلبك اتحفظ وهيتراجع', 'success');
       if (typeof grecaptcha !== "undefined") grecaptcha.reset();
       showSuccess(docRef.id);
     } catch(e) {
-      // ✅ SECURITY: عرض رسائل خطأ آمنة دون كشف تفاصيل النظام
       if (e.message === 'RATE_LIMIT_EXCEEDED') {
         toast('تجاوزت الحد المسموح', 'يرجى الانتظار قبل إرسال طلب جديد', 'warning');
       } else if (e.message === 'CSRF_VALIDATION_FAILED') {
@@ -1719,7 +1657,6 @@
     });
     const s = document.getElementById('success-screen');
     s.classList.add('show');
-    // ✅ SECURITY: استخدام textContent بدلاً من innerHTML لعرض docId
     const idEl = document.getElementById('success-id-val');
     if (idEl) idEl.textContent = docId.substring(0, 12) + '...';
     window.scrollTo({ top: 0, behavior:'smooth' });
@@ -1746,7 +1683,7 @@
     try {
       localStorage.removeItem('easyget_last_submission');
       localStorage.removeItem('easyget_last_docId');
-    } catch(e) { /* تجاهل */ }
+    } catch(e) { }
     if (typeof grecaptcha !== "undefined") grecaptcha.reset();
   }
 
@@ -1767,7 +1704,6 @@
     const idSpan = document.getElementById('status-id-span');
     const whatsappLink = document.getElementById('status-whatsapp');
 
-    // ✅ SECURITY: استخدام textContent بدلاً من innerHTML
     whatsappLink.href = 'https://wa.me/201124933983';
     idSpan.textContent = docId.substring(0, 12) + '...';
 
@@ -1802,7 +1738,6 @@
     tiDiv.className = `ti ${cls[type] || 'ti-i'}`;
     const tiIcon = document.createElement('span');
     tiIcon.className = 'mi';
-    // ✅ SECURITY: استخدام textContent لمنع XSS
     tiIcon.textContent = icons[type] || 'info';
     tiDiv.appendChild(tiIcon);
 
@@ -1830,7 +1765,6 @@
   }
 
   function showHelp(text) {
-    // ✅ SECURITY: النص يأتي فقط من الكود المصدري (hardcoded) وليس من مدخلات المستخدم
     toast('شرح الحقل', text, 'info');
   }
 
@@ -1841,7 +1775,7 @@
     let docId = null;
     try {
       docId = localStorage.getItem('easyget_last_docId');
-    } catch(e) { /* localStorage غير متاح */ }
+    } catch(e) { }
 
     if (docId) {
       const shown = await showStatusScreenFromFirestore(docId);
@@ -1851,7 +1785,7 @@
     let lastSub = null;
     try {
       lastSub = localStorage.getItem('easyget_last_submission');
-    } catch(e) { /* localStorage غير متاح */ }
+    } catch(e) { }
 
     if (lastSub && (Date.now() - parseInt(lastSub) < 3600000)) {
       document.querySelectorAll('.sec-head, .form-body, .sec-divider, .submit-section').forEach(el => {
@@ -1887,7 +1821,6 @@
   window.submitForm = submitForm;
 </script>
 
-<!-- ✅ FIX: التأكد من ظهور reCAPTCHA حتى لو لم يتحمل تلقائياً -->
 <script>
   (function() {
     function renderRecaptcha() {
@@ -1904,11 +1837,8 @@
         }
       }
     }
-    // محاولة فورية
     renderRecaptcha();
-    // محاولة بعد تأخير قصير
     setTimeout(renderRecaptcha, 500);
-    // محاولة عند تحميل الصفحة بالكامل
     window.addEventListener('load', renderRecaptcha);
   })();
 </script>
