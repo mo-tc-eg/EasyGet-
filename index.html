@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
-  <meta http-equiv="X-Frame-Options" content="DENY">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://www.google.com https://www.gstatic.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://i.postimg.cc; script-src 'self' 'unsafe-inline' https://www.google.com https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https://i.postimg.cc https://www.gstatic.com;">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="robots" content="noindex, nofollow">
@@ -452,24 +451,6 @@
 
 <script>
 (function(){
-  /* ============================================================
-     SECURITY LAYER — obfuscated config loader
-     كل القيم الحساسة متشفرة بـ base64 مقلوب + XOR بسيط
-  ============================================================ */
-  var _k=function(s,x){var r='';for(var i=0;i<s.length;i++)r+=String.fromCharCode(s.charCodeAt(i)^x);return r;};
-  var _b=function(s){return atob(s.split('').reverse().join(''))};
-  /* Firebase config — encoded */
-  var _c={
-    aK:_b('QEqjJnZkZzIkIzUyJyp2IjpiYyNkIjphZGUnZSViZCVmZiQ='),
-    aD:_b('==QWZlRHajVkZiYiMlZXZlRnYkZiYTZiZmZWZHJWY0ZyZ2NlZlNWZ'),
-    pI:_b('=ETbvJWa'),
-    sB:_b('==AXZhNXahRXYkBib0ZWa5hGdkZXZlJWY'),
-    mI:_b('=kTM0MzMzMTQwMDYx'),
-    aI:_b('=ETbvJWa:==QWZlRHajVkZiYiMlZXZlRnYkZiYTZiZmZWZHJWY0ZyZ2NlZlNWZ:web:==ETbvJWa==QWZlRHajVkZiYiMlZXZlRnYkZiYTZiZmZWZHJWY0ZyZ2NlZlNWZ'),
-    mId:_b('=ETbvJWa')
-  };
-
-  /* دي الـ config الحقيقية — بتتحمل من Firebase SDK مباشرة */
   var __fbCfg = {
     apiKey:"AIzaSyDHbiCGUqJJJsI3ZoQYgpbeQ9tFc3j9rEQ",
     authDomain:"easyget-e3991.firebaseapp.com",
@@ -480,7 +461,6 @@
     measurementId:"G-VKV8185R8R"
   };
 
-  /* Rate limit */
   var _RL='eg_rl',_RM=3,_RW=3600000;
   function _chkRL(){
     try{
@@ -493,7 +473,6 @@
     }catch(e){return true;}
   }
 
-  /* Sanitizers */
   function _sS(s,mx){
     if(typeof s!=='string')return'';
     return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#x27;').replace(/\//g,'&#x2F;').trim().substring(0,mx||500);
@@ -555,7 +534,6 @@
     };
   }
 
-  /* CSRF */
   function _genCSRF(){
     var a=new Uint8Array(32);crypto.getRandomValues(a);
     return Array.from(a,function(b){return b.toString(16).padStart(2,'0');}).join('');
@@ -567,19 +545,16 @@
   }
   _getCSRF();
 
-  /* Honeypot check */
   function _chkHP(){
     var hp=document.getElementById('_hp_field');
     return!(hp&&hp.value!=='');
   }
 
-  /* Timing check — منع الـ bots اللي بيملوا الفورم بسرعة */
   var _formLoadTime=Date.now();
   function _chkTiming(){
     return(Date.now()-_formLoadTime)>3000;
   }
 
-  /* Firebase loader — lazy */
   var _db=null;
   async function _initDB(){
     if(_db)return _db;
@@ -597,7 +572,6 @@
     return _db;
   }
 
-  /* Register brand */
   window._registerBrand=async function(data){
     if(!_chkRL())throw new Error('RATE_LIMIT_EXCEEDED');
     if(!_chkHP())throw new Error('BOT_DETECTED');
@@ -611,7 +585,6 @@
     return await db.addDoc(db.col(db.fs,'brands'),Object.assign({},clean,{isActive:false,status:'pending',submittedAt:db.ts()}));
   };
 
-  /* Get brand status */
   window._getBrandStatus=async function(docId){
     if(!docId||typeof docId!=='string'||!/^[a-zA-Z0-9]{10,30}$/.test(docId))return null;
     try{
@@ -625,19 +598,16 @@
 
   window._getCsrfToken=_getCSRF;
 
-  /* Suppress console errors */
   var _oe=console.error;
   console.error=function(){
     if(typeof arguments[0]==='string'&&(arguments[0].includes('Firebase')||arguments[0].includes('firestore')))return;
     _oe.apply(console,arguments);
   };
-  /* Disable right-click & devtools shortcuts */
   document.addEventListener('contextmenu',function(e){e.preventDefault();});
   document.addEventListener('keydown',function(e){
     if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&['I','J','C'].includes(e.key))||(e.ctrlKey&&e.key==='U'))e.preventDefault();
   });
 
-  /* Email obfuscated */
   var _eu='\x65\x61\x73\x79\x67\x65\x74\x2e\x61\x70\x70\x31';
   var _ed='\x67\x6d\x61\x69\x6c\x2e\x63\x6f\x6d';
   var _el=document.getElementById('email-support-link');
@@ -647,9 +617,6 @@
 
 <script>
 (function(){
-  /* ============================================================
-     APP LOGIC
-  ============================================================ */
   var _pc=0,_ic=0,_tc=false;
   var _MP=50,_MI=20;
 
@@ -897,7 +864,6 @@
     window.addProductRow();
     window.addImgUrl();
 
-    /* Payment toggle — single clean listener */
     document.querySelectorAll('.pay-opt').forEach(function(el){
       el.addEventListener('click',function(e){
         e.preventDefault();
@@ -935,7 +901,6 @@
   window.submitForm=window.submitForm;
 })();
 </script>
-
 
 <div style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden" aria-hidden="true">
   <input type="text" id="_hp_field" name="_hp" tabindex="-1" autocomplete="off">
