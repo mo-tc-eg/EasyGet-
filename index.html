@@ -605,13 +605,95 @@ select.fi{cursor:pointer;appearance:none}
 
   window.__SHOW_BLOCKED__ = _showBlockedPage;
 
-  function _detectDevTools() {
-    const threshold = 160;
-    const widthDiff  = window.outerWidth  - window.innerWidth;
-    const heightDiff = window.outerHeight - window.innerHeight;
-    if (widthDiff > threshold || heightDiff > threshold) _showBlockedPage();
-  }
-  _devDetectTimer = setInterval(_detectDevTools, 1000);
+  // ======================================================
+  // التعديل هنا فقط: كشف DevTools بطريقة دقيقة
+  // بدون الاعتماد على فرق الحجم اللي بيتغير عند الريستارت
+  // ======================================================
+  (function() {
+    // الطريقة الأولى: debugger timing trick
+    let _devOpen = false;
+
+    function _checkViaDebugger() {
+      const start = performance.now();
+      // eslint-disable-next-line no-debugger
+      debugger;
+      const elapsed = performance.now() - start;
+      // لو DevTools مفتوح، الـ debugger بياخد وقت أطول من 100ms
+      if (elapsed > 100) {
+        if (!_devOpen) {
+          _devOpen = true;
+          _showBlockedPage();
+        }
+      } else {
+        _devOpen = false;
+      }
+    }
+
+    // الطريقة الثانية: toString override trick
+    let _toStringTriggered = false;
+    const _devObj = new Proxy({}, {
+      get: function(target, prop) {
+        if (prop === 'toString' || prop === Symbol.toPrimitive) {
+          return function() {
+            _toStringTriggered = true;
+            return '';
+          };
+        }
+        return target[prop];
+      }
+    });
+
+    // الطريقة الثالثة: console.log يستدعي toString فقط لو DevTools مفتوح
+    function _checkViaConsole() {
+      _toStringTriggered = false;
+      console.log(_devObj);
+      // نظّف الـ console بعدين
+      console.clear && console.clear();
+      if (_toStringTriggered) {
+        _showBlockedPage();
+      }
+    }
+
+    // شغّل الفحص كل ثانية
+    _devDetectTimer = setInterval(function() {
+      _checkViaConsole();
+    }, 1000);
+
+    // فحص إضافي عند أي تغيير في حجم النافذة
+    // بس مع baseline لتجنب الـ false positive عند الريستارت
+    let _sizeBaseline = null;
+    let _sizeStableCount = 0;
+
+    function _checkViaSize() {
+      const wDiff = window.outerWidth  - window.innerWidth;
+      const hDiff = window.outerHeight - window.innerHeight;
+
+      // استنى 3 ثواني عشان الأحجام تستقر بعد التحميل
+      if (_sizeBaseline === null) {
+        _sizeStableCount++;
+        if (_sizeStableCount >= 3) {
+          _sizeBaseline = { w: wDiff, h: hDiff };
+        }
+        return;
+      }
+
+      // لو الفرق زاد عن الـ baseline بأكتر من 160px → DevTools اتفتح
+      const threshold = 160;
+      if (
+        (wDiff - _sizeBaseline.w) > threshold ||
+        (hDiff - _sizeBaseline.h) > threshold
+      ) {
+        _showBlockedPage();
+      }
+    }
+
+    // شغّل فحص الحجم بعد 3 ثواني من التحميل
+    setTimeout(function() {
+      setInterval(_checkViaSize, 1000);
+    }, 3000);
+
+  })();
+  // ======================================================
 
   document.addEventListener("dragover", function(e) { e.preventDefault(); }, false);
   document.addEventListener("drop",     function(e) { e.preventDefault(); }, false);
