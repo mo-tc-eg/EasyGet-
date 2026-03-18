@@ -595,14 +595,15 @@ select.fi{cursor:pointer;appearance:none}
     if(b){e.preventDefault();e.stopPropagation();return false;}
   },true);
 
+  var _dtOpen=false;
   function _checkDevTools(){
-    var threshold=160;
-    var wDiff=window.outerWidth-window.innerWidth;
-    var hDiff=window.outerHeight-window.innerHeight;
-    if(wDiff>threshold||hDiff>threshold)_buildBlockedPage();
+    var _t=new Image();
+    var _hit=false;
+    Object.defineProperty(_t,'id',{get:function(){_hit=true;return '';}});
+    console.log('%c',_t);
+    if(_hit&&!_dtOpen){_dtOpen=true;_buildBlockedPage();}
   }
-
-  _devTimer=setInterval(_checkDevTools,1000);
+  _devTimer=setInterval(_checkDevTools,1500);
 
   document.addEventListener("dragover",function(e){e.preventDefault();},false);
   document.addEventListener("drop",function(e){e.preventDefault();},false);
