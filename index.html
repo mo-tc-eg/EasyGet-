@@ -1010,7 +1010,7 @@ select.fi{cursor:pointer;appearance:none}
     });
     var prods=[];
     document.querySelectorAll('[data-img-url]').forEach(function(el){var u=el.value.trim();if(u)prods.push(u);});
-    var _wRaw=v('whatsapp');var _wClean=_wRaw.replace(/[^0-9]/g,'');var _wLink=_wClean?'https://wa.me/'+_wClean:'';
+    var _wRaw=v('whatsapp');var _wClean=_wRaw.replace(/[^0-9]/g,'');if(_wClean.startsWith('0'))_wClean='20'+_wClean.substring(1);var _wLink=_wClean?'https://wa.me/+'+_wClean:'';
     return{
       name:v('name'),category:v('category'),subcategory:v('subcategory'),
       description:v('description'),imageUrl:v('imageUrl'),
