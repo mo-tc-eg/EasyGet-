@@ -757,8 +757,7 @@ select.fi{cursor:pointer;appearance:none}
         instagram:_sU(data.socialMedia&&data.socialMedia.instagram),
         tiktok:_sU(data.socialMedia&&data.socialMedia.tiktok),
         phone:_sP(data.socialMedia&&data.socialMedia.phone),
-        whatsappNumber:_sP(data.socialMedia&&data.socialMedia.whatsappNumber),
-        whatsappLink:_sU(data.socialMedia&&data.socialMedia.whatsappLink)
+        whatsapp:_sU(data.socialMedia&&data.socialMedia.whatsapp)
       },
       website:_sU(data.website),
       productsList:_sPL(data.productsList),
@@ -1011,14 +1010,14 @@ select.fi{cursor:pointer;appearance:none}
     });
     var prods=[];
     document.querySelectorAll('[data-img-url]').forEach(function(el){var u=el.value.trim();if(u)prods.push(u);});
-    var wn=v('whatsapp');var wc=wn.replace(/[^0-9]/g,'');var wl=wc?'https://wa.me/'+wc:'';
+    var _wRaw=v('whatsapp');var _wClean=_wRaw.replace(/[^0-9]/g,'');var _wLink=_wClean?'https://wa.me/'+_wClean:'';
     return{
       name:v('name'),category:v('category'),subcategory:v('subcategory'),
       description:v('description'),imageUrl:v('imageUrl'),
       deliveryAreas:v('deliveryAreas'),deliveryFee:v('deliveryFee'),deliveryTime:v('deliveryTime'),
       minPrice:n('minPrice')||undefined,maxPrice:n('maxPrice')||undefined,
       paymentMethods:pays.join(' - '),orderUrl:v('orderUrl'),
-      socialMedia:{website:v('website'),facebook:v('facebook'),instagram:v('instagram'),tiktok:v('tiktok'),phone:v('phone'),whatsappNumber:wn,whatsappLink:wl},
+      socialMedia:{website:v('website'),facebook:v('facebook'),instagram:v('instagram'),tiktok:v('tiktok'),phone:v('phone'),whatsapp:_wLink},
       website:v('website'),productsList:pList,products:prods,
       contactName:v('contactName'),contactPhone:v('contactPhone'),
       _csrfToken:window._getCsrfToken?window._getCsrfToken():''
