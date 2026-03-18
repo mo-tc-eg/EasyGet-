@@ -983,6 +983,13 @@ select.fi{cursor:pointer;appearance:none}
       if(ee&&ee.lastChild)ee.lastChild.textContent=' رقم هاتف غير صحيح';
       ok=false;
     }
+    var _socialFields=['website','facebook','instagram','tiktok','phone','whatsapp'];
+    var _socialFilled=0;
+    _socialFields.forEach(function(k){
+      var el=document.getElementById('f-'+k);
+      if(el&&el.value.trim())_socialFilled++;
+    });
+    if(_socialFilled<2){_toast('بيانات السوشيال ميديا ناقصة','لازم تدخل رابط الأوردر + حقلين على الأقل من السوشيال ميديا','error');ok=false;}
     if(!_tc){document.getElementById('err-terms').classList.add('show');ok=false;}
     else{document.getElementById('err-terms').classList.remove('show');}
     return ok;
@@ -1100,10 +1107,15 @@ select.fi{cursor:pointer;appearance:none}
     var wl=document.getElementById('status-whatsapp');
     wl.href='https://wa.me/201124933983';
     idSp.textContent=docId.substring(0,12)+'...';
-    if(data.isActive===true){
+    var _st=data.status||'pending';
+    if(_st==='approved'||data.isActive===true){
       icon.className='status-icon accepted';iconMi.textContent='check_circle';
       title.className='status-title accepted';title.textContent='تم قبول الطلب';
       msg.textContent='تم قبول طلبكم وإضافة البراند الخاص بكم.\n\nيرجى التواصل مع الدعم الفني لاستكمال أو تحديد بعض البيانات.';
+    }else if(_st==='rejected'){
+      icon.className='status-icon pending';iconMi.textContent='cancel';icon.style.background='#ef444420';icon.style.color='#ef4444';
+      title.className='status-title pending';title.style.color='#ef4444';title.textContent='تم رفض الطلب';
+      msg.textContent='نأسف، تم رفض طلب تسجيل براندك من قِبل الإدارة.\n\nيمكنك التواصل مع الدعم الفني لمعرفة السبب أو تقديم طلب جديد بعد تعديل البيانات.';
     }else{
       icon.className='status-icon pending';iconMi.textContent='pending';
       title.className='status-title pending';title.textContent='طلبك قيد المراجعة';
