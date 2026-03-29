@@ -173,7 +173,14 @@ select.fi{cursor:pointer;appearance:none}
 .tb{flex:1}
 .tt{font-size:13px;font-weight:800;color:var(--text)}
 .tm{font-size:11.5px;color:var(--text2);margin-top:1px}
-
+.toast-dismiss{background:transparent;border:none;color:var(--text3);cursor:pointer;padding:4px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:var(--tr)}
+.toast-dismiss:hover{background:var(--border);color:var(--text)}
+.support-toast{background:var(--surface);border-right:4px solid #25D366;padding:14px 18px;gap:14px;max-width:420px}
+.support-toast .ti{background:#25D36610;color:#25D366}
+.support-toast .tt{font-size:14px}
+.support-toast .tm{font-size:13px;margin-top:4px}
+.support-toast .tm a{color:#25D366;text-decoration:none;font-weight:700}
+.support-toast .tm a:hover{text-decoration:underline}
 .spinner{width:20px;height:20px;border:2.5px solid rgba(255,255,255,0.4);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;display:inline-block}
 @keyframes spin{to{transform:rotate(360deg)}}
 
@@ -203,6 +210,7 @@ select.fi{cursor:pointer;appearance:none}
   .support-icons{justify-content:center}
   .success-actions{flex-direction:column;width:100%}
   .btn-success,.btn-support-success{justify-content:center}
+  .support-toast{max-width:90%}
 }
 </style>
 </head>
@@ -524,31 +532,38 @@ select.fi{cursor:pointer;appearance:none}
 
 <script>
 (function(){
-  "use strict";
-  var _threatState={reqTs:[],pasteCount:0,flagged:false};
-  function _triggerBlock(){}
-  function _check(){}
-  document.addEventListener("contextmenu",function(e){e.preventDefault();e.stopPropagation();return false;},true);
-  document.addEventListener("keydown",function(e){
-    var b=(e.key==="F12"||(e.ctrlKey&&e.shiftKey&&(e.key==="I"||e.key==="J"||e.key==="C"))||(e.ctrlKey&&e.key==="U"));
-    if(b){e.preventDefault();e.stopPropagation();return false;}
-  },true);
-  document.addEventListener("dragover",function(e){e.preventDefault();},false);
-  document.addEventListener("drop",function(e){e.preventDefault();},false);
-  var _origFetch=window.fetch;
-  window.fetch=function(){return _origFetch.apply(this,arguments);};
-  var _origXHROpen=XMLHttpRequest.prototype.open;
-  XMLHttpRequest.prototype.open=function(){return _origXHROpen.apply(this,arguments);};
+  const _x = (s) => { try { return atob(s); } catch(e) { return ''; } };
+  window.__FIREBASE_CONFIG__ = {
+    apiKey: _x('QUl6YVN5REhiaUNHVXFKSkpzSTNab1FZZ3BiZVE5dEZjM2o5ckVR'),
+    authDomain: _x('ZWFzeWdldC1lMzk5MS5maXJlYmFzZWFwcC5jb20='),
+    projectId: _x('ZWFzeWdldC1lMzk5MQ=='),
+    storageBucket: _x('ZWFzeWdldC1lMzk5MS5maXJlYmFzZXN0b3JhZ2UuYXBw'),
+    messagingSenderId: _x('MTAwNjU2MTA0OTMwNg=='),
+    appId: _x('MToxMDA2NTYxMDQ5MzA2OndlYjoxZmFmODc5NmE2ZDNkYzM0YTU0M2Uz'),
+    measurementId: 'G-VKV8185R8R'
+  };
+  var _el=document.getElementById('email-support-link');if(_el)_el.href='mailto:easyget.app1@gmail.com';
 })();
 </script>
 
 <script>
 (function(){
-  var _cfg={};
+  "use strict";
+  document.addEventListener("contextmenu",function(e){e.preventDefault();e.stopPropagation();return false;},true);
+  document.addEventListener("keydown",function(e){var b=(e.key==="F12"||(e.ctrlKey&&e.shiftKey&&(e.key==="I"||e.key==="J"||e.key==="C"))||(e.ctrlKey&&e.key==="U"));if(b){e.preventDefault();e.stopPropagation();return false;}},true);
+  document.addEventListener("dragover",function(e){e.preventDefault();},false);
+  document.addEventListener("drop",function(e){e.preventDefault();},false);
+  var _origFetch=window.fetch;window.fetch=function(){return _origFetch.apply(this,arguments);};
+  var _origXHROpen=XMLHttpRequest.prototype.open;XMLHttpRequest.prototype.open=function(){return _origXHROpen.apply(this,arguments);};
+})();
+</script>
+
+<script>
+(function(){
   var _db=null;
   async function _initDB(){
     if(_db)return _db;
-    if(!window.__FIREBASE_CONFIG__)throw new Error('Firebase config missing. Please set window.__FIREBASE_CONFIG__');
+    if(!window.__FIREBASE_CONFIG__)throw new Error('Firebase config missing');
     var m=await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js");
     var fi=await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
     var app=m.initializeApp(window.__FIREBASE_CONFIG__);
@@ -573,9 +588,7 @@ select.fi{cursor:pointer;appearance:none}
   window._registerBrand=async function(data){if(!_chkRL())throw new Error('RATE_LIMIT_EXCEEDED');if(!_chkHP())throw new Error('BOT_DETECTED');if(!_chkTiming())throw new Error('BOT_DETECTED');var st=sessionStorage.getItem('_eg_s');if(!st||st!==data._csrfToken)throw new Error('CSRF_VALIDATION_FAILED');var clean=_sData(data);delete clean._csrfToken;delete clean._recaptchaToken;var db=await _initDB();return await db.addDoc(db.col(db.fs,'brands'),Object.assign({},clean,{isActive:false,status:'pending',submittedAt:db.ts()}));};
   window._getBrandStatus=async function(docId){if(!docId||typeof docId!=='string'||!/^[a-zA-Z0-9]{10,30}$/.test(docId))return null;try{var db=await _initDB();var ref=db.doc(db.fs,'brands',docId);var snap=await db.getDoc(ref);if(snap.exists()){var d=snap.data();return{isActive:d.isActive,status:d.status,submittedAt:d.submittedAt};}return null;}catch(e){return null;}};
   window._getCsrfToken=_getCSRF;
-  var _oe=console.error;
-  console.error=function(){if(typeof arguments[0]==='string'&&(arguments[0].includes('Firebase')||arguments[0].includes('firestore')))return;_oe.apply(console,arguments);};
-  var _el=document.getElementById('email-support-link');if(_el)_el.href='mailto:easyget.app1@gmail.com';
+  var _oe=console.error;console.error=function(){if(typeof arguments[0]==='string'&&(arguments[0].includes('Firebase')||arguments[0].includes('firestore')))return;_oe.apply(console,arguments);};
 })();
 </script>
 
@@ -600,7 +613,32 @@ select.fi{cursor:pointer;appearance:none}
   function _resetForm(){document.getElementById('main-form-card').querySelectorAll('.sec-head,.form-body,.sec-divider,.submit-section').forEach(function(el){el.style.display='';});document.getElementById('success-screen').classList.remove('show');document.getElementById('status-screen').classList.remove('show');document.getElementById('main-form-card').querySelectorAll('.fi').forEach(function(el){el.value='';});document.getElementById('products-list').innerHTML='';document.getElementById('img-urls-list').innerHTML='';document.querySelectorAll('.pay-opt').forEach(function(el){el.classList.remove('checked');});_tc=false;document.getElementById('terms-check').classList.remove('checked');var btn=document.getElementById('btn-submit');btn.innerHTML='<span class="mi">send</span><span id="btn-txt">أرسل طلب التسجيل</span>';btn.disabled=false;document.querySelectorAll('.field-err').forEach(function(el){el.classList.remove('show');});document.querySelectorAll('.fi.err').forEach(function(el){el.classList.remove('err');});document.getElementById('f-subcategory').innerHTML='<option value="">أختر الفئة الرئيسية أولاً</option>';try{localStorage.removeItem('easyget_ls');localStorage.removeItem('easyget_ld');}catch(e){}if(typeof grecaptcha!=='undefined')grecaptcha.reset();_addProductRow();_addImgUrl();}
   document.getElementById('btn-reset-success').addEventListener('click',_resetForm);
   document.getElementById('btn-reset-status').addEventListener('click',_resetForm);
-  async function _submitForm(){if(!_validate()){var fe=document.querySelector('.fi.err,.field-err.show');if(fe)fe.scrollIntoView({behavior:'smooth',block:'center'});return;}var btn=document.getElementById('btn-submit');btn.innerHTML='<span class="spinner"></span><span>بيتبعت...</span>';btn.disabled=true;try{var rc=(typeof grecaptcha!=='undefined')?grecaptcha.getResponse():'';if(!rc){document.getElementById('err-recaptcha').classList.add('show');btn.innerHTML='<span class="mi">send</span><span>أرسل طلب التسجيل</span>';btn.disabled=false;return;}document.getElementById('err-recaptcha').classList.remove('show');var data=_collectData();data._recaptchaToken=rc;if(typeof window._registerBrand!=='function')throw new Error('Service not ready');var ref=await window._registerBrand(data);try{localStorage.setItem('easyget_ls',Date.now().toString());localStorage.setItem('easyget_ld',ref.id);}catch(e){}_toast('تم الإرسال بنجاح!','طلبك اتحفظ وهيتراجع','success');if(typeof grecaptcha!=='undefined')grecaptcha.reset();_showSuccess(ref.id);}catch(e){if(e.message==='RATE_LIMIT_EXCEEDED')_toast('تجاوزت الحد المسموح','يرجى الانتظار قبل إرسال طلب جديد','warning');else if(e.message==='CSRF_VALIDATION_FAILED')_toast('خطأ في التحقق','يرجى تحديث الصفحة والمحاولة مجدداً','error');else if(e.message==='BOT_DETECTED')_toast('خطأ','حدث خطأ في التحقق','error');else _toast('حصل خطأ','تحقق من الاتصال وحاول تاني','error');if(typeof grecaptcha!=='undefined')grecaptcha.reset();btn.innerHTML='<span class="mi">send</span><span>أرسل طلب التسجيل</span>';btn.disabled=false;}}
+  function _showSupportToast(message){
+    var c=document.getElementById('tc');
+    var el=document.createElement('div');
+    el.className='tst support-toast';
+    el.style.maxWidth='450px';
+    var ti=document.createElement('div');ti.className='ti';ti.style.background='#25D36610';ti.style.color='#25D366';
+    var tii=document.createElement('span');tii.className='mi';tii.textContent='support_agent';ti.appendChild(tii);
+    var tb=document.createElement('div');tb.className='tb';
+    var tt=document.createElement('div');tt.className='tt';tt.textContent='❗️ في مشكلة؟';
+    var tm=document.createElement('div');tm.className='tm';tm.innerHTML=message+'<br><a href="https://wa.me/201125933983" target="_blank" style="display:inline-flex;align-items:center;gap:5px;margin-top:6px;"><span class="mi">chat</span> تواصل مع الدعم الفني عبر واتساب</a>';
+    tb.appendChild(tt);tb.appendChild(tm);
+    var dismiss=document.createElement('button');dismiss.className='toast-dismiss';dismiss.innerHTML='<span class="mi">close</span>';dismiss.style.fontSize='18px';dismiss.style.padding='4px';
+    dismiss.addEventListener('click',function(){el.classList.remove('show');setTimeout(function(){if(el.parentNode)el.remove();},300);});
+    el.appendChild(ti);el.appendChild(tb);el.appendChild(dismiss);
+    c.appendChild(el);
+    requestAnimationFrame(function(){setTimeout(function(){el.classList.add('show');},10);});
+    var timer=setTimeout(function(){if(el.parentNode){el.classList.remove('show');setTimeout(function(){if(el.parentNode)el.remove();},300);}},20000);
+    el.addEventListener('mouseenter',function(){clearTimeout(timer);});
+    el.addEventListener('mouseleave',function(){timer=setTimeout(function(){if(el.parentNode){el.classList.remove('show');setTimeout(function(){if(el.parentNode)el.remove();},300);}},5000);});
+  }
+  async function _submitForm(){if(!_validate()){var fe=document.querySelector('.fi.err,.field-err.show');if(fe)fe.scrollIntoView({behavior:'smooth',block:'center'});return;}var btn=document.getElementById('btn-submit');btn.innerHTML='<span class="spinner"></span><span>بيتبعت...</span>';btn.disabled=true;try{var rc=(typeof grecaptcha!=='undefined')?grecaptcha.getResponse():'';if(!rc){document.getElementById('err-recaptcha').classList.add('show');btn.innerHTML='<span class="mi">send</span><span>أرسل طلب التسجيل</span>';btn.disabled=false;return;}document.getElementById('err-recaptcha').classList.remove('show');var data=_collectData();data._recaptchaToken=rc;if(typeof window._registerBrand!=='function')throw new Error('Service not ready');var ref=await window._registerBrand(data);try{localStorage.setItem('easyget_ls',Date.now().toString());localStorage.setItem('easyget_ld',ref.id);}catch(e){}_toast('تم الإرسال بنجاح!','طلبك اتحفظ وهيتراجع','success');if(typeof grecaptcha!=='undefined')grecaptcha.reset();_showSuccess(ref.id);}catch(e){console.error(e);if(typeof grecaptcha!=='undefined')grecaptcha.reset();btn.innerHTML='<span class="mi">send</span><span>أرسل طلب التسجيل</span>';btn.disabled=false;var supportMsg='حدث خطأ أثناء إرسال البيانات. تأكد من اتصال الإنترنت أو حاول مرة أخرى. إذا استمرت المشكلة، تواصل مع الدعم.';
+    if(e.message==='RATE_LIMIT_EXCEEDED')supportMsg='لقد تجاوزت الحد المسموح للإرسال. يرجى الانتظار ثم المحاولة مرة أخرى.';
+    else if(e.message==='CSRF_VALIDATION_FAILED')supportMsg='فشل التحقق الأمني. يرجى تحديث الصفحة والمحاولة مجدداً.';
+    else if(e.message==='BOT_DETECTED')supportMsg='تم اكتشاف نشاط غير معتاد. يرجى التأكد من أنك لست روبوت وإعادة المحاولة.';
+    else if(e.message.includes('Firebase')||e.message.includes('network'))supportMsg='مشكلة في الاتصال بقاعدة البيانات. تأكد من اتصال الإنترنت أو حاول لاحقاً.';
+    _showSupportToast(supportMsg);}}
   document.getElementById('btn-submit').addEventListener('click',_submitForm);
   async function _showStatus(docId){if(!window._getBrandStatus)return false;var data=await window._getBrandStatus(docId);if(!data)return false;document.querySelectorAll('.sec-head,.form-body,.sec-divider,.submit-section,#success-screen').forEach(function(el){el.style.display='none';});var ss=document.getElementById('status-screen');var icon=document.getElementById('status-icon');var iconMi=document.getElementById('status-icon-mi');var title=document.getElementById('status-title');var msg=document.getElementById('status-message');var idSp=document.getElementById('status-id-span');var wl=document.getElementById('status-whatsapp');wl.href='https://wa.me/201124933983';idSp.textContent=docId.substring(0,12)+'...';var _st=data.status||'pending';if(_st==='approved'||data.isActive===true){icon.className='status-icon accepted';iconMi.textContent='check_circle';title.className='status-title accepted';title.textContent='تم قبول الطلب';msg.textContent='تم قبول طلبكم وإضافة البراند الخاص بكم.\n\nيرجى التواصل مع الدعم الفني لاستكمال أو تحديد بعض البيانات.';}else if(_st==='rejected'){icon.className='status-icon pending';iconMi.textContent='cancel';icon.style.background='#ef444420';icon.style.color='#ef4444';title.className='status-title pending';title.style.color='#ef4444';title.textContent='تم رفض الطلب';msg.textContent='نأسف، تم رفض طلب تسجيل براندك من قِبل الإدارة.\n\nيمكنك التواصل مع الدعم الفني لمعرفة السبب أو تقديم طلب جديد بعد تعديل البيانات.';}else{icon.className='status-icon pending';iconMi.textContent='pending';title.className='status-title pending';title.textContent='طلبك قيد المراجعة';msg.textContent='طلبك قيد المراجعة من الإدارة والمختصين وسيتم الرد عليكم في أقرب وقت.';}ss.classList.add('show');window.scrollTo({top:0,behavior:'smooth'});return true;}
   function _toast(title,msg,type){type=type||'info';var icons={success:'check_circle',error:'error',info:'info',warning:'warning_amber'};var cls={success:'ts',error:'te',info:'ti-i',warning:'tw'};var c=document.getElementById('tc');var el=document.createElement('div');el.className='tst';var ti=document.createElement('div');ti.className='ti '+(cls[type]||'ti-i');var tii=document.createElement('span');tii.className='mi';tii.textContent=icons[type]||'info';ti.appendChild(tii);var tb=document.createElement('div');tb.className='tb';var tt=document.createElement('div');tt.className='tt';tt.textContent=title;tb.appendChild(tt);if(msg){var tm=document.createElement('div');tm.className='tm';tm.textContent=msg;tb.appendChild(tm);}el.appendChild(ti);el.appendChild(tb);c.appendChild(el);requestAnimationFrame(function(){setTimeout(function(){el.classList.add('show');},10);});setTimeout(function(){el.classList.remove('show');setTimeout(function(){el.remove();},350);},3800);}
