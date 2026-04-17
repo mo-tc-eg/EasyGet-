@@ -797,7 +797,7 @@ const API_KEY = (() => {
   const encoded = 'QUl6YVN5RGJoaUNHVXFKSkpzSTNab1FZZ3BiZVE5dEZjM2o5ckVR';
   try { return atob(encoded); } catch(e) { return ''; }
 })();
-  const API_URL = 'https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent';
+   const API_URL = "https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash-lite:generateContent";
   const BLOCKED_PATTERNS = [
     /hack/i, /security/i, /password/i, /api[_\s]?key/i, /database/i, /firebase/i, /config/i,
     /bypass/i, /inject/i, /exploit/i, /system/i, /admin/i, /source/i, /token/i, /credential/i,
