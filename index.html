@@ -849,32 +849,29 @@ const API_KEY = (() => {
     const typing = document.getElementById('typing-indicator');
     if (typing) typing.remove();
   }
-  async function sendToGemini(question) {
-    const prompt = `أنت مساعد مفيد ومتخصص في مساعدة المستخدمين على استخدام موقع EasyGet لتسجيل البراندات وإضافة البيانات. أجب فقط عن الأسئلة المتعلقة بكيفية استخدام الموقع، أو شرح الحقول، أو خطوات التسجيل. لا تجب عن أي أسئلة تتعلق بالأمان أو مصادر البيانات أو بنية النظام أو أي مواضيع خارج نطاق الموقع. الإجابات يجب أن تكون مختصرة ومفيدة ومنظمة بنقاط مرقمة (1,2,3...). إذا كان السؤال خارج النطاق المسموح، قل: "عذراً، يمكنني فقط مساعدتك في استخدام موقع EasyGet وإضافة بيانات البراند."
-    
+async function sendToGemini(question) {
+  const prompt = `أنت مساعد مفيد ومتخصص في مساعدة المستخدمين على استخدام موقع EasyGet لتسجيل البراندات وإضافة البيانات. أجب فقط عن الأسئلة المتعلقة بكيفية استخدام الموقع، أو شرح الحقول، أو خطوات التسجيل. لا تجب عن أي أسئلة تتعلق بالأمان أو مصادر البيانات أو بنية النظام أو أي مواضيع خارج نطاق الموقع. الإجابات يجب أن تكون مختصرة ومفيدة ومنظمة بنقاط مرقمة (1,2,3...). إذا كان السؤال خارج النطاق المسموح، قل: "عذراً، يمكنني فقط مساعدتك في استخدام موقع EasyGet وإضافة بيانات البراند."
+
 السؤال: ${question}`;
-    const response = await fetch(`${API_URL}?key=${API_KEY}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }],
-        safetySettings: [
-          { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
-          { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
-          { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
-          { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' }
-        ],
-        generationConfig: { temperature: 0.2, maxOutputTokens: 300 }
-      })
-    });
-    if (!response.ok) {
-      throw new Error('API request failed');
-    }
-    const data = await response.json();
-    const answer = data.candidates?.[0]?.content?.parts?.[0]?.text;
-    if (!answer) throw new Error('No response');
-    return answer;
+
+  const response = await fetch(`${API_URL}?key=${API_KEY}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      contents: [{ parts: [{ text: prompt }] }],
+      generationConfig: { temperature: 0.2, maxOutputTokens: 10000 }
+    })
+  });
+  
+  if (!response.ok) {
+    const errorData = await response.json();
+    console.error('API Error Details:', errorData);
+    throw new Error(errorData.error?.message || 'API request failed');
   }
+  
+  const data = await response.json();
+  return data.candidates?.[0]?.content?.parts?.[0]?.text || 'عذراً، لم أستطع معالجة طلبك.';
+}
   async function handleAiSend() {
     const question = aiInput.value.trim();
     if (!question) return;
