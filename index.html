@@ -794,13 +794,8 @@ select.fi{cursor:pointer;appearance:none}
     }
   });
 const API_KEY = (() => {
-  const parts = [
-    'QUl6YVN5', 'QWJSd2hK', 'SUZvWWRy', 'T2dwUlND', 
-    'aEVuSjVL', 'WmQyUlVF', 'alJRYTUt', 'QWVKS3cx', 'UmlGTVJH'
-  ];
-  return parts.map(p => {
-    try { return atob(p); } catch(e) { return ''; }
-  }).join('');
+  const encoded = 'QVEuQWI4Uk42SklGb1lkck9ncFJTQ2hFbko1S1pkMlJVRWpSUWE1LUFlSkt3MVJpRk1SR1E=';
+  try { return atob(encoded); } catch(e) { return ''; }
 })();
   const API_URL = 'https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash-lite:generateContent';
   const BLOCKED_PATTERNS = [
