@@ -30,7 +30,6 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-h
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-thumb{background:var(--brand);border-radius:2px}
 .mi{font-family:'Material Icons Round';font-weight:normal;font-style:normal;font-size:20px;line-height:1;display:inline-block;white-space:nowrap;direction:ltr;-webkit-font-smoothing:antialiased;user-select:none}
-
 .topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;height:58px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100;box-shadow:0 1px 8px rgba(0,0,0,0.05)}
 .brand-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
 .brand-logo img{width:32px;height:32px;border-radius:9px;object-fit:contain}
@@ -38,7 +37,6 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-h
 .topbar-sep{flex:1}
 .topbar-badge{background:var(--brand-soft);color:var(--brand);border:1px solid rgba(212,22,42,0.2);border-radius:25px;padding:5px 14px;font-size:12.5px;font-weight:700;display:flex;align-items:center;gap:5px}
 .topbar-badge .mi{font-size:15px}
-
 .hero{background:linear-gradient(145deg,#0f0f1a 0%,#1a0810 55%,#0a0a12 100%);padding:56px 24px 64px;text-align:center;position:relative;overflow:hidden}
 .hero::before{content:'';position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(212,22,42,0.18) 0%,transparent 68%);top:-200px;left:50%;transform:translateX(-50%);pointer-events:none}
 .hero::after{content:'';position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(212,22,42,0.1) 0%,transparent 70%);bottom:-80px;right:-60px;pointer-events:none}
@@ -51,7 +49,6 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-h
 .hero-steps{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
 .step-pill{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:8px 16px;color:rgba(255,255,255,0.7);font-size:13px;font-weight:600}
 .step-pill .mi{font-size:16px;color:var(--brand-light)}
-
 .main-wrap{max-width:860px;margin:-30px auto 60px;padding:0 16px;position:relative;z-index:10}
 .form-card{background:var(--surface);border-radius:22px;border:1px solid var(--border);box-shadow:var(--shadow-lg);overflow:hidden}
 .sec-head{display:flex;align-items:center;gap:10px;padding:18px 24px;border-bottom:1px solid var(--border);background:var(--surface2)}
@@ -78,7 +75,6 @@ select.fi{cursor:pointer;appearance:none}
 .fi-wrap .fi-icon{position:absolute;top:50%;transform:translateY(-50%);right:13px;color:var(--text3);font-size:17px;pointer-events:none}
 .fi-wrap .fi{padding-right:42px}
 .sec-divider{height:1px;background:linear-gradient(90deg,transparent,var(--border2),transparent);margin:8px 0}
-
 .products-list{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
 .product-row{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;background:var(--surface2);border-radius:12px;padding:12px 14px;border:1.5px solid var(--border);animation:fadeIn 0.2s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
@@ -90,13 +86,11 @@ select.fi{cursor:pointer;appearance:none}
 .btn-add-product{display:flex;align-items:center;gap:6px;background:var(--brand-soft);border:1.5px dashed rgba(212,22,42,0.3);border-radius:11px;padding:10px 18px;font-family:'Cairo',sans-serif;font-size:13.5px;font-weight:700;color:var(--brand);cursor:pointer;transition:var(--tr);width:100%;justify-content:center}
 .btn-add-product:hover{background:var(--brand-glow)}
 .btn-add-product .mi{font-size:18px}
-
 .img-urls-list{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
 .img-url-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}
 .btn-rm-url{width:34px;height:34px;border-radius:9px;border:none;background:transparent;cursor:pointer;transition:var(--tr);color:var(--text3);display:flex;align-items:center;justify-content:center}
 .btn-rm-url:hover{background:#FEF2F2;color:var(--brand)}
 .btn-rm-url .mi{font-size:18px}
-
 .payment-opts{display:flex;gap:10px;flex-wrap:wrap}
 .pay-opt{display:flex;align-items:center;gap:7px;background:var(--surface2);border:1.5px solid var(--border2);border-radius:10px;padding:9px 14px;cursor:pointer;transition:var(--tr);user-select:none;font-size:13.5px;font-weight:600;color:var(--text2)}
 .pay-opt input[type=checkbox]{display:none}
@@ -105,7 +99,6 @@ select.fi{cursor:pointer;appearance:none}
 .pay-opt.checked .pay-check{background:var(--brand);border-color:var(--brand)}
 .pay-check .mi{font-size:12px;color:transparent}
 .pay-opt.checked .pay-check .mi{color:#fff}
-
 .submit-section{padding:20px 24px 24px;border-top:1px solid var(--border);background:var(--surface2)}
 .terms-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:16px;cursor:pointer}
 .terms-row input{display:none}
@@ -115,18 +108,15 @@ select.fi{cursor:pointer;appearance:none}
 .terms-check.checked .mi{color:#fff}
 .terms-text{font-size:13px;color:var(--text2);line-height:1.6}
 .terms-text a{color:var(--brand);text-decoration:none;font-weight:700}
-
 .btn-submit{width:100%;background:linear-gradient(135deg,var(--brand),#FF3347);color:#fff;border:none;border-radius:13px;padding:15px 24px;font-family:'Cairo',sans-serif;font-size:16px;font-weight:800;cursor:pointer;transition:var(--tr);display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 6px 24px var(--brand-glow)}
 .btn-submit:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(212,22,42,0.3)}
 .btn-submit:active{transform:translateY(0)}
 .btn-submit:disabled{opacity:0.6;cursor:not-allowed;transform:none}
 .btn-submit .mi{font-size:20px}
-
 .field-err{font-size:11.5px;color:#B91C1C;display:none;align-items:center;gap:4px;margin-top:2px}
 .field-err .mi{font-size:14px}
 .field-err.show{display:flex}
 .fi.err{border-color:#F87171}
-
 .success-screen{display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:64px 32px;min-height:500px}
 .success-screen.show{display:flex}
 .success-anim{width:88px;height:88px;border-radius:50%;background:var(--brand);display:flex;align-items:center;justify-content:center;margin-bottom:24px;animation:popIn 0.5s cubic-bezier(0.34,1.56,0.64,1);box-shadow:0 8px 30px rgba(212,22,42,0.3)}
@@ -142,7 +132,6 @@ select.fi{cursor:pointer;appearance:none}
 .btn-success:hover{background:var(--brand);color:#fff;border-color:var(--brand);transform:translateY(-2px)}
 .btn-support-success{background:var(--surface2);color:var(--text2);border:1.5px solid var(--border2);border-radius:13px;padding:14px 28px;font-family:'Cairo',sans-serif;font-size:15px;font-weight:800;cursor:pointer;transition:var(--tr);display:inline-flex;align-items:center;gap:10px;text-decoration:none}
 .btn-support-success:hover{background:#25D36610;color:#25D366;border-color:#25D366;transform:translateY(-2px)}
-
 .status-screen{display:none;flex-direction:column;padding:32px;min-height:400px}
 .status-screen.show{display:flex}
 .status-card{background:var(--surface2);border:1.5px solid var(--border);border-radius:20px;padding:32px;text-align:center;max-width:500px;margin:0 auto}
@@ -160,7 +149,6 @@ select.fi{cursor:pointer;appearance:none}
 .status-whatsapp:hover{background:#25D366;color:#fff}
 .status-btn{background:var(--brand-soft);color:var(--brand);border:1.5px solid rgba(212,22,42,0.25);border-radius:11px;padding:11px 26px;font-family:'Cairo',sans-serif;font-size:14px;font-weight:800;cursor:pointer;transition:var(--tr);display:inline-flex;align-items:center;gap:7px;margin-top:20px}
 .status-btn:hover{background:var(--brand);color:#fff}
-
 .toast-c{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:9999;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none}
 .tst{background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:12px 16px;box-shadow:0 8px 32px rgba(0,0,0,0.12);display:flex;align-items:center;gap:11px;min-width:260px;max-width:380px;transform:translateY(16px) scale(0.96);opacity:0;transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);pointer-events:auto}
 .tst.show{transform:translateY(0) scale(1);opacity:1}
@@ -183,7 +171,6 @@ select.fi{cursor:pointer;appearance:none}
 .support-toast .tm a:hover{text-decoration:underline}
 .spinner{width:20px;height:20px;border:2.5px solid rgba(255,255,255,0.4);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;display:inline-block}
 @keyframes spin{to{transform:rotate(360deg)}}
-
 .warning-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.75);backdrop-filter:blur(5px);z-index:10000;align-items:center;justify-content:center;padding:20px;direction:rtl}
 .warning-modal.show{display:flex}
 .modal-content{background:var(--surface);border-radius:24px;max-width:500px;width:100%;overflow:hidden;box-shadow:0 25px 50px -12px rgba(0,0,0,0.5);animation:modalPop 0.3s cubic-bezier(0.34,1.56,0.64,1);border:1px solid var(--border2)}
@@ -202,7 +189,6 @@ select.fi{cursor:pointer;appearance:none}
 .btn-modal-back:hover{background:var(--border);color:var(--text)}
 .btn-modal-proceed{background:var(--brand);color:#fff;box-shadow:0 2px 8px var(--brand-glow)}
 .btn-modal-proceed:hover{background:var(--brand-dark);transform:translateY(-1px)}
-
 .floating-support-btn{position:fixed;bottom:24px;left:24px;width:56px;height:56px;border-radius:28px;background:var(--surface);box-shadow:0 8px 20px rgba(0,0,0,0.15);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10000;border:1.5px solid var(--border2);transition:var(--tr);color:var(--brand)}
 .floating-support-btn:hover{transform:scale(1.05);box-shadow:0 12px 28px rgba(0,0,0,0.2)}
 .floating-support-btn .mi{font-size:28px}
@@ -217,7 +203,6 @@ select.fi{cursor:pointer;appearance:none}
 .support-option .mi{font-size:22px}
 .support-option.email .mi{color:var(--brand)}
 .support-option.whatsapp .mi{color:#25D366}
-
 .floating-ai-btn{position:fixed;bottom:24px;right:24px;width:auto;height:56px;border-radius:28px;background:var(--brand);box-shadow:0 8px 20px rgba(212,22,42,0.3);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10000;border:none;padding:0 20px;gap:8px;transition:var(--tr);color:#fff;font-weight:800;font-size:16px}
 .floating-ai-btn:hover{transform:scale(1.05);box-shadow:0 12px 28px rgba(212,22,42,0.4)}
 .floating-ai-btn .mi{font-size:24px}
@@ -231,7 +216,7 @@ select.fi{cursor:pointer;appearance:none}
 .ai-message{max-width:85%;padding:10px 14px;border-radius:16px;font-size:14px;line-height:1.5;word-break:break-word}
 .ai-message.user{align-self:flex-end;background:var(--brand);color:#fff;border-bottom-right-radius:4px}
 .ai-message.bot{align-self:flex-start;background:var(--surface2);color:var(--text);border-bottom-left-radius:4px;border:1px solid var(--border)}
-.ai-message.bot ol, .ai-message.bot ul{margin-right:20px;margin-top:4px;margin-bottom:4px}
+.ai-message.bot ol,.ai-message.bot ul{margin-right:20px;margin-top:4px;margin-bottom:4px}
 .ai-chat-input-area{display:flex;padding:12px;border-top:1px solid var(--border);background:var(--surface2)}
 .ai-chat-input{flex:1;background:var(--surface);border:1.5px solid var(--border2);border-radius:20px;padding:10px 16px;font-family:'Cairo',sans-serif;font-size:14px;outline:none;resize:none}
 .ai-chat-input:focus{border-color:var(--brand)}
@@ -239,7 +224,6 @@ select.fi{cursor:pointer;appearance:none}
 .ai-send-btn:hover{background:var(--brand-dark)}
 .ai-send-btn .mi{font-size:20px}
 .ai-send-btn:disabled{opacity:0.6;cursor:not-allowed}
-
 @media(max-width:640px){
   .grid-2,.grid-3{grid-template-columns:1fr}
   .full{grid-column:1}
@@ -628,29 +612,69 @@ select.fi{cursor:pointer;appearance:none}
 
 <script>
 (function(){
-  const _x = (s) => { try { return atob(s); } catch(e) { return ''; } };
-  window.__FIREBASE_CONFIG__ = {
-    apiKey: _x('QUl6YVN5REhiaUNHVXFKSkpzSTNab1FZZ3BiZVE5dEZjM2o5ckVR'),
-    authDomain: _x('ZWFzeWdldC1lMzk5MS5maXJlYmFzZWFwcC5jb20='),
-    projectId: _x('ZWFzeWdldC1lMzk5MQ=='),
-    storageBucket: _x('ZWFzeWdldC1lMzk5MS5maXJlYmFzZXN0b3JhZ2UuYXBw'),
-    messagingSenderId: _x('MTAwNjU2MTA0OTMwNg=='),
-    appId: _x('MToxMDA2NTYxMDQ5MzA2OndlYjoxZmFmODc5NmE2ZDNkYzM0YTU0M2Uz'),
-    measurementId: 'G-VKV8185R8R'
+  var _r=function(s){var o='',i=s.length;while(i--)o+=s[i];return o;};
+  var _d=function(s){try{return atob(s);}catch(e){return '';}};
+  var _p=function(s,k){var o='',j=0;for(var i=0;i<s.length;i++){o+=String.fromCharCode(s.charCodeAt(i)^k.charCodeAt(j%k.length));j++;}return o;};
+  var _fc=_d('QUl6YVN5REhiaUNHVXFKSkpzSTNab1FZZ3BiZVE5dEZjM2o5ckVR');
+  var _fb={
+    apiKey:_fc,
+    authDomain:_d('ZWFzeWdldC1lMzk5MS5maXJlYmFzZWFwcC5jb20='),
+    projectId:_d('ZWFzeWdldC1lMzk5MQ=='),
+    storageBucket:_d('ZWFzeWdldC1lMzk5MS5maXJlYmFzZXN0b3JhZ2UuYXBw'),
+    messagingSenderId:_d('MTAwNjU2MTA0OTMwNg=='),
+    appId:_d('MToxMDA2NTYxMDQ5MzA2OndlYjoxZmFmODc5NmE2ZDNkYzM0YTU0M2Uz'),
+    measurementId:'G-VKV8185R8R'
   };
-  var _el=document.getElementById('email-support-link');if(_el)_el.href='mailto:easyget.app1@gmail.com';
+  window.__FIREBASE_CONFIG__=_fb;
+  var _ga_parts=['AIzaSy','GEMINI_KEY_PLACEHOLDER'];
+  window.__getAIK=function(){
+    var t=sessionStorage.getItem('_eg_aik');
+    if(t){try{return _p(atob(t),'eg2025');}catch(e){}}
+    return null;
+  };
+  window.__setAIK=function(k){
+    sessionStorage.setItem('_eg_aik',btoa(_p(k,'eg2025')));
+  };
 })();
 </script>
 
 <script>
 (function(){
   "use strict";
+  var _devToolsOpen=false;
+  var _threshold=160;
+  var _check=function(){
+    var w=window.outerWidth-window.innerWidth>_threshold;
+    var h=window.outerHeight-window.innerHeight>_threshold;
+    if(w||h){
+      if(!_devToolsOpen){
+        _devToolsOpen=true;
+        document.body.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:Cairo,sans-serif;font-size:18px;color:#D4162A;flex-direction:column;gap:16px;"><span style="font-size:48px;">🔒</span><b>الوصول محظور</b><p style="color:#666;font-size:14px;">يرجى إغلاق أدوات المطور والمحاولة مجدداً</p></div>';
+      }
+    } else {_devToolsOpen=false;}
+  };
+  setInterval(_check,1000);
   document.addEventListener("contextmenu",function(e){e.preventDefault();e.stopPropagation();return false;},true);
-  document.addEventListener("keydown",function(e){var b=(e.key==="F12"||(e.ctrlKey&&e.shiftKey&&(e.key==="I"||e.key==="J"||e.key==="C"))||(e.ctrlKey&&e.key==="U"));if(b){e.preventDefault();e.stopPropagation();return false;}},true);
+  document.addEventListener("keydown",function(e){
+    var b=(e.key==="F12"||(e.ctrlKey&&e.shiftKey&&(e.key==="I"||e.key==="J"||e.key==="C"))||(e.ctrlKey&&e.key==="U")||(e.ctrlKey&&e.key==="S")||(e.ctrlKey&&e.key==="A"&&e.shiftKey));
+    if(b){e.preventDefault();e.stopPropagation();return false;}
+  },true);
   document.addEventListener("dragover",function(e){e.preventDefault();},false);
   document.addEventListener("drop",function(e){e.preventDefault();},false);
-  var _origFetch=window.fetch;window.fetch=function(){return _origFetch.apply(this,arguments);};
-  var _origXHROpen=XMLHttpRequest.prototype.open;XMLHttpRequest.prototype.open=function(){return _origXHROpen.apply(this,arguments);};
+  (function(){
+    var _t=0;
+    var _dbg=function(){
+      if(typeof console!=='undefined'){
+        var _s=new Date().getTime();
+        debugger;
+        if(new Date().getTime()-_s>100){
+          _t++;
+          if(_t>2){document.body.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:Cairo,sans-serif;font-size:18px;color:#D4162A;">🔒 الوصول محظور</div>';}
+        }
+      }
+    };
+    setInterval(_dbg,3000);
+  })();
 })();
 </script>
 
@@ -666,7 +690,18 @@ select.fi{cursor:pointer;appearance:none}
     _db={fs:fi.getFirestore(app),col:fi.collection,addDoc:fi.addDoc,ts:fi.serverTimestamp,doc:fi.doc,getDoc:fi.getDoc};
     return _db;
   }
-  function _chkRL(){return true;}
+  var _rlMap={};
+  function _chkRL(){
+    var k='_eg_rl';var now=Date.now();
+    try{
+      var d=JSON.parse(sessionStorage.getItem(k)||'{"c":0,"t":0}');
+      if(now-d.t>3600000){d={c:0,t:now};}
+      if(d.c>=5)return false;
+      d.c++;d.t=now;
+      sessionStorage.setItem(k,JSON.stringify(d));
+    }catch(e){}
+    return true;
+  }
   function _chkHP(){var hp=document.getElementById('_hp_field');return!(hp&&hp.value!=='');}
   var _formLoadTime=Date.now();
   function _chkTiming(){return(Date.now()-_formLoadTime)>3000;}
@@ -681,10 +716,34 @@ select.fi{cursor:pointer;appearance:none}
   function _sPM(s){if(!s||typeof s!=='string')return'';var al=['الدفع عند الاستلام','فيزا/ماستر','فودافون كاش','انستاباي'];return s.split(' - ').filter(function(m){return al.includes(m.trim());}).join(' - ');}
   function _sCat(v){var al=['أكل','ملابس','إلكترونيات','العناية','البيت','المكتبة','متنوع'];return al.includes(v)?v:'';}
   function _sData(data){return{name:_sS(data.name),category:_sCat(data.category),subcategory:_sS(data.subcategory),description:_sS(data.description,1000),imageUrl:_sU(data.imageUrl),deliveryAreas:_sS(data.deliveryAreas),deliveryFee:_sS(data.deliveryFee),deliveryTime:_sS(data.deliveryTime),minPrice:(typeof data.minPrice==='number'&&isFinite(data.minPrice))?Math.abs(data.minPrice):null,maxPrice:(typeof data.maxPrice==='number'&&isFinite(data.maxPrice))?Math.abs(data.maxPrice):null,paymentMethods:_sPM(data.paymentMethods),orderUrl:_sU(data.orderUrl),socialMedia:{website:_sU(data.socialMedia&&data.socialMedia.website),facebook:_sU(data.socialMedia&&data.socialMedia.facebook),instagram:_sU(data.socialMedia&&data.socialMedia.instagram),tiktok:_sU(data.socialMedia&&data.socialMedia.tiktok),phone:_sP(data.socialMedia&&data.socialMedia.phone),whatsapp:_sU(data.socialMedia&&data.socialMedia.whatsapp)},website:_sU(data.website),productsList:_sPL(data.productsList),products:_sPI(data.products),contactName:_sS(data.contactName),contactPhone:_sP(data.contactPhone)};}
-  window._registerBrand=async function(data){if(!_chkRL())throw new Error('RATE_LIMIT_EXCEEDED');if(!_chkHP())throw new Error('BOT_DETECTED');if(!_chkTiming())throw new Error('BOT_DETECTED');var st=sessionStorage.getItem('_eg_s');if(!st||st!==data._csrfToken)throw new Error('CSRF_VALIDATION_FAILED');var clean=_sData(data);delete clean._csrfToken;delete clean._recaptchaToken;var db=await _initDB();return await db.addDoc(db.col(db.fs,'brands'),Object.assign({},clean,{isActive:false,status:'pending',submittedAt:db.ts()}));};
-  window._getBrandStatus=async function(docId){if(!docId||typeof docId!=='string'||!/^[a-zA-Z0-9]{10,30}$/.test(docId))return null;try{var db=await _initDB();var ref=db.doc(db.fs,'brands',docId);var snap=await db.getDoc(ref);if(snap.exists()){var d=snap.data();return{isActive:d.isActive,status:d.status,submittedAt:d.submittedAt};}return null;}catch(e){return null;}};
+  window._registerBrand=async function(data){
+    if(!_chkRL())throw new Error('RATE_LIMIT_EXCEEDED');
+    if(!_chkHP())throw new Error('BOT_DETECTED');
+    if(!_chkTiming())throw new Error('BOT_DETECTED');
+    var st=sessionStorage.getItem('_eg_s');
+    if(!st||st!==data._csrfToken)throw new Error('CSRF_VALIDATION_FAILED');
+    var clean=_sData(data);
+    delete clean._csrfToken;
+    delete clean._recaptchaToken;
+    var db=await _initDB();
+    return await db.addDoc(db.col(db.fs,'brands'),Object.assign({},clean,{isActive:false,status:'pending',submittedAt:db.ts()}));
+  };
+  window._getBrandStatus=async function(docId){
+    if(!docId||typeof docId!=='string'||!/^[a-zA-Z0-9]{10,30}$/.test(docId))return null;
+    try{
+      var db=await _initDB();
+      var ref=db.doc(db.fs,'brands',docId);
+      var snap=await db.getDoc(ref);
+      if(snap.exists()){var d=snap.data();return{isActive:d.isActive,status:d.status,submittedAt:d.submittedAt};}
+      return null;
+    }catch(e){return null;}
+  };
   window._getCsrfToken=_getCSRF;
-  var _oe=console.error;console.error=function(){if(typeof arguments[0]==='string'&&(arguments[0].includes('Firebase')||arguments[0].includes('firestore')))return;_oe.apply(console,arguments);};
+  var _oe=console.error;
+  console.error=function(){
+    if(typeof arguments[0]==='string'&&(arguments[0].includes('Firebase')||arguments[0].includes('firestore')))return;
+    _oe.apply(console,arguments);
+  };
 })();
 </script>
 
@@ -692,21 +751,175 @@ select.fi{cursor:pointer;appearance:none}
 (function(){
   var _pc=0,_ic=0,_tc=false;
   var _MP=50,_MI=20;
-  var _helpTexts={'name':'اسم البراند لازم يكون هو الاسم التجاري الرسمي للبراند','category':'اختار الفئة الرئيسية اللي براندك بينتمي ليها','subcategory':'اختار تصنيف أدق من القائمة','imageUrl':'ارفع الصورة على موقع رفع صور وانسخ الرابط هنا','description':'اكتب نبذة بسيطة عن براندك ومنتجاته','deliveryAreas':'حدد المناطق اللي بتوصل لها','deliveryFee':'سعر التوصيل أو اكتب مجاني','deliveryTime':'الوقت التقريبي للشحنة','minPrice':'أقل سعر لمنتج عندك','maxPrice':'أعلى سعر منتج','payment':'اختار طرق الدفع المتاحة عندك','orderUrl':'الرابط اللي العملاء يدخلوا عليه يطلبوا','website':'رابط موقعك الرسمي لو موجود','facebook':'رابط صفحة الفيسبوك (اختياري)','instagram':'رابط حساب الإنستاغرام (اختياري)','tiktok':'رابط حساب التيك توك (اختياري)','phone':'رقم للتواصل مع العملاء (اختياري)','whatsapp':'رقم الواتساب للتواصل مع العملاء','imgurls':'ارفع الصورة على موقع رفع صور (مثل postimg.cc) وانسخ الرابط المباشر وحطه هنا','contactName':'الاسم الكامل لمسؤول البراند','contactPhone':'رقم الهاتف الخاص بمسؤول البراند'};
-  Object.keys(_helpTexts).forEach(function(k){var el=document.getElementById('h-'+k);if(el)el.addEventListener('click',function(){_toast('شرح الحقل',_helpTexts[k],'info');});});
-  var _subMap={'أكل':[['أكل بيتي','home_food'],['وجبات سريعة','fast_food'],['أكل صحي','healthy_food'],['فاكهة وخضروات','fruits_vegetables'],['مخبوزات','bakery'],['حاجات البيت','home'],['سناكس وكدة','nuts'],['حلويات زيك','sweets'],['مشروبات','drinks']],'ملابس':[['لبس رجالي','mens_clothing'],['لبس نسائي','womens_clothing'],['لبس أطفالي','kids_clothing'],['لبس رياضي','sportswear'],['زي شرعي وحجاب','Headscarf'],['أحذية','shoes'],['نظارات','glasses'],['ساعات','watches'],['ملابس داخلية','underwear'],['كابات','caps'],['ميوهات','Beachwear'],['أحزمة','belts'],['محافظ','wallets'],['شنط حريمي','bagswomen'],['شنط','bags-work'],['إكسسوارات','accessories_clothing']],'إلكترونيات':[['موبايلات','phones'],['لابتوبات','laptops'],['سماعات','headphones'],['إكسسوارات','accessories_electronics'],['الكاميرات','camera'],['كاميرات مراقبة','cctv'],['جرابات موبايل','mobile_cases'],['الكمبيوتر','mouse_keyboard'],['ألعاب الفيديو','gaming']],'العناية':[['العناية بالبشرة','skincare'],['العناية بالشعر','haircare'],['العناية الشخصية','personal care'],['مكياج','makeup'],['البرفيوم','perfumes'],['أدوات حلاقة','shaving_tools'],['الصحة','health']],'البيت':[['العفش','furniture'],['أجهزة كهربائية','electrical appliances'],['للمكتب','office_furniture'],['للشركة','company'],['مفروشات','home_textiles'],['الحديقة','garden_balcony'],['الديكور','decor'],['الإضاءة','lighting'],['المطبخ','kitchen'],['أوض النوم','bedroom'],['الحمام','bathroom']],'المكتبة':[['كتب','books'],['إكسسوارات','pens'],['استيكرات روشة','stickers'],['شنط مدرسية','school_bags'],['أدوات مدرسية','school_supplies'],['كراسي مكتب','office_furniture'],['تحف وفنون','home_artifacts'],['الرسم','art'],['مستلزمات','supplies']],'متنوع':[['هدايا لحبايبك','gifts'],['ألعاب','games'],['أدوات تصليح','tools'],['الطباعة','printers'],['هاند ميد','handmade'],['التخرج','graduation'],['ورد وشوكولاتة','flowers_chocolate'],['المصيف','summer'],['مناسبات','occasions'],['السفر','travel_essentials'],['مولود جديد','newborn'],['حاجات العربية','car_items'],['الرياضة و الجيم','sports'],['حاجات الأطفال','kids'],['حاجات الحيوانات','pets']]};
-  document.getElementById('f-category').addEventListener('change',function(){var cat=this.value;var sub=document.getElementById('f-subcategory');if(!_subMap[cat]){sub.innerHTML='<option value="">أختر الفئة الرئيسية أولاً</option>';return;}while(sub.firstChild)sub.removeChild(sub.firstChild);var d=document.createElement('option');d.value='';d.textContent='-- اختر الفئة الفرعية --';sub.appendChild(d);(_subMap[cat]||[]).forEach(function(s){var o=document.createElement('option');o.value=s[1];o.textContent=s[0];sub.appendChild(o);});});
-  function _addProductRow(){var rows=document.querySelectorAll('[data-pr-name]');if(rows.length>=_MP){_toast('تنبيه','وصلت للحد الأقصى من المنتجات','warning');return;}_pc++;var id=_pc;var row=document.createElement('div');row.className='product-row';row.id='pr-'+id;var ng=document.createElement('div');ng.className='fg';ng.style.gap='5px';var nl=document.createElement('label');nl.style.fontSize='12px';nl.style.color='var(--text3)';nl.textContent='اسم المنتج ';var nr=document.createElement('span');nr.className='req';nr.textContent='*';nl.appendChild(nr);var ni=document.createElement('input');ni.className='fi';ni.placeholder='مثال: اسم المنتج';ni.dataset.prName=id;ni.maxLength=100;ng.appendChild(nl);ng.appendChild(ni);var pg=document.createElement('div');pg.className='fg';pg.style.gap='5px';pg.style.width='100px';var pl=document.createElement('label');pl.style.fontSize='12px';pl.style.color='var(--text3)';pl.textContent='السعر (ج.م)';var pi=document.createElement('input');pi.className='fi';pi.type='number';pi.min='0';pi.max='9999999';pi.placeholder='50';pi.dataset.prPrice=id;pg.appendChild(pl);pg.appendChild(pi);var ig=document.createElement('div');ig.className='fg';ig.style.gap='5px';ig.style.width='110px';var il=document.createElement('label');il.style.fontSize='12px';il.style.color='var(--text3)';il.textContent='رابط الصورة';var ii=document.createElement('input');ii.className='fi';ii.placeholder='https://...';ii.dataset.prImg=id;ii.maxLength=500;ig.appendChild(il);ig.appendChild(ii);var rb=document.createElement('button');rb.className='btn-rm-product';rb.type='button';var rowId='pr-'+id;rb.addEventListener('click',function(){_rmRow(rowId);});var ri=document.createElement('span');ri.className='mi';ri.textContent='delete_outline';rb.appendChild(ri);row.appendChild(ng);row.appendChild(pg);row.appendChild(ig);row.appendChild(rb);document.getElementById('products-list').appendChild(row);}
-  function _addImgUrl(){var urls=document.querySelectorAll('[data-img-url]');if(urls.length>=_MI){_toast('تنبيه','وصلت للحد الأقصى من الصور','warning');return;}_ic++;var id=_ic;var row=document.createElement('div');row.className='img-url-row';row.id='iu-'+id;var inp=document.createElement('input');inp.className='fi';inp.type='url';inp.placeholder='https://...';inp.dataset.imgUrl=id;inp.maxLength=500;var rb=document.createElement('button');rb.className='btn-rm-url';rb.type='button';var rowId='iu-'+id;rb.addEventListener('click',function(){_rmRow(rowId);});var ri=document.createElement('span');ri.className='mi';ri.textContent='close';rb.appendChild(ri);row.appendChild(inp);row.appendChild(rb);document.getElementById('img-urls-list').appendChild(row);}
-  function _rmRow(id){if(typeof id!=='string'||!/^(pr|iu)-\d+$/.test(id))return;var el=document.getElementById(id);if(el)el.remove();}
+  var _helpTexts={
+    'name':'اسم البراند لازم يكون هو الاسم التجاري الرسمي للبراند',
+    'category':'اختار الفئة الرئيسية اللي براندك بينتمي ليها',
+    'subcategory':'اختار تصنيف أدق من القائمة',
+    'imageUrl':'ارفع الصورة على موقع رفع صور وانسخ الرابط هنا',
+    'description':'اكتب نبذة بسيطة عن براندك ومنتجاته',
+    'deliveryAreas':'حدد المناطق اللي بتوصل لها',
+    'deliveryFee':'سعر التوصيل أو اكتب مجاني',
+    'deliveryTime':'الوقت التقريبي للشحنة',
+    'minPrice':'أقل سعر لمنتج عندك',
+    'maxPrice':'أعلى سعر منتج',
+    'payment':'اختار طرق الدفع المتاحة عندك',
+    'orderUrl':'الرابط اللي العملاء يدخلوا عليه يطلبوا',
+    'website':'رابط موقعك الرسمي لو موجود',
+    'facebook':'رابط صفحة الفيسبوك (اختياري)',
+    'instagram':'رابط حساب الإنستاغرام (اختياري)',
+    'tiktok':'رابط حساب التيك توك (اختياري)',
+    'phone':'رقم للتواصل مع العملاء (اختياري)',
+    'whatsapp':'رقم الواتساب للتواصل مع العملاء',
+    'imgurls':'ارفع الصورة على موقع رفع صور (مثل postimg.cc) وانسخ الرابط المباشر وحطه هنا',
+    'contactName':'الاسم الكامل لمسؤول البراند',
+    'contactPhone':'رقم الهاتف الخاص بمسؤول البراند'
+  };
+  Object.keys(_helpTexts).forEach(function(k){
+    var el=document.getElementById('h-'+k);
+    if(el)el.addEventListener('click',function(){_toast('شرح الحقل',_helpTexts[k],'info');});
+  });
+  var _subMap={
+    'أكل':[['أكل بيتي','home_food'],['وجبات سريعة','fast_food'],['أكل صحي','healthy_food'],['فاكهة وخضروات','fruits_vegetables'],['مخبوزات','bakery'],['حاجات البيت','home'],['سناكس وكدة','nuts'],['حلويات زيك','sweets'],['مشروبات','drinks']],
+    'ملابس':[['لبس رجالي','mens_clothing'],['لبس نسائي','womens_clothing'],['لبس أطفالي','kids_clothing'],['لبس رياضي','sportswear'],['زي شرعي وحجاب','Headscarf'],['أحذية','shoes'],['نظارات','glasses'],['ساعات','watches'],['ملابس داخلية','underwear'],['كابات','caps'],['ميوهات','Beachwear'],['أحزمة','belts'],['محافظ','wallets'],['شنط حريمي','bagswomen'],['شنط','bags-work'],['إكسسوارات','accessories_clothing']],
+    'إلكترونيات':[['موبايلات','phones'],['لابتوبات','laptops'],['سماعات','headphones'],['إكسسوارات','accessories_electronics'],['الكاميرات','camera'],['كاميرات مراقبة','cctv'],['جرابات موبايل','mobile_cases'],['الكمبيوتر','mouse_keyboard'],['ألعاب الفيديو','gaming']],
+    'العناية':[['العناية بالبشرة','skincare'],['العناية بالشعر','haircare'],['العناية الشخصية','personal care'],['مكياج','makeup'],['البرفيوم','perfumes'],['أدوات حلاقة','shaving_tools'],['الصحة','health']],
+    'البيت':[['العفش','furniture'],['أجهزة كهربائية','electrical appliances'],['للمكتب','office_furniture'],['للشركة','company'],['مفروشات','home_textiles'],['الحديقة','garden_balcony'],['الديكور','decor'],['الإضاءة','lighting'],['المطبخ','kitchen'],['أوض النوم','bedroom'],['الحمام','bathroom']],
+    'المكتبة':[['كتب','books'],['إكسسوارات','pens'],['استيكرات روشة','stickers'],['شنط مدرسية','school_bags'],['أدوات مدرسية','school_supplies'],['كراسي مكتب','office_furniture'],['تحف وفنون','home_artifacts'],['الرسم','art'],['مستلزمات','supplies']],
+    'متنوع':[['هدايا لحبايبك','gifts'],['ألعاب','games'],['أدوات تصليح','tools'],['الطباعة','printers'],['هاند ميد','handmade'],['التخرج','graduation'],['ورد وشوكولاتة','flowers_chocolate'],['المصيف','summer'],['مناسبات','occasions'],['السفر','travel_essentials'],['مولود جديد','newborn'],['حاجات العربية','car_items'],['الرياضة و الجيم','sports'],['حاجات الأطفال','kids'],['حاجات الحيوانات','pets']]
+  };
+  document.getElementById('f-category').addEventListener('change',function(){
+    var cat=this.value;var sub=document.getElementById('f-subcategory');
+    if(!_subMap[cat]){sub.innerHTML='<option value="">أختر الفئة الرئيسية أولاً</option>';return;}
+    while(sub.firstChild)sub.removeChild(sub.firstChild);
+    var d=document.createElement('option');d.value='';d.textContent='-- اختر الفئة الفرعية --';sub.appendChild(d);
+    (_subMap[cat]||[]).forEach(function(s){var o=document.createElement('option');o.value=s[1];o.textContent=s[0];sub.appendChild(o);});
+  });
+  function _addProductRow(){
+    var rows=document.querySelectorAll('[data-pr-name]');
+    if(rows.length>=_MP){_toast('تنبيه','وصلت للحد الأقصى من المنتجات','warning');return;}
+    _pc++;var id=_pc;
+    var row=document.createElement('div');row.className='product-row';row.id='pr-'+id;
+    var ng=document.createElement('div');ng.className='fg';ng.style.gap='5px';
+    var nl=document.createElement('label');nl.style.fontSize='12px';nl.style.color='var(--text3)';nl.textContent='اسم المنتج ';
+    var nr=document.createElement('span');nr.className='req';nr.textContent='*';nl.appendChild(nr);
+    var ni=document.createElement('input');ni.className='fi';ni.placeholder='مثال: اسم المنتج';ni.dataset.prName=id;ni.maxLength=100;
+    ng.appendChild(nl);ng.appendChild(ni);
+    var pg=document.createElement('div');pg.className='fg';pg.style.gap='5px';pg.style.width='100px';
+    var pl=document.createElement('label');pl.style.fontSize='12px';pl.style.color='var(--text3)';pl.textContent='السعر (ج.م)';
+    var pi=document.createElement('input');pi.className='fi';pi.type='number';pi.min='0';pi.max='9999999';pi.placeholder='50';pi.dataset.prPrice=id;
+    pg.appendChild(pl);pg.appendChild(pi);
+    var ig=document.createElement('div');ig.className='fg';ig.style.gap='5px';ig.style.width='110px';
+    var il=document.createElement('label');il.style.fontSize='12px';il.style.color='var(--text3)';il.textContent='رابط الصورة';
+    var ii=document.createElement('input');ii.className='fi';ii.placeholder='https://...';ii.dataset.prImg=id;ii.maxLength=500;
+    ig.appendChild(il);ig.appendChild(ii);
+    var rb=document.createElement('button');rb.className='btn-rm-product';rb.type='button';
+    var rowId='pr-'+id;rb.addEventListener('click',function(){_rmRow(rowId);});
+    var ri=document.createElement('span');ri.className='mi';ri.textContent='delete_outline';rb.appendChild(ri);
+    row.appendChild(ng);row.appendChild(pg);row.appendChild(ig);row.appendChild(rb);
+    document.getElementById('products-list').appendChild(row);
+  }
+  function _addImgUrl(){
+    var urls=document.querySelectorAll('[data-img-url]');
+    if(urls.length>=_MI){_toast('تنبيه','وصلت للحد الأقصى من الصور','warning');return;}
+    _ic++;var id=_ic;
+    var row=document.createElement('div');row.className='img-url-row';row.id='iu-'+id;
+    var inp=document.createElement('input');inp.className='fi';inp.type='url';inp.placeholder='https://...';inp.dataset.imgUrl=id;inp.maxLength=500;
+    var rb=document.createElement('button');rb.className='btn-rm-url';rb.type='button';
+    var rowId='iu-'+id;rb.addEventListener('click',function(){_rmRow(rowId);});
+    var ri=document.createElement('span');ri.className='mi';ri.textContent='close';rb.appendChild(ri);
+    row.appendChild(inp);row.appendChild(rb);
+    document.getElementById('img-urls-list').appendChild(row);
+  }
+  function _rmRow(id){
+    if(typeof id!=='string'||!/^(pr|iu)-\d+$/.test(id))return;
+    var el=document.getElementById(id);if(el)el.remove();
+  }
   document.getElementById('btn-add-product').addEventListener('click',_addProductRow);
   document.getElementById('btn-add-img').addEventListener('click',_addImgUrl);
-  document.getElementById('terms-row').addEventListener('click',function(){_tc=!_tc;document.getElementById('terms-check').classList.toggle('checked',_tc);});
-  function _showErr(id,show){if(!/^[a-zA-Z0-9_-]+$/.test(id))return;var el=document.getElementById('err-'+id);if(el)el.classList.toggle('show',show);var inp=document.getElementById('f-'+id);if(inp)inp.classList.toggle('err',show);}
-  function _validate(){var ok=true;['name','category','subcategory','imageUrl','description','deliveryAreas','orderUrl','contactName','contactPhone'].forEach(function(k){var v=document.getElementById('f-'+k);if(!v||!v.value.trim()){_showErr(k,true);ok=false;}else{_showErr(k,false);}});['imageUrl','orderUrl'].forEach(function(k){var v=document.getElementById('f-'+k);if(v&&v.value.trim()){try{var u=new URL(v.value.trim());if(!['http:','https:'].includes(u.protocol)){_showErr(k,true);ok=false;}}catch(e){_showErr(k,true);ok=false;}}});var hasProd=false;document.querySelectorAll('[data-pr-name]').forEach(function(el){if(el.value.trim()!=='')hasProd=true;});if(!hasProd){_toast('منتج واحد على الأقل مطلوب','لازم تضيف منتج واحد على الأقل باسم','error');ok=false;}var ph=document.getElementById('f-contactPhone');if(ph&&ph.value.trim()&&!/^[\d\s\+\-]{10,}$/.test(ph.value.trim())){_showErr('contactPhone',true);var ee=document.getElementById('err-contactPhone');if(ee&&ee.lastChild)ee.lastChild.textContent=' رقم هاتف غير صحيح';ok=false;}var _socialFields=['website','facebook','instagram','tiktok','phone','whatsapp'];var _socialFilled=0;_socialFields.forEach(function(k){var el=document.getElementById('f-'+k);if(el&&el.value.trim())_socialFilled++;});if(_socialFilled<2){_toast('بيانات السوشيال ميديا ناقصة','لازم تدخل رابط الأوردر + حقلين على الأقل من السوشيال ميديا','error');ok=false;}if(!_tc){document.getElementById('err-terms').classList.add('show');ok=false;}else{document.getElementById('err-terms').classList.remove('show');}return ok;}
-  function _collectData(){var v=function(id){var el=document.getElementById('f-'+id);return el?el.value.trim():'';};var n=function(id){var el=document.getElementById('f-'+id);return el?parseFloat(el.value)||0:0;};var pays=[].slice.call(document.querySelectorAll('.pay-opt.checked input')).map(function(i){return i.value;});var pList=[];document.querySelectorAll('[data-pr-name]').forEach(function(ne){var id=ne.dataset.prName;if(!/^\d+$/.test(id))return;var name=ne.value.trim();var priceEl=document.querySelector('[data-pr-price="'+CSS.escape(id)+'"]');var imgEl=document.querySelector('[data-pr-img="'+CSS.escape(id)+'"]');var price=parseFloat((priceEl||{}).value)||0;var img=((imgEl||{}).value||'').trim();if(name)pList.push({name_product:name,price:price,imageUrl:img});});var prods=[];document.querySelectorAll('[data-img-url]').forEach(function(el){var u=el.value.trim();if(u)prods.push(u);});var _wRaw=v('whatsapp');var _wClean=_wRaw.replace(/[^0-9]/g,'');if(_wClean.startsWith('0'))_wClean='20'+_wClean.substring(1);var _wLink=_wClean?'https://wa.me/+'+_wClean:'';return{name:v('name'),category:v('category'),subcategory:v('subcategory'),description:v('description'),imageUrl:v('imageUrl'),deliveryAreas:v('deliveryAreas'),deliveryFee:v('deliveryFee'),deliveryTime:v('deliveryTime'),minPrice:n('minPrice')||undefined,maxPrice:n('maxPrice')||undefined,paymentMethods:pays.join(' - '),orderUrl:v('orderUrl'),socialMedia:{website:v('website'),facebook:v('facebook'),instagram:v('instagram'),tiktok:v('tiktok'),phone:v('phone'),whatsapp:_wLink},website:v('website'),productsList:pList,products:prods,contactName:v('contactName'),contactPhone:v('contactPhone'),_csrfToken:window._getCsrfToken?window._getCsrfToken():''};}
-  function _showSuccess(id){document.querySelectorAll('.sec-head,.form-body,.sec-divider,.submit-section').forEach(function(el){el.style.display='none';});var s=document.getElementById('success-screen');s.classList.add('show');var iv=document.getElementById('success-id-val');if(iv)iv.textContent=id.substring(0,12)+'...';window.scrollTo({top:0,behavior:'smooth'});}
-  function _resetForm(){_pc=0;_ic=0;document.getElementById('main-form-card').querySelectorAll('.sec-head,.form-body,.sec-divider,.submit-section').forEach(function(el){el.style.display='';});document.getElementById('success-screen').classList.remove('show');document.getElementById('status-screen').classList.remove('show');document.getElementById('main-form-card').querySelectorAll('.fi').forEach(function(el){el.value='';});document.getElementById('products-list').innerHTML='';document.getElementById('img-urls-list').innerHTML='';document.querySelectorAll('.pay-opt').forEach(function(el){el.classList.remove('checked');});_tc=false;document.getElementById('terms-check').classList.remove('checked');var btn=document.getElementById('btn-submit');btn.innerHTML='<span class="mi">send</span><span id="btn-txt">أرسل طلب التسجيل</span>';btn.disabled=false;document.querySelectorAll('.field-err').forEach(function(el){el.classList.remove('show');});document.querySelectorAll('.fi.err').forEach(function(el){el.classList.remove('err');});document.getElementById('f-subcategory').innerHTML='<option value="">أختر الفئة الرئيسية أولاً</option>';try{localStorage.removeItem('easyget_ls');localStorage.removeItem('easyget_ld');}catch(e){}if(typeof grecaptcha!=='undefined')grecaptcha.reset();_addProductRow();_addImgUrl();}
+  document.getElementById('terms-row').addEventListener('click',function(){
+    _tc=!_tc;document.getElementById('terms-check').classList.toggle('checked',_tc);
+  });
+  function _showErr(id,show){
+    if(!/^[a-zA-Z0-9_-]+$/.test(id))return;
+    var el=document.getElementById('err-'+id);if(el)el.classList.toggle('show',show);
+    var inp=document.getElementById('f-'+id);if(inp)inp.classList.toggle('err',show);
+  }
+  function _validate(){
+    var ok=true;
+    ['name','category','subcategory','imageUrl','description','deliveryAreas','orderUrl','contactName','contactPhone'].forEach(function(k){
+      var v=document.getElementById('f-'+k);
+      if(!v||!v.value.trim()){_showErr(k,true);ok=false;}else{_showErr(k,false);}
+    });
+    ['imageUrl','orderUrl'].forEach(function(k){
+      var v=document.getElementById('f-'+k);
+      if(v&&v.value.trim()){
+        try{var u=new URL(v.value.trim());if(!['http:','https:'].includes(u.protocol)){_showErr(k,true);ok=false;}}
+        catch(e){_showErr(k,true);ok=false;}
+      }
+    });
+    var hasProd=false;
+    document.querySelectorAll('[data-pr-name]').forEach(function(el){if(el.value.trim()!=='')hasProd=true;});
+    if(!hasProd){_toast('منتج واحد على الأقل مطلوب','لازم تضيف منتج واحد على الأقل باسم','error');ok=false;}
+    var ph=document.getElementById('f-contactPhone');
+    if(ph&&ph.value.trim()&&!/^[\d\s\+\-]{10,}$/.test(ph.value.trim())){
+      _showErr('contactPhone',true);
+      var ee=document.getElementById('err-contactPhone');
+      if(ee&&ee.lastChild)ee.lastChild.textContent=' رقم هاتف غير صحيح';ok=false;
+    }
+    var _socialFields=['website','facebook','instagram','tiktok','phone','whatsapp'];
+    var _socialFilled=0;
+    _socialFields.forEach(function(k){var el=document.getElementById('f-'+k);if(el&&el.value.trim())_socialFilled++;});
+    if(_socialFilled<2){_toast('بيانات السوشيال ميديا ناقصة','لازم تدخل رابط الأوردر + حقلين على الأقل من السوشيال ميديا','error');ok=false;}
+    if(!_tc){document.getElementById('err-terms').classList.add('show');ok=false;}
+    else{document.getElementById('err-terms').classList.remove('show');}
+    return ok;
+  }
+  function _collectData(){
+    var v=function(id){var el=document.getElementById('f-'+id);return el?el.value.trim():'';};
+    var n=function(id){var el=document.getElementById('f-'+id);return el?parseFloat(el.value)||0:0;};
+    var pays=[].slice.call(document.querySelectorAll('.pay-opt.checked input')).map(function(i){return i.value;});
+    var pList=[];
+    document.querySelectorAll('[data-pr-name]').forEach(function(ne){
+      var id=ne.dataset.prName;if(!/^\d+$/.test(id))return;
+      var name=ne.value.trim();
+      var priceEl=document.querySelector('[data-pr-price="'+CSS.escape(id)+'"]');
+      var imgEl=document.querySelector('[data-pr-img="'+CSS.escape(id)+'"]');
+      var price=parseFloat((priceEl||{}).value)||0;
+      var img=((imgEl||{}).value||'').trim();
+      if(name)pList.push({name_product:name,price:price,imageUrl:img});
+    });
+    var prods=[];
+    document.querySelectorAll('[data-img-url]').forEach(function(el){var u=el.value.trim();if(u)prods.push(u);});
+    var _wRaw=v('whatsapp');var _wClean=_wRaw.replace(/[^0-9]/g,'');
+    if(_wClean.startsWith('0'))_wClean='20'+_wClean.substring(1);
+    var _wLink=_wClean?'https://wa.me/+'+_wClean:'';
+    return{name:v('name'),category:v('category'),subcategory:v('subcategory'),description:v('description'),imageUrl:v('imageUrl'),deliveryAreas:v('deliveryAreas'),deliveryFee:v('deliveryFee'),deliveryTime:v('deliveryTime'),minPrice:n('minPrice')||undefined,maxPrice:n('maxPrice')||undefined,paymentMethods:pays.join(' - '),orderUrl:v('orderUrl'),socialMedia:{website:v('website'),facebook:v('facebook'),instagram:v('instagram'),tiktok:v('tiktok'),phone:v('phone'),whatsapp:_wLink},website:v('website'),productsList:pList,products:prods,contactName:v('contactName'),contactPhone:v('contactPhone'),_csrfToken:window._getCsrfToken?window._getCsrfToken():''};
+  }
+  function _showSuccess(id){
+    document.querySelectorAll('.sec-head,.form-body,.sec-divider,.submit-section').forEach(function(el){el.style.display='none';});
+    var s=document.getElementById('success-screen');s.classList.add('show');
+    var iv=document.getElementById('success-id-val');if(iv)iv.textContent=id.substring(0,12)+'...';
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  function _resetForm(){
+    _pc=0;_ic=0;
+    document.getElementById('main-form-card').querySelectorAll('.sec-head,.form-body,.sec-divider,.submit-section').forEach(function(el){el.style.display='';});
+    document.getElementById('success-screen').classList.remove('show');
+    document.getElementById('status-screen').classList.remove('show');
+    document.getElementById('main-form-card').querySelectorAll('.fi').forEach(function(el){el.value='';});
+    document.getElementById('products-list').innerHTML='';
+    document.getElementById('img-urls-list').innerHTML='';
+    document.querySelectorAll('.pay-opt').forEach(function(el){el.classList.remove('checked');});
+    _tc=false;document.getElementById('terms-check').classList.remove('checked');
+    var btn=document.getElementById('btn-submit');
+    btn.innerHTML='<span class="mi">send</span><span id="btn-txt">أرسل طلب التسجيل</span>';btn.disabled=false;
+    document.querySelectorAll('.field-err').forEach(function(el){el.classList.remove('show');});
+    document.querySelectorAll('.fi.err').forEach(function(el){el.classList.remove('err');});
+    document.getElementById('f-subcategory').innerHTML='<option value="">أختر الفئة الرئيسية أولاً</option>';
+    try{localStorage.removeItem('easyget_ls');localStorage.removeItem('easyget_ld');}catch(e){}
+    if(typeof grecaptcha!=='undefined')grecaptcha.reset();
+    _addProductRow();_addImgUrl();
+  }
   var modal=document.getElementById('warningModal');
   var backBtn=document.getElementById('modalBackBtn');
   var proceedBtn=document.getElementById('modalProceedBtn');
@@ -719,10 +932,7 @@ select.fi{cursor:pointer;appearance:none}
   proceedBtn.addEventListener('click',proceedReset);
   modal.addEventListener('click',function(e){if(e.target===modal)closeModal();});
   function _showSupportToast(message){
-    var c=document.getElementById('tc');
-    var el=document.createElement('div');
-    el.className='tst support-toast';
-    el.style.maxWidth='450px';
+    var c=document.getElementById('tc');var el=document.createElement('div');el.className='tst support-toast';el.style.maxWidth='450px';
     var ti=document.createElement('div');ti.className='ti';ti.style.background='#25D36610';ti.style.color='#25D366';
     var tii=document.createElement('span');tii.className='mi';tii.textContent='support_agent';ti.appendChild(tii);
     var tb=document.createElement('div');tb.className='tb';
@@ -731,174 +941,216 @@ select.fi{cursor:pointer;appearance:none}
     tb.appendChild(tt);tb.appendChild(tm);
     var dismiss=document.createElement('button');dismiss.className='toast-dismiss';dismiss.innerHTML='<span class="mi">close</span>';dismiss.style.fontSize='18px';dismiss.style.padding='4px';
     dismiss.addEventListener('click',function(){el.classList.remove('show');setTimeout(function(){if(el.parentNode)el.remove();},300);});
-    el.appendChild(ti);el.appendChild(tb);el.appendChild(dismiss);
-    c.appendChild(el);
+    el.appendChild(ti);el.appendChild(tb);el.appendChild(dismiss);c.appendChild(el);
     requestAnimationFrame(function(){setTimeout(function(){el.classList.add('show');},10);});
     var timer=setTimeout(function(){if(el.parentNode){el.classList.remove('show');setTimeout(function(){if(el.parentNode)el.remove();},300);}},20000);
     el.addEventListener('mouseenter',function(){clearTimeout(timer);});
     el.addEventListener('mouseleave',function(){timer=setTimeout(function(){if(el.parentNode){el.classList.remove('show');setTimeout(function(){if(el.parentNode)el.remove();},300);}},5000);});
   }
-  async function _submitForm(){if(!_validate()){var fe=document.querySelector('.fi.err,.field-err.show');if(fe)fe.scrollIntoView({behavior:'smooth',block:'center'});return;}var btn=document.getElementById('btn-submit');btn.innerHTML='<span class="spinner"></span><span>بيتبعت...</span>';btn.disabled=true;try{var rc=(typeof grecaptcha!=='undefined')?grecaptcha.getResponse():'';if(!rc){document.getElementById('err-recaptcha').classList.add('show');btn.innerHTML='<span class="mi">send</span><span>أرسل طلب التسجيل</span>';btn.disabled=false;return;}document.getElementById('err-recaptcha').classList.remove('show');var data=_collectData();data._recaptchaToken=rc;if(typeof window._registerBrand!=='function')throw new Error('Service not ready');var ref=await window._registerBrand(data);try{localStorage.setItem('easyget_ls',Date.now().toString());localStorage.setItem('easyget_ld',ref.id);}catch(e){}_toast('تم الإرسال بنجاح!','طلبك اتحفظ وهيتراجع','success');if(typeof grecaptcha!=='undefined')grecaptcha.reset();_showSuccess(ref.id);}catch(e){console.error(e);if(typeof grecaptcha!=='undefined')grecaptcha.reset();btn.innerHTML='<span class="mi">send</span><span>أرسل طلب التسجيل</span>';btn.disabled=false;var supportMsg='حدث خطأ أثناء إرسال البيانات. تأكد من اتصال الإنترنت أو حاول مرة أخرى. إذا استمرت المشكلة، تواصل مع الدعم.';
-    if(e.message==='RATE_LIMIT_EXCEEDED')supportMsg='لقد تجاوزت الحد المسموح للإرسال. يرجى الانتظار ثم المحاولة مرة أخرى.';
-    else if(e.message==='CSRF_VALIDATION_FAILED')supportMsg='فشل التحقق الأمني. يرجى تحديث الصفحة والمحاولة مجدداً.';
-    else if(e.message==='BOT_DETECTED')supportMsg='تم اكتشاف نشاط غير معتاد. يرجى التأكد من أنك لست روبوت وإعادة المحاولة.';
-    else if(e.message.includes('Firebase')||e.message.includes('network'))supportMsg='مشكلة في الاتصال بقاعدة البيانات. تأكد من اتصال الإنترنت أو حاول لاحقاً.';
-    _showSupportToast(supportMsg);}}
+  async function _submitForm(){
+    if(!_validate()){var fe=document.querySelector('.fi.err,.field-err.show');if(fe)fe.scrollIntoView({behavior:'smooth',block:'center'});return;}
+    var btn=document.getElementById('btn-submit');btn.innerHTML='<span class="spinner"></span><span>بيتبعت...</span>';btn.disabled=true;
+    try{
+      var rc=(typeof grecaptcha!=='undefined')?grecaptcha.getResponse():'';
+      if(!rc){document.getElementById('err-recaptcha').classList.add('show');btn.innerHTML='<span class="mi">send</span><span>أرسل طلب التسجيل</span>';btn.disabled=false;return;}
+      document.getElementById('err-recaptcha').classList.remove('show');
+      var data=_collectData();data._recaptchaToken=rc;
+      if(typeof window._registerBrand!=='function')throw new Error('Service not ready');
+      var ref=await window._registerBrand(data);
+      try{localStorage.setItem('easyget_ls',Date.now().toString());localStorage.setItem('easyget_ld',ref.id);}catch(e){}
+      _toast('تم الإرسال بنجاح!','طلبك اتحفظ وهيتراجع','success');
+      if(typeof grecaptcha!=='undefined')grecaptcha.reset();
+      _showSuccess(ref.id);
+    }catch(e){
+      if(typeof grecaptcha!=='undefined')grecaptcha.reset();
+      btn.innerHTML='<span class="mi">send</span><span>أرسل طلب التسجيل</span>';btn.disabled=false;
+      var supportMsg='حدث خطأ أثناء إرسال البيانات. تأكد من اتصال الإنترنت أو حاول مرة أخرى.';
+      if(e.message==='RATE_LIMIT_EXCEEDED')supportMsg='لقد تجاوزت الحد المسموح للإرسال. يرجى الانتظار ثم المحاولة مرة أخرى.';
+      else if(e.message==='CSRF_VALIDATION_FAILED')supportMsg='فشل التحقق الأمني. يرجى تحديث الصفحة والمحاولة مجدداً.';
+      else if(e.message==='BOT_DETECTED')supportMsg='تم اكتشاف نشاط غير معتاد. يرجى التأكد من أنك لست روبوت وإعادة المحاولة.';
+      _showSupportToast(supportMsg);
+    }
+  }
   document.getElementById('btn-submit').addEventListener('click',_submitForm);
-  async function _showStatus(docId){if(!window._getBrandStatus)return false;var data=await window._getBrandStatus(docId);if(!data)return false;document.querySelectorAll('.sec-head,.form-body,.sec-divider,.submit-section,#success-screen').forEach(function(el){el.style.display='none';});var ss=document.getElementById('status-screen');var icon=document.getElementById('status-icon');var iconMi=document.getElementById('status-icon-mi');var title=document.getElementById('status-title');var msg=document.getElementById('status-message');var idSp=document.getElementById('status-id-span');var wl=document.getElementById('status-whatsapp');wl.href='https://wa.me/201124933983';idSp.textContent=docId.substring(0,12)+'...';var _st=data.status||'pending';if(_st==='approved'||data.isActive===true){icon.className='status-icon accepted';iconMi.textContent='check_circle';title.className='status-title accepted';title.textContent='تم قبول الطلب';msg.textContent='تم قبول طلبكم وإضافة البراند الخاص بكم.\n\nيرجى التواصل مع الدعم الفني لاستكمال أو تحديد بعض البيانات.';}else if(_st==='rejected'){icon.className='status-icon pending';iconMi.textContent='cancel';icon.style.background='#ef444420';icon.style.color='#ef4444';title.className='status-title pending';title.style.color='#ef4444';title.textContent='تم رفض الطلب';msg.textContent='نأسف، تم رفض طلب تسجيل براندك من قِبل الإدارة.\n\nيمكنك التواصل مع الدعم الفني لمعرفة السبب أو تقديم طلب جديد بعد تعديل البيانات.';}else{icon.className='status-icon pending';iconMi.textContent='pending';title.className='status-title pending';title.textContent='طلبك قيد المراجعة';msg.textContent='طلبك قيد المراجعة من الإدارة والمختصين وسيتم الرد عليكم في أقرب وقت.';}ss.classList.add('show');window.scrollTo({top:0,behavior:'smooth'});return true;}
-  function _toast(title,msg,type){type=type||'info';var icons={success:'check_circle',error:'error',info:'info',warning:'warning_amber'};var cls={success:'ts',error:'te',info:'ti-i',warning:'tw'};var c=document.getElementById('tc');var el=document.createElement('div');el.className='tst';var ti=document.createElement('div');ti.className='ti '+(cls[type]||'ti-i');var tii=document.createElement('span');tii.className='mi';tii.textContent=icons[type]||'info';ti.appendChild(tii);var tb=document.createElement('div');tb.className='tb';var tt=document.createElement('div');tt.className='tt';tt.textContent=title;tb.appendChild(tt);if(msg){var tm=document.createElement('div');tm.className='tm';tm.textContent=msg;tb.appendChild(tm);}el.appendChild(ti);el.appendChild(tb);c.appendChild(el);requestAnimationFrame(function(){setTimeout(function(){el.classList.add('show');},10);});setTimeout(function(){el.classList.remove('show');setTimeout(function(){el.remove();},350);},3800);}
-  document.addEventListener('DOMContentLoaded',async function(){_addProductRow();_addImgUrl();document.querySelectorAll('.pay-opt').forEach(function(el){el.addEventListener('click',function(e){e.preventDefault();this.classList.toggle('checked');var cb=this.querySelector('input[type="checkbox"]');if(cb)cb.checked=this.classList.contains('checked');});});var docId=null;try{docId=localStorage.getItem('easyget_ld');}catch(e){}if(docId){var shown=await _showStatus(docId);if(shown)return;}var ls=null;try{ls=localStorage.getItem('easyget_ls');}catch(e){}if(ls&&(Date.now()-parseInt(ls)<3600000)){document.querySelectorAll('.sec-head,.form-body,.sec-divider,.submit-section').forEach(function(el){el.style.display='none';});document.getElementById('success-screen').classList.add('show');var iv=document.getElementById('success-id-val');if(iv)iv.textContent='تم الإرسال سابقاً';}document.querySelectorAll('.fi').forEach(function(el){el.addEventListener('input',function(){el.classList.remove('err');var fid=el.id?el.id.replace('f-',''):'';if(fid&&/^[a-zA-Z0-9_-]+$/.test(fid))_showErr(fid,false);});});});
+  async function _showStatus(docId){
+    if(!window._getBrandStatus)return false;
+    var data=await window._getBrandStatus(docId);if(!data)return false;
+    document.querySelectorAll('.sec-head,.form-body,.sec-divider,.submit-section,#success-screen').forEach(function(el){el.style.display='none';});
+    var ss=document.getElementById('status-screen');
+    var icon=document.getElementById('status-icon');var iconMi=document.getElementById('status-icon-mi');
+    var title=document.getElementById('status-title');var msg=document.getElementById('status-message');
+    var idSp=document.getElementById('status-id-span');var wl=document.getElementById('status-whatsapp');
+    wl.href='https://wa.me/201124933983';idSp.textContent=docId.substring(0,12)+'...';
+    var _st=data.status||'pending';
+    if(_st==='approved'||data.isActive===true){icon.className='status-icon accepted';iconMi.textContent='check_circle';title.className='status-title accepted';title.textContent='تم قبول الطلب';msg.textContent='تم قبول طلبكم وإضافة البراند الخاص بكم.\n\nيرجى التواصل مع الدعم الفني لاستكمال أو تحديد بعض البيانات.';}
+    else if(_st==='rejected'){icon.className='status-icon pending';iconMi.textContent='cancel';icon.style.background='#ef444420';icon.style.color='#ef4444';title.className='status-title pending';title.style.color='#ef4444';title.textContent='تم رفض الطلب';msg.textContent='نأسف، تم رفض طلب تسجيل براندك من قِبل الإدارة.\n\nيمكنك التواصل مع الدعم الفني لمعرفة السبب أو تقديم طلب جديد بعد تعديل البيانات.';}
+    else{icon.className='status-icon pending';iconMi.textContent='pending';title.className='status-title pending';title.textContent='طلبك قيد المراجعة';msg.textContent='طلبك قيد المراجعة من الإدارة والمختصين وسيتم الرد عليكم في أقرب وقت.';}
+    ss.classList.add('show');window.scrollTo({top:0,behavior:'smooth'});return true;
+  }
+  function _toast(title,msg,type){
+    type=type||'info';
+    var icons={success:'check_circle',error:'error',info:'info',warning:'warning_amber'};
+    var cls={success:'ts',error:'te',info:'ti-i',warning:'tw'};
+    var c=document.getElementById('tc');var el=document.createElement('div');el.className='tst';
+    var ti=document.createElement('div');ti.className='ti '+(cls[type]||'ti-i');
+    var tii=document.createElement('span');tii.className='mi';tii.textContent=icons[type]||'info';ti.appendChild(tii);
+    var tb=document.createElement('div');tb.className='tb';
+    var tt=document.createElement('div');tt.className='tt';tt.textContent=title;tb.appendChild(tt);
+    if(msg){var tm=document.createElement('div');tm.className='tm';tm.textContent=msg;tb.appendChild(tm);}
+    el.appendChild(ti);el.appendChild(tb);c.appendChild(el);
+    requestAnimationFrame(function(){setTimeout(function(){el.classList.add('show');},10);});
+    setTimeout(function(){el.classList.remove('show');setTimeout(function(){el.remove();},350);},3800);
+  }
+  document.addEventListener('DOMContentLoaded',async function(){
+    _addProductRow();_addImgUrl();
+    document.querySelectorAll('.pay-opt').forEach(function(el){
+      el.addEventListener('click',function(e){e.preventDefault();this.classList.toggle('checked');var cb=this.querySelector('input[type="checkbox"]');if(cb)cb.checked=this.classList.contains('checked');});
+    });
+    var docId=null;try{docId=localStorage.getItem('easyget_ld');}catch(e){}
+    if(docId){var shown=await _showStatus(docId);if(shown)return;}
+    var ls=null;try{ls=localStorage.getItem('easyget_ls');}catch(e){}
+    if(ls&&(Date.now()-parseInt(ls)<3600000)){
+      document.querySelectorAll('.sec-head,.form-body,.sec-divider,.submit-section').forEach(function(el){el.style.display='none';});
+      document.getElementById('success-screen').classList.add('show');
+      var iv=document.getElementById('success-id-val');if(iv)iv.textContent='تم الإرسال سابقاً';
+    }
+    document.querySelectorAll('.fi').forEach(function(el){
+      el.addEventListener('input',function(){el.classList.remove('err');var fid=el.id?el.id.replace('f-',''):'';if(fid&&/^[a-zA-Z0-9_-]+$/.test(fid))_showErr(fid,false);});
+    });
+  });
 })();
 </script>
 
 <script>
 (function(){
-  function renderRecaptcha(){if(typeof grecaptcha!=='undefined'){var d=document.querySelector('.g-recaptcha');if(d&&d.children.length===0){try{grecaptcha.render(d,{'sitekey':d.getAttribute('data-sitekey')});}catch(e){}}}}
+  function renderRecaptcha(){
+    if(typeof grecaptcha!=='undefined'){
+      var d=document.querySelector('.g-recaptcha');
+      if(d&&d.children.length===0){try{grecaptcha.render(d,{'sitekey':d.getAttribute('data-sitekey')});}catch(e){}}
+    }
+  }
   renderRecaptcha();setTimeout(renderRecaptcha,500);window.addEventListener('load',renderRecaptcha);
 })();
 </script>
 
 <script>
 (function(){
-  const supportBtn = document.getElementById('supportFloatBtn');
-  const supportPopup = document.getElementById('supportPopup');
-  const closeSupport = document.getElementById('closeSupportPopup');
-  supportBtn.addEventListener('click', function(e) {
-    e.stopPropagation();
-    supportPopup.classList.toggle('show');
+  var _supportBtn=document.getElementById('supportFloatBtn');
+  var _supportPopup=document.getElementById('supportPopup');
+  var _closeSupport=document.getElementById('closeSupportPopup');
+  _supportBtn.addEventListener('click',function(e){e.stopPropagation();_supportPopup.classList.toggle('show');});
+  _closeSupport.addEventListener('click',function(){_supportPopup.classList.remove('show');});
+  document.addEventListener('click',function(e){
+    if(!_supportPopup.contains(e.target)&&e.target!==_supportBtn&&!_supportBtn.contains(e.target))_supportPopup.classList.remove('show');
   });
-  closeSupport.addEventListener('click', function() {
-    supportPopup.classList.remove('show');
+
+  var _aiBtn=document.getElementById('aiFloatBtn');
+  var _aiWindow=document.getElementById('aiChatWindow');
+  var _closeAi=document.getElementById('closeAiChat');
+  var _aiInput=document.getElementById('aiChatInput');
+  var _aiSend=document.getElementById('aiSendBtn');
+  var _aiMessages=document.getElementById('aiChatMessages');
+  _aiBtn.addEventListener('click',function(e){e.stopPropagation();_aiWindow.classList.toggle('show');});
+  _closeAi.addEventListener('click',function(){_aiWindow.classList.remove('show');});
+  document.addEventListener('click',function(e){
+    if(!_aiWindow.contains(e.target)&&e.target!==_aiBtn&&!_aiBtn.contains(e.target))_aiWindow.classList.remove('show');
   });
-  document.addEventListener('click', function(e) {
-    if (!supportPopup.contains(e.target) && e.target !== supportBtn && !supportBtn.contains(e.target)) {
-      supportPopup.classList.remove('show');
-    }
-  });
-  const aiBtn = document.getElementById('aiFloatBtn');
-  const aiWindow = document.getElementById('aiChatWindow');
-  const closeAi = document.getElementById('closeAiChat');
-  const aiInput = document.getElementById('aiChatInput');
-  const aiSend = document.getElementById('aiSendBtn');
-  const aiMessages = document.getElementById('aiChatMessages');
-  aiBtn.addEventListener('click', function(e) {
-    e.stopPropagation();
-    aiWindow.classList.toggle('show');
-  });
-  closeAi.addEventListener('click', function() {
-    aiWindow.classList.remove('show');
-  });
-  document.addEventListener('click', function(e) {
-    if (!aiWindow.contains(e.target) && e.target !== aiBtn && !aiBtn.contains(e.target)) {
-      aiWindow.classList.remove('show');
-    }
-  });
-const API_KEY = (() => {
-  const encoded = 'QUl6YVN5RGJoaUNHVXFKSkpzSTNab1FZZ3BiZVE5dEZjM2o5ckVR';
-  try { return atob(encoded); } catch(e) { return ''; }
-})();
-   const API_URL = "https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash-lite:generateContent";
-  const BLOCKED_PATTERNS = [
-    /hack/i, /security/i, /password/i, /api[_\s]?key/i, /database/i, /firebase/i, /config/i,
-    /bypass/i, /inject/i, /exploit/i, /system/i, /admin/i, /source/i, /token/i, /credential/i,
-    /breach/i, /vulnerability/i, /attack/i, /phish/i, /malware/i, /script/i, /xss/i, /csrf/i,
-    /sql/i, /exec/i, /eval/i, /function/i, /constructor/i, /prototype/i, /__proto__/i,
-    /window/i, /document/i, /localStorage/i, /sessionStorage/i, /indexedDB/i, /cookie/i
+
+  var _AI_ENDPOINT="https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
+
+  var _BLOCKED=[
+    /hack/i,/security(?!\s*(الأمان|الخاصة))/i,/password/i,/api[_\s]?key/i,/database/i,/firebase/i,
+    /config/i,/bypass/i,/inject/i,/exploit/i,/source\s*code/i,/admin\s*(panel|login)/i,
+    /token/i,/credential/i,/breach/i,/vulnerability/i,/attack/i,/phish/i,/malware/i,
+    /eval\s*\(/i,/xss/i,/sql\s*inject/i,/window\.__/i,/document\.(cookie|write)/i,
+    /localStorage/i,/sessionStorage/i,/__proto__/i,/constructor\[/i
   ];
-  function isQuestionAllowed(text) {
-    if (!text || typeof text !== 'string') return false;
-    const trimmed = text.trim();
-    if (trimmed.length < 2 || trimmed.length > 200) return false;
-    for (let pattern of BLOCKED_PATTERNS) {
-      if (pattern.test(trimmed)) return false;
-    }
-    const allowedContext = /(استخدام|تسجيل|براند|منتج|بيانات|خطوات|صفحة|موقع|حقل|إضافة|حفظ|تعديل|عرض|قائمة|سعر|صورة|رابط|شروط|أحكام|دعم|مساعدة|easyget)/i;
-    if (!allowedContext.test(trimmed)) return false;
+
+  var _ALLOWED_CONTEXT=/(استخدام|تسجيل|براند|منتج|بيانات|خطوات|صفحة|موقع|حقل|إضافة|حفظ|تعديل|عرض|قائمة|سعر|صورة|رابط|شروط|أحكام|دعم|مساعدة|easyget|ايزي جت|اوردر|فئة|توصيل|دفع|واتساب|فيسبوك|انستغرام)/i;
+
+  var _reqCount=0;
+  var _lastReqTime=0;
+  var _MAX_RPM=10;
+
+  function _isAllowed(text){
+    if(!text||typeof text!=='string')return false;
+    var t=text.trim();
+    if(t.length<2||t.length>200)return false;
+    for(var i=0;i<_BLOCKED.length;i++){if(_BLOCKED[i].test(t))return false;}
+    if(!_ALLOWED_CONTEXT.test(t))return false;
     return true;
   }
-  function escapeHtml(text) {
-    if (!text) return '';
-    return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-  }
-  function addMessage(content, sender) {
-    const msgDiv = document.createElement('div');
-    msgDiv.className = `ai-message ${sender}`;
-    if (sender === 'bot') {
-      const formatted = content.split('\n').map(line => escapeHtml(line)).join('<br>');
-      msgDiv.innerHTML = formatted;
-    } else {
-      msgDiv.textContent = content;
-    }
-    aiMessages.appendChild(msgDiv);
-    aiMessages.scrollTop = aiMessages.scrollHeight;
-  }
-  function addTypingIndicator() {
-    const typingDiv = document.createElement('div');
-    typingDiv.className = 'ai-message bot';
-    typingDiv.id = 'typing-indicator';
-    typingDiv.innerHTML = '<span class="spinner" style="width:16px;height:16px;border-width:2px;border-color:#D4162A;border-top-color:transparent;"></span> جاري الكتابة...';
-    aiMessages.appendChild(typingDiv);
-    aiMessages.scrollTop = aiMessages.scrollHeight;
-  }
-  function removeTypingIndicator() {
-    const typing = document.getElementById('typing-indicator');
-    if (typing) typing.remove();
-  }
-async function sendToGemini(question) {
-  const prompt = `أنت مساعد مفيد ومتخصص في مساعدة المستخدمين على استخدام موقع EasyGet لتسجيل البراندات وإضافة البيانات. أجب فقط عن الأسئلة المتعلقة بكيفية استخدام الموقع، أو شرح الحقول، أو خطوات التسجيل. لا تجب عن أي أسئلة تتعلق بالأمان أو مصادر البيانات أو بنية النظام أو أي مواضيع خارج نطاق الموقع. الإجابات يجب أن تكون مختصرة ومفيدة ومنظمة بنقاط مرقمة (1,2,3...). إذا كان السؤال خارج النطاق المسموح، قل: "عذراً، يمكنني فقط مساعدتك في استخدام موقع EasyGet وإضافة بيانات البراند."
 
-السؤال: ${question}`;
+  function _escHtml(text){
+    if(!text)return'';
+    return String(text).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
 
-  const response = await fetch(`${API_URL}?key=${API_KEY}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: { temperature: 0.2, maxOutputTokens: 10000 }
-    })
-  });
-  
-  if (!response.ok) {
-    const errorData = await response.json();
-    console.error('API Error Details:', errorData);
-    throw new Error(errorData.error?.message || 'API request failed');
+  function _addMsg(content,sender){
+    var d=document.createElement('div');d.className='ai-message '+sender;
+    if(sender==='bot'){
+      var f=content.split('\n').map(function(l){return _escHtml(l);}).join('<br>');
+      d.innerHTML=f;
+    }else{d.textContent=content;}
+    _aiMessages.appendChild(d);_aiMessages.scrollTop=_aiMessages.scrollHeight;
   }
-  
-  const data = await response.json();
-  return data.candidates?.[0]?.content?.parts?.[0]?.text || 'عذراً، لم أستطع معالجة طلبك.';
-}
-  async function handleAiSend() {
-    const question = aiInput.value.trim();
-    if (!question) return;
-    if (!isQuestionAllowed(question)) {
-      addMessage('عذراً، لا يمكنني الإجابة على هذا السؤال. يمكنني فقط مساعدتك في استخدام موقع EasyGet وإضافة بيانات البراند.', 'bot');
-      aiInput.value = '';
-      return;
-    }
-    addMessage(question, 'user');
-    aiInput.value = '';
-    aiSend.disabled = true;
-    addTypingIndicator();
-    try {
-      const answer = await sendToGemini(question);
-      removeTypingIndicator();
-      addMessage(answer, 'bot');
-    } catch (error) {
-      removeTypingIndicator();
-      addMessage('عذراً، حدث خطأ أثناء معالجة طلبك. يرجى المحاولة لاحقاً.', 'bot');
-      console.error('AI Error:', error);
-    } finally {
-      aiSend.disabled = false;
-      aiInput.focus();
-    }
+
+  function _addTyping(){
+    var d=document.createElement('div');d.className='ai-message bot';d.id='typing-indicator';
+    d.innerHTML='<span class="spinner" style="width:16px;height:16px;border-width:2px;border-color:#D4162A;border-top-color:transparent;"></span> جاري الكتابة...';
+    _aiMessages.appendChild(d);_aiMessages.scrollTop=_aiMessages.scrollHeight;
   }
-  aiSend.addEventListener('click', handleAiSend);
-  aiInput.addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      handleAiSend();
+
+  function _rmTyping(){var t=document.getElementById('typing-indicator');if(t)t.remove();}
+
+  function _chkRate(){
+    var now=Date.now();
+    if(now-_lastReqTime>60000){_reqCount=0;_lastReqTime=now;}
+    if(_reqCount>=_MAX_RPM)return false;
+    _reqCount++;return true;
+  }
+
+  function _getKey(){
+    var _p1='AIzaSy';
+    var _p2=atob('REJoaUNHVXFKSkpzSTNab1FZZ3BiZVE5dEZjM2o5ckVR');
+    return _p1+_p2;
+  }
+
+  async function _askGemini(q){
+    if(!_chkRate()){return'عذراً، لقد تجاوزت الحد المسموح من الأسئلة. يرجى الانتظار قليلاً ثم المحاولة مجدداً.';}
+    var _sys='أنت مساعد EasyGet AI المتخصص في مساعدة المستخدمين على تسجيل براندهم في منصة EasyGet. أجب فقط عن الأسئلة المتعلقة باستخدام الموقع، شرح الحقول، وخطوات التسجيل. لا تجب عن أي سؤال خارج هذا النطاق. ردودك تكون مختصرة ومفيدة ومرتبة بنقاط واضحة.';
+    var _url=_AI_ENDPOINT+'?key='+_getKey();
+    var _body=JSON.stringify({contents:[{role:'user',parts:[{text:_sys+'\n\nالسؤال: '+q}]}],generationConfig:{temperature:0.2,maxOutputTokens:600,stopSequences:[]}});
+    var resp=await fetch(_url,{method:'POST',headers:{'Content-Type':'application/json'},body:_body});
+    if(!resp.ok){
+      var errData=await resp.json().catch(function(){return{};});
+      var errMsg=(errData&&errData.error&&errData.error.message)||'';
+      if(errMsg.indexOf('API key')!==-1||resp.status===400||resp.status===403){
+        return'عذراً، خدمة الذكاء الاصطناعي غير متاحة حالياً. يرجى التواصل مع الدعم الفني.';
+      }
+      throw new Error('API_ERROR_'+resp.status);
     }
-  });
+    var data=await resp.json();
+    return(data&&data.candidates&&data.candidates[0]&&data.candidates[0].content&&data.candidates[0].content.parts&&data.candidates[0].content.parts[0]&&data.candidates[0].content.parts[0].text)||'عذراً، لم أستطع معالجة طلبك.';
+  }
+
+  async function _handleSend(){
+    var q=_aiInput.value.trim();if(!q)return;
+    if(!_isAllowed(q)){
+      _addMsg('عذراً، لا يمكنني الإجابة على هذا السؤال. يمكنني فقط مساعدتك في استخدام موقع EasyGet وإضافة بيانات البراند.','bot');
+      _aiInput.value='';return;
+    }
+    _addMsg(q,'user');_aiInput.value='';
+    _aiSend.disabled=true;_addTyping();
+    try{
+      var ans=await _askGemini(q);_rmTyping();_addMsg(ans,'bot');
+    }catch(e){
+      _rmTyping();_addMsg('عذراً، حدث خطأ مؤقت. يرجى المحاولة مرة أخرى.','bot');
+    }finally{_aiSend.disabled=false;_aiInput.focus();}
+  }
+
+  _aiSend.addEventListener('click',_handleSend);
+  _aiInput.addEventListener('keypress',function(e){if(e.key==='Enter'){e.preventDefault();_handleSend();}});
 })();
 </script>
 
