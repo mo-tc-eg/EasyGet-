@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google-site-verification" content="tc77DT4BIKoneK7p2npUFNJmneika-E37urjFIG5fAo">
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://www.google.com https://www.gstatic.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://i.postimg.cc; script-src 'self' 'unsafe-inline' https://www.google.com https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https://i.postimg.cc https://www.gstatic.com;">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://www.google.com https://www.gstatic.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://i.postimg.cc https://generativelanguage.googleapis.com; script-src 'self' 'unsafe-inline' https://www.google.com https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https://i.postimg.cc https://www.gstatic.com; connect-src 'self' https://generativelanguage.googleapis.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com;">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>تسجيل براندك | EasyGet App</title>
 <link rel="icon" type="image/png" href="https://i.postimg.cc/d1yfBw4c/LogoEasyGet.png">
@@ -184,21 +184,6 @@ select.fi{cursor:pointer;appearance:none}
 .spinner{width:20px;height:20px;border:2.5px solid rgba(255,255,255,0.4);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;display:inline-block}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-.support-bar{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);padding:10px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;z-index:1000;direction:rtl;box-shadow:0 -4px 12px rgba(0,0,0,0.05);transition:transform 0.35s cubic-bezier(0.2,0.9,0.4,1.1);transform:translateY(0)}
-.support-bar.hide-bar{transform:translateY(100%)}
-.support-bar.peek-bar{transform:translateY(calc(100% - 52px))}
-.support-text{font-size:13px;font-weight:600;color:var(--text2);display:flex;align-items:center;gap:6px}
-.support-icons{display:flex;align-items:center;gap:20px}
-.support-link{display:flex;align-items:center;gap:6px;text-decoration:none;font-size:13px;font-weight:600;padding:6px 12px;border-radius:30px;transition:var(--tr)}
-.support-link.whatsapp{background:#25D36610;color:#25D366;border:1px solid #25D36620}
-.support-link.whatsapp:hover{background:#25D366;color:#fff}
-.support-link.email{background:var(--brand-soft);color:var(--brand);border:1px solid rgba(212,22,42,0.2)}
-.support-link.email:hover{background:var(--brand);color:#fff}
-.support-link .mi{font-size:18px}
-.recommended-badge{font-size:10px;background:#25D366;color:white;padding:2px 8px;border-radius:30px;margin-right:4px;font-weight:700}
-
-#recaptcha-container{display:flex!important;justify-content:flex-end!important;min-height:78px;margin-bottom:16px}
-
 .warning-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.75);backdrop-filter:blur(5px);z-index:10000;align-items:center;justify-content:center;padding:20px;direction:rtl}
 .warning-modal.show{display:flex}
 .modal-content{background:var(--surface);border-radius:24px;max-width:500px;width:100%;overflow:hidden;box-shadow:0 25px 50px -12px rgba(0,0,0,0.5);animation:modalPop 0.3s cubic-bezier(0.34,1.56,0.64,1);border:1px solid var(--border2)}
@@ -218,6 +203,43 @@ select.fi{cursor:pointer;appearance:none}
 .btn-modal-proceed{background:var(--brand);color:#fff;box-shadow:0 2px 8px var(--brand-glow)}
 .btn-modal-proceed:hover{background:var(--brand-dark);transform:translateY(-1px)}
 
+.floating-support-btn{position:fixed;bottom:24px;left:24px;width:56px;height:56px;border-radius:28px;background:var(--surface);box-shadow:0 8px 20px rgba(0,0,0,0.15);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10000;border:1.5px solid var(--border2);transition:var(--tr);color:var(--brand)}
+.floating-support-btn:hover{transform:scale(1.05);box-shadow:0 12px 28px rgba(0,0,0,0.2)}
+.floating-support-btn .mi{font-size:28px}
+.floating-support-popup{position:fixed;bottom:96px;left:24px;width:280px;background:var(--surface);border-radius:20px;box-shadow:var(--shadow-lg);border:1px solid var(--border2);z-index:10001;padding:16px;display:none;transform-origin:bottom left;animation:popIn 0.2s ease}
+.floating-support-popup.show{display:block}
+.support-popup-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.support-popup-header span{font-weight:800;font-size:16px;color:var(--text)}
+.support-popup-close{background:transparent;border:none;cursor:pointer;color:var(--text3);padding:4px}
+.support-popup-close:hover{color:var(--brand)}
+.support-option{display:flex;align-items:center;gap:12px;padding:12px;border-radius:14px;background:var(--surface2);margin-bottom:8px;text-decoration:none;color:var(--text);transition:var(--tr);border:1px solid transparent}
+.support-option:hover{background:var(--brand-soft);border-color:var(--brand-glow)}
+.support-option .mi{font-size:22px}
+.support-option.email .mi{color:var(--brand)}
+.support-option.whatsapp .mi{color:#25D366}
+
+.floating-ai-btn{position:fixed;bottom:24px;right:24px;width:auto;height:56px;border-radius:28px;background:var(--brand);box-shadow:0 8px 20px rgba(212,22,42,0.3);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10000;border:none;padding:0 20px;gap:8px;transition:var(--tr);color:#fff;font-weight:800;font-size:16px}
+.floating-ai-btn:hover{transform:scale(1.05);box-shadow:0 12px 28px rgba(212,22,42,0.4)}
+.floating-ai-btn .mi{font-size:24px}
+.ai-chat-window{position:fixed;bottom:96px;right:24px;width:340px;height:480px;background:var(--surface);border-radius:20px;box-shadow:var(--shadow-lg);border:1px solid var(--border2);z-index:10001;display:none;flex-direction:column;overflow:hidden;transform-origin:bottom right;animation:popIn 0.2s ease}
+.ai-chat-window.show{display:flex}
+.ai-chat-header{display:flex;justify-content:space-between;align-items:center;padding:16px;border-bottom:1px solid var(--border);background:var(--brand-soft)}
+.ai-chat-header span{font-weight:800;color:var(--brand);display:flex;align-items:center;gap:8px}
+.ai-chat-close{background:transparent;border:none;cursor:pointer;color:var(--text3);padding:4px}
+.ai-chat-close:hover{color:var(--brand)}
+.ai-chat-messages{flex:1;padding:16px;overflow-y:auto;display:flex;flex-direction:column;gap:12px}
+.ai-message{max-width:85%;padding:10px 14px;border-radius:16px;font-size:14px;line-height:1.5;word-break:break-word}
+.ai-message.user{align-self:flex-end;background:var(--brand);color:#fff;border-bottom-right-radius:4px}
+.ai-message.bot{align-self:flex-start;background:var(--surface2);color:var(--text);border-bottom-left-radius:4px;border:1px solid var(--border)}
+.ai-message.bot ol, .ai-message.bot ul{margin-right:20px;margin-top:4px;margin-bottom:4px}
+.ai-chat-input-area{display:flex;padding:12px;border-top:1px solid var(--border);background:var(--surface2)}
+.ai-chat-input{flex:1;background:var(--surface);border:1.5px solid var(--border2);border-radius:20px;padding:10px 16px;font-family:'Cairo',sans-serif;font-size:14px;outline:none;resize:none}
+.ai-chat-input:focus{border-color:var(--brand)}
+.ai-send-btn{background:var(--brand);border:none;border-radius:50%;width:40px;height:40px;margin-right:8px;cursor:pointer;color:#fff;display:flex;align-items:center;justify-content:center;transition:var(--tr)}
+.ai-send-btn:hover{background:var(--brand-dark)}
+.ai-send-btn .mi{font-size:20px}
+.ai-send-btn:disabled{opacity:0.6;cursor:not-allowed}
+
 @media(max-width:640px){
   .grid-2,.grid-3{grid-template-columns:1fr}
   .full{grid-column:1}
@@ -225,13 +247,15 @@ select.fi{cursor:pointer;appearance:none}
   .form-body{padding:16px}
   .main-wrap{margin-top:-20px}
   .payment-opts{flex-direction:column}
-  .support-bar{flex-direction:column;align-items:stretch}
-  .support-icons{justify-content:center}
   .success-actions{flex-direction:column;width:100%}
   .btn-success,.btn-support-success{justify-content:center}
   .support-toast{max-width:90%}
   .modal-content{margin:16px}
   .modal-footer{flex-direction:column}
+  .floating-support-btn{left:16px;bottom:16px}
+  .floating-ai-btn{right:16px;bottom:16px}
+  .floating-support-popup{left:16px;bottom:80px;width:260px}
+  .ai-chat-window{right:16px;bottom:80px;width:calc(100vw - 32px);max-width:340px}
 }
 </style>
 </head>
@@ -539,11 +563,39 @@ select.fi{cursor:pointer;appearance:none}
 
 <div class="toast-c" id="tc"></div>
 
-<div class="support-bar" id="supportBar">
-  <div class="support-text"><span class="mi">support_agent</span> للتواصل مع الدعم الفني</div>
-  <div class="support-icons">
-    <a href="https://wa.me/201125933983" target="_blank" rel="noopener noreferrer" class="support-link whatsapp"><span class="mi">chat</span> واتساب<span class="recommended-badge">موصى به</span></a>
-    <a href="#" id="email-support-link" class="support-link email"><span class="mi">email</span> إيميل</a>
+<div class="floating-support-btn" id="supportFloatBtn">
+  <span class="mi">support_agent</span>
+</div>
+<div class="floating-support-popup" id="supportPopup">
+  <div class="support-popup-header">
+    <span>الدعم الفني</span>
+    <button class="support-popup-close" id="closeSupportPopup"><span class="mi">close</span></button>
+  </div>
+  <a href="mailto:easyget.app1@gmail.com" class="support-option email">
+    <span class="mi">email</span>
+    <span>البريد الإلكتروني</span>
+  </a>
+  <a href="https://wa.me/201125933983" target="_blank" rel="noopener noreferrer" class="support-option whatsapp">
+    <span class="mi">chat</span>
+    <span>واتساب</span>
+  </a>
+</div>
+
+<div class="floating-ai-btn" id="aiFloatBtn">
+  <span class="mi">smart_toy</span>
+  <span>EasyGet AI</span>
+</div>
+<div class="ai-chat-window" id="aiChatWindow">
+  <div class="ai-chat-header">
+    <span><span class="mi">smart_toy</span> EasyGet AI</span>
+    <button class="ai-chat-close" id="closeAiChat"><span class="mi">close</span></button>
+  </div>
+  <div class="ai-chat-messages" id="aiChatMessages">
+    <div class="ai-message bot">مرحباً! أنا مساعد EasyGet AI. يمكنني مساعدتك في استخدام الموقع أو إضافة بيانات البراند. كيف يمكنني مساعدتك؟</div>
+  </div>
+  <div class="ai-chat-input-area">
+    <input type="text" class="ai-chat-input" id="aiChatInput" placeholder="اكتب سؤالك هنا..." maxlength="200">
+    <button class="ai-send-btn" id="aiSendBtn"><span class="mi">send</span></button>
   </div>
 </div>
 
@@ -708,31 +760,147 @@ select.fi{cursor:pointer;appearance:none}
 
 <script>
 (function(){
-  var supportBar=document.getElementById('supportBar');
-  var lastScrollY=window.scrollY;
-  var ticking=false;
-  function updateBarVisibility(){
-    var currentY=window.scrollY;
-    if(currentY>lastScrollY+8){
-      supportBar.classList.remove('peek-bar');
-      supportBar.classList.add('hide-bar');
-    } else if(currentY<lastScrollY-8){
-      supportBar.classList.remove('hide-bar');
-      supportBar.classList.add('peek-bar');
-      setTimeout(function(){if(window.scrollY===currentY)supportBar.classList.remove('peek-bar');},300);
-    } else if(Math.abs(currentY-lastScrollY)<=8){
-      if(!supportBar.classList.contains('hide-bar')&&!supportBar.classList.contains('peek-bar')){
-        supportBar.classList.remove('peek-bar','hide-bar');
-      }
-    }
-    lastScrollY=currentY;
-    ticking=false;
-  }
-  window.addEventListener('scroll',function(){
-    if(!ticking){requestAnimationFrame(function(){updateBarVisibility();ticking=false;});ticking=true;}
+  const supportBtn = document.getElementById('supportFloatBtn');
+  const supportPopup = document.getElementById('supportPopup');
+  const closeSupport = document.getElementById('closeSupportPopup');
+  supportBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    supportPopup.classList.toggle('show');
   });
-  supportBar.classList.remove('hide-bar','peek-bar');
+  closeSupport.addEventListener('click', function() {
+    supportPopup.classList.remove('show');
+  });
+  document.addEventListener('click', function(e) {
+    if (!supportPopup.contains(e.target) && e.target !== supportBtn && !supportBtn.contains(e.target)) {
+      supportPopup.classList.remove('show');
+    }
+  });
+  const aiBtn = document.getElementById('aiFloatBtn');
+  const aiWindow = document.getElementById('aiChatWindow');
+  const closeAi = document.getElementById('closeAiChat');
+  const aiInput = document.getElementById('aiChatInput');
+  const aiSend = document.getElementById('aiSendBtn');
+  const aiMessages = document.getElementById('aiChatMessages');
+  aiBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    aiWindow.classList.toggle('show');
+  });
+  closeAi.addEventListener('click', function() {
+    aiWindow.classList.remove('show');
+  });
+  document.addEventListener('click', function(e) {
+    if (!aiWindow.contains(e.target) && e.target !== aiBtn && !aiBtn.contains(e.target)) {
+      aiWindow.classList.remove('show');
+    }
+  });
+  const API_KEY = (function(){var k='QVEuQWI4Uk42SklGb1lkck9ncFJTQ2hFbko1S1pkMlJVRWpSUWE1LUFlSkt3MVJpRk1SR1E=';try{return atob(k).split('').reverse().join('');}catch(e){return'';}})();
+  const API_URL = 'https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash-lite:generateContent';
+  const BLOCKED_PATTERNS = [
+    /hack/i, /security/i, /password/i, /api[_\s]?key/i, /database/i, /firebase/i, /config/i,
+    /bypass/i, /inject/i, /exploit/i, /system/i, /admin/i, /source/i, /token/i, /credential/i,
+    /breach/i, /vulnerability/i, /attack/i, /phish/i, /malware/i, /script/i, /xss/i, /csrf/i,
+    /sql/i, /exec/i, /eval/i, /function/i, /constructor/i, /prototype/i, /__proto__/i,
+    /window/i, /document/i, /localStorage/i, /sessionStorage/i, /indexedDB/i, /cookie/i
+  ];
+  function isQuestionAllowed(text) {
+    if (!text || typeof text !== 'string') return false;
+    const trimmed = text.trim();
+    if (trimmed.length < 2 || trimmed.length > 200) return false;
+    for (let pattern of BLOCKED_PATTERNS) {
+      if (pattern.test(trimmed)) return false;
+    }
+    const allowedContext = /(استخدام|تسجيل|براند|منتج|بيانات|خطوات|صفحة|موقع|حقل|إضافة|حفظ|تعديل|عرض|قائمة|سعر|صورة|رابط|شروط|أحكام|دعم|مساعدة|easyget)/i;
+    if (!allowedContext.test(trimmed)) return false;
+    return true;
+  }
+  function escapeHtml(text) {
+    if (!text) return '';
+    return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+  function addMessage(content, sender) {
+    const msgDiv = document.createElement('div');
+    msgDiv.className = `ai-message ${sender}`;
+    if (sender === 'bot') {
+      const formatted = content.split('\n').map(line => escapeHtml(line)).join('<br>');
+      msgDiv.innerHTML = formatted;
+    } else {
+      msgDiv.textContent = content;
+    }
+    aiMessages.appendChild(msgDiv);
+    aiMessages.scrollTop = aiMessages.scrollHeight;
+  }
+  function addTypingIndicator() {
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'ai-message bot';
+    typingDiv.id = 'typing-indicator';
+    typingDiv.innerHTML = '<span class="spinner" style="width:16px;height:16px;border-width:2px;border-color:#D4162A;border-top-color:transparent;"></span> جاري الكتابة...';
+    aiMessages.appendChild(typingDiv);
+    aiMessages.scrollTop = aiMessages.scrollHeight;
+  }
+  function removeTypingIndicator() {
+    const typing = document.getElementById('typing-indicator');
+    if (typing) typing.remove();
+  }
+  async function sendToGemini(question) {
+    const prompt = `أنت مساعد مفيد ومتخصص في مساعدة المستخدمين على استخدام موقع EasyGet لتسجيل البراندات وإضافة البيانات. أجب فقط عن الأسئلة المتعلقة بكيفية استخدام الموقع، أو شرح الحقول، أو خطوات التسجيل. لا تجب عن أي أسئلة تتعلق بالأمان أو مصادر البيانات أو بنية النظام أو أي مواضيع خارج نطاق الموقع. الإجابات يجب أن تكون مختصرة ومفيدة ومنظمة بنقاط مرقمة (1,2,3...). إذا كان السؤال خارج النطاق المسموح، قل: "عذراً، يمكنني فقط مساعدتك في استخدام موقع EasyGet وإضافة بيانات البراند."
+    
+السؤال: ${question}`;
+    const response = await fetch(`${API_URL}?key=${API_KEY}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        safetySettings: [
+          { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
+          { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
+          { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
+          { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' }
+        ],
+        generationConfig: { temperature: 0.2, maxOutputTokens: 300 }
+      })
+    });
+    if (!response.ok) {
+      throw new Error('API request failed');
+    }
+    const data = await response.json();
+    const answer = data.candidates?.[0]?.content?.parts?.[0]?.text;
+    if (!answer) throw new Error('No response');
+    return answer;
+  }
+  async function handleAiSend() {
+    const question = aiInput.value.trim();
+    if (!question) return;
+    if (!isQuestionAllowed(question)) {
+      addMessage('عذراً، لا يمكنني الإجابة على هذا السؤال. يمكنني فقط مساعدتك في استخدام موقع EasyGet وإضافة بيانات البراند.', 'bot');
+      aiInput.value = '';
+      return;
+    }
+    addMessage(question, 'user');
+    aiInput.value = '';
+    aiSend.disabled = true;
+    addTypingIndicator();
+    try {
+      const answer = await sendToGemini(question);
+      removeTypingIndicator();
+      addMessage(answer, 'bot');
+    } catch (error) {
+      removeTypingIndicator();
+      addMessage('عذراً، حدث خطأ أثناء معالجة طلبك. يرجى المحاولة لاحقاً.', 'bot');
+      console.error('AI Error:', error);
+    } finally {
+      aiSend.disabled = false;
+      aiInput.focus();
+    }
+  }
+  aiSend.addEventListener('click', handleAiSend);
+  aiInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleAiSend();
+    }
+  });
 })();
 </script>
+
 </body>
 </html>
