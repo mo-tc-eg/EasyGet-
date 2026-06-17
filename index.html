@@ -24,47 +24,48 @@
   --radius:16px;
   --shadow:0 4px 24px rgba(0,0,0,0.08);
   --shadow-lg:0 12px 48px rgba(0,0,0,0.13);
-  --tr:all 0.2s cubic-bezier(0.4,0,0.2,1)
+  --tr:all 0.2s cubic-bezier(0.4,0,0.2,1);
+  --gold:#C9A227;--egypt-black:#0a0a0a;--egypt-white:#fff
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:70px;position:relative;overflow-x:hidden}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:70px;position:relative}
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-thumb{background:var(--brand);border-radius:2px}
 .mi{font-family:'Material Icons Round';font-weight:normal;font-style:normal;font-size:20px;line-height:1;display:inline-block;white-space:nowrap;direction:ltr;-webkit-font-smoothing:antialiased;user-select:none}
 
-.wc-bg{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden;opacity:0.07}
-.wc-bg-circle{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(212,22,42,0.4) 0%,transparent 70%);animation:wcFloat 20s ease-in-out infinite alternate}
-.wc-bg-circle:nth-child(1){width:500px;height:500px;top:-100px;right:-100px;animation-duration:25s}
-.wc-bg-circle:nth-child(2){width:300px;height:300px;bottom:-50px;left:-50px;animation-duration:18s;animation-delay:2s;background:radial-gradient(circle,rgba(212,22,42,0.25) 0%,transparent 70%)}
-.wc-bg-circle:nth-child(3){width:200px;height:200px;top:40%;left:20%;animation-duration:22s;animation-delay:4s;background:radial-gradient(circle,rgba(212,22,42,0.15) 0%,transparent 70%)}
-.wc-bg-shape{position:absolute;font-size:120px;opacity:0.05;animation:wcFloatShape 30s linear infinite}
-.wc-bg-shape:nth-child(4){top:10%;right:10%;animation-duration:35s}
-.wc-bg-shape:nth-child(5){bottom:15%;left:15%;animation-duration:28s;animation-delay:5s}
-@keyframes wcFloat{0%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-20px) scale(1.05)}66%{transform:translate(-20px,30px) scale(0.95)}100%{transform:translate(10px,-10px) scale(1.02)}}
-@keyframes wcFloatShape{0%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(40px,-30px) rotate(180deg)}100%{transform:translate(-20px,20px) rotate(360deg)}}
+.wc-bg-layer{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;overflow:hidden;opacity:0.05}
+.wc-bg-layer svg{position:absolute;width:100%;height:100%}
+.wc-bg-pattern{position:absolute;inset:0;background-image:radial-gradient(circle at 10% 15%,var(--brand) 0,transparent 2.5%),radial-gradient(circle at 85% 10%,var(--gold) 0,transparent 2.2%),radial-gradient(circle at 50% 50%,var(--brand) 0,transparent 2%),radial-gradient(circle at 25% 80%,var(--gold) 0,transparent 2.3%),radial-gradient(circle at 75% 70%,var(--brand) 0,transparent 2%),radial-gradient(circle at 95% 90%,var(--gold) 0,transparent 2%),radial-gradient(circle at 40% 30%,var(--brand) 0,transparent 1.8%),radial-gradient(circle at 60% 95%,var(--gold) 0,transparent 2%);background-size:100% 100%}
 
-.splash-overlay{position:fixed;top:0;left:0;width:100%;height:100%;z-index:9999;background:linear-gradient(145deg,#0a0a12 0%,#1a0810 40%,#0f0f1a 100%);display:flex;align-items:center;justify-content:center;flex-direction:column;opacity:1;transition:opacity 0.8s ease;pointer-events:all}
-.splash-overlay.hide{opacity:0;pointer-events:none}
-.splash-content{text-align:center;position:relative;padding:20px;max-width:600px;animation:splashPulse 2s ease-in-out infinite alternate}
-.splash-flag{display:flex;justify-content:center;gap:6px;margin-bottom:24px;font-size:48px;line-height:1;animation:splashFlag 1.5s ease-in-out infinite alternate}
-.splash-flag span{display:inline-block;animation:splashFlagItem 1.5s ease-in-out infinite alternate}
-.splash-flag span:nth-child(2){animation-delay:0.15s}
-.splash-flag span:nth-child(3){animation-delay:0.3s}
-@keyframes splashFlagItem{0%{transform:scale(1) rotate(0deg)}100%{transform:scale(1.08) rotate(3deg)}}
-.splash-title{font-family:'Tajawal',sans-serif;font-size:clamp(32px,7vw,56px);font-weight:900;color:#fff;line-height:1.2;margin-bottom:12px;text-shadow:0 0 60px rgba(212,22,42,0.3)}
-.splash-title .hl{color:var(--brand-light);position:relative;display:inline-block}
-.splash-title .hl::after{content:'';position:absolute;bottom:-4px;left:0;width:100%;height:3px;background:linear-gradient(90deg,transparent,var(--brand-light),transparent);border-radius:2px}
-.splash-sub{font-size:18px;color:rgba(255,255,255,0.5);font-weight:400;margin-top:8px;letter-spacing:1px}
-.splash-ball{font-size:64px;margin-top:16px;animation:splashBall 1.2s ease-in-out infinite alternate;display:inline-block}
-@keyframes splashPulse{0%{transform:scale(1)}100%{transform:scale(1.01)}}
-@keyframes splashFlag{0%{transform:translateY(0)}100%{transform:translateY(-6px)}}
-@keyframes splashBall{0%{transform:translateY(0) rotate(0deg)}100%{transform:translateY(-10px) rotate(15deg)}}
-.splash-loader{width:40px;height:40px;margin-top:32px;position:relative}
-.splash-loader::before{content:'';position:absolute;inset:0;border-radius:50%;border:3px solid rgba(212,22,42,0.15);border-top-color:var(--brand-light);animation:splashSpin 0.9s linear infinite}
-@keyframes splashSpin{to{transform:rotate(360deg)}}
-.splash-eg{position:absolute;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(212,22,42,0.08) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
-.splash-eg::after{content:'🇪🇬';font-size:80px;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.15}
+.welcome-overlay{position:fixed;inset:0;z-index:99999;background:linear-gradient(160deg,#0a0a0a 0%,#1a0810 45%,#0a0a12 100%);display:flex;align-items:center;justify-content:center;flex-direction:column;overflow:hidden;animation:welcomeFadeOut 0.6s ease forwards;animation-delay:2.6s}
+.welcome-overlay.wc-hidden{display:none}
+@keyframes welcomeFadeOut{from{opacity:1;visibility:visible}to{opacity:0;visibility:hidden}}
+.welcome-flag{width:120px;height:80px;border-radius:8px;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,0.5);margin-bottom:26px;opacity:0;transform:scale(0.7);animation:wcPopIn 0.7s cubic-bezier(0.34,1.56,0.64,1) forwards;animation-delay:0.15s;border:2px solid rgba(255,255,255,0.15)}
+.welcome-flag .stripe{width:100%;height:33.333%}
+.welcome-flag .stripe.red{background:#CE1126}
+.welcome-flag .stripe.white{background:#fff;display:flex;align-items:center;justify-content:center;position:relative}
+.welcome-flag .stripe.black{background:#000}
+.welcome-eagle{width:22px;height:22px;color:#C09300}
+@keyframes wcPopIn{from{opacity:0;transform:scale(0.7) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.welcome-icons{display:flex;gap:18px;margin-bottom:22px;opacity:0;animation:wcFadeUp 0.6s ease forwards;animation-delay:0.5s}
+@keyframes wcFadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.welcome-icon-ball{font-size:34px;animation:wcSpin 1.8s linear infinite}
+.welcome-icon-cup{font-size:34px;animation:wcBounce 1.6s ease-in-out infinite}
+@keyframes wcSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes wcBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.welcome-text{font-family:'Tajawal',sans-serif;font-size:clamp(22px,5vw,34px);font-weight:900;color:#fff;text-align:center;opacity:0;letter-spacing:-0.3px;animation:wcTextReveal 1s ease forwards;animation-delay:0.8s;padding:0 24px}
+.welcome-text span{color:var(--brand-light)}
+@keyframes wcTextReveal{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.welcome-progress{width:160px;height:3px;background:rgba(255,255,255,0.15);border-radius:3px;margin-top:30px;overflow:hidden;opacity:0;animation:wcFadeUp 0.5s ease forwards;animation-delay:1s}
+.welcome-progress-fill{height:100%;background:linear-gradient(90deg,var(--brand),var(--gold));border-radius:3px;width:0%;animation:wcProgressFill 1.8s ease forwards;animation-delay:1s}
+@keyframes wcProgressFill{from{width:0%}to{width:100%}}
+.welcome-confetti{position:absolute;top:-20px;border-radius:2px;opacity:0;animation:wcConfettiFall linear forwards}
+@keyframes wcConfettiFall{0%{opacity:0;transform:translateY(0) rotate(0deg)}10%{opacity:1}100%{opacity:0.3;transform:translateY(110vh) rotate(540deg)}}
+@media(prefers-reduced-motion:reduce){
+  .welcome-icon-ball,.welcome-icon-cup,.welcome-confetti{animation:none!important}
+  .welcome-overlay,.welcome-flag,.welcome-icons,.welcome-text,.welcome-progress{animation-duration:0.01s!important}
+}
 
 .topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;height:58px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100;box-shadow:0 1px 8px rgba(0,0,0,0.05)}
 .brand-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
@@ -87,48 +88,48 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-h
 .step-pill{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:8px 16px;color:rgba(255,255,255,0.7);font-size:13px;font-weight:600}
 .step-pill .mi{font-size:16px;color:var(--brand-light)}
 
+.wc-cta-banner{max-width:860px;margin:24px auto 0;padding:0 16px;position:relative;z-index:10}
+.wc-cta-inner{background:linear-gradient(120deg,#1a0810,#0a0a12 60%,#1a0810);border:1px solid rgba(212,22,42,0.3);border-radius:20px;padding:22px 26px;display:flex;align-items:center;gap:18px;box-shadow:var(--shadow-lg);position:relative;overflow:hidden;opacity:0;animation:wcSlideUp 0.7s ease forwards;animation-delay:0.1s}
+@keyframes wcSlideUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.wc-cta-inner::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 90% 20%,rgba(201,162,39,0.18),transparent 60%);pointer-events:none}
+.wc-cta-icon{width:54px;height:54px;border-radius:14px;background:rgba(212,22,42,0.18);border:1px solid rgba(212,22,42,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:26px;position:relative;z-index:1}
+.wc-cta-text{flex:1;position:relative;z-index:1}
+.wc-cta-title{font-family:'Tajawal',sans-serif;font-size:19px;font-weight:900;color:#fff;margin-bottom:4px}
+.wc-cta-sub{font-size:13px;color:rgba(255,255,255,0.55);line-height:1.6}
+.wc-cta-arrow{width:40px;height:40px;border-radius:50%;background:var(--brand);display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;position:relative;z-index:1;transition:var(--tr);cursor:pointer}
+.wc-cta-arrow:hover{transform:scale(1.08);background:var(--brand-light)}
+.wc-cta-arrow .mi{font-size:20px}
+
 .main-wrap{max-width:860px;margin:-30px auto 60px;padding:0 16px;position:relative;z-index:10}
 
-.wc-campaign-banner{background:linear-gradient(135deg,#0f0f1a 0%,#1a0810 50%,#0a0a12 100%);border-radius:22px;padding:28px 28px 24px;margin-bottom:24px;border:1px solid rgba(212,22,42,0.2);box-shadow:0 8px 32px rgba(212,22,42,0.08);position:relative;overflow:hidden}
-.wc-campaign-banner::before{content:'';position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(212,22,42,0.1) 0%,transparent 70%);top:-80px;right:-80px;pointer-events:none}
-.wc-campaign-banner::after{content:'';position:absolute;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(212,22,42,0.06) 0%,transparent 70%);bottom:-60px;left:-60px;pointer-events:none}
-.wc-campaign-inner{position:relative;z-index:1;display:flex;flex-wrap:wrap;align-items:center;gap:16px;justify-content:space-between}
-.wc-campaign-text{flex:1;min-width:200px}
-.wc-campaign-title{font-family:'Tajawal',sans-serif;font-size:clamp(20px,3vw,28px);font-weight:900;color:#fff;line-height:1.3;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.wc-campaign-title .wc-ball{font-size:28px;display:inline-block;animation:wcBallBounce 2s ease-in-out infinite}
-@keyframes wcBallBounce{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-6px) rotate(8deg)}}
-.wc-campaign-title .wc-highlight{color:var(--brand-light)}
-.wc-campaign-sub{font-size:14px;color:rgba(255,255,255,0.55);margin-top:6px;line-height:1.7;max-width:500px}
-.wc-campaign-sub .wc-hash{color:var(--brand-light);font-weight:700;letter-spacing:0.5px}
-.wc-campaign-cta{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:4px}
-.wc-cta-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--brand),#FF3347);color:#fff;border:none;border-radius:14px;padding:14px 28px;font-family:'Cairo',sans-serif;font-size:16px;font-weight:800;cursor:pointer;transition:var(--tr);box-shadow:0 6px 24px rgba(212,22,42,0.3);text-decoration:none}
-.wc-cta-btn:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 10px 36px rgba(212,22,42,0.4)}
-.wc-cta-btn .mi{font-size:20px}
-.wc-cta-sub{font-size:11px;color:rgba(255,255,255,0.4);font-weight:400}
-.wc-cta-sub .mi{font-size:13px;vertical-align:middle}
+.wc-info-card{background:var(--surface);border-radius:20px;border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden;margin-bottom:18px;opacity:0;animation:wcSlideUp 0.7s ease forwards;animation-delay:0.2s}
+.wc-info-head{display:flex;align-items:center;gap:10px;padding:18px 24px;background:linear-gradient(135deg,var(--brand-soft),transparent);border-bottom:1px solid var(--border)}
+.wc-info-head .wc-info-icon{width:38px;height:38px;border-radius:10px;background:var(--brand-soft);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:19px}
+.wc-info-head .wc-info-icon .mi{color:var(--brand)}
+.wc-info-title{font-family:'Tajawal',sans-serif;font-size:17px;font-weight:900;color:var(--text);display:flex;align-items:center;gap:7px}
+.wc-info-body{padding:20px 24px}
+.wc-info-desc{font-size:14px;color:var(--text2);line-height:1.85;margin-bottom:14px}
+.wc-info-alert{display:flex;align-items:flex-start;gap:10px;background:#FFF7ED;border:1.5px solid #FED7AA;border-radius:13px;padding:13px 16px}
+.wc-info-alert .mi{color:#D97706;font-size:20px;flex-shrink:0;margin-top:1px}
+.wc-info-alert-text{font-size:13px;color:#92400E;line-height:1.7;font-weight:600}
 
-.wc-info-card{background:var(--surface);border-radius:22px;border:1px solid var(--border);box-shadow:var(--shadow-lg);overflow:hidden;margin-bottom:24px}
-.wc-info-header{display:flex;align-items:center;gap:10px;padding:18px 24px;border-bottom:1px solid var(--border);background:var(--surface2)}
-.wc-info-icon{width:38px;height:38px;border-radius:10px;background:rgba(212,22,42,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.wc-info-icon .mi{color:var(--brand);font-size:20px}
-.wc-info-title{font-size:15px;font-weight:800;color:var(--text)}
-.wc-info-desc{font-size:12px;color:var(--text3);margin-top:1px}
-.wc-info-body{padding:20px 24px 24px}
-.wc-info-body p{font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:14px}
-.wc-info-body .wc-note{background:rgba(212,22,42,0.04);border-right:3px solid var(--brand);padding:12px 16px;border-radius:8px;font-size:13px;color:var(--text3);line-height:1.7;margin-top:8px}
-.wc-info-body .wc-note .mi{font-size:16px;color:var(--brand);vertical-align:middle;margin-left:6px}
+.wc-showcase-card{background:var(--surface);border-radius:20px;border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden;margin-bottom:24px;opacity:0;animation:wcSlideUp 0.7s ease forwards;animation-delay:0.3s}
+.wc-showcase-img-wrap{position:relative;overflow:hidden;background:var(--surface2)}
+.wc-showcase-img-wrap img{width:100%;display:block;transition:transform 0.4s cubic-bezier(0.4,0,0.2,1)}
+.wc-showcase-card:hover .wc-showcase-img-wrap img{transform:scale(1.02)}
+.wc-showcase-badge{position:absolute;top:14px;right:14px;background:rgba(10,10,10,0.7);backdrop-filter:blur(4px);color:#fff;font-size:12px;font-weight:700;padding:6px 14px;border-radius:20px;display:flex;align-items:center;gap:6px}
+.wc-showcase-badge .mi{font-size:15px;color:var(--gold)}
+.wc-showcase-caption{padding:18px 24px;border-top:1px solid var(--border)}
+.wc-showcase-caption-text{font-size:13.5px;color:var(--text2);line-height:1.8;display:flex;align-items:flex-start;gap:9px}
+.wc-showcase-caption-text .mi{color:var(--brand);font-size:18px;flex-shrink:0;margin-top:1px}
 
-.wc-image-card{background:var(--surface);border-radius:22px;border:1px solid var(--border);box-shadow:var(--shadow-lg);overflow:hidden;margin-bottom:24px;transition:transform 0.3s ease,box-shadow 0.3s ease}
-.wc-image-card:hover{transform:translateY(-3px);box-shadow:0 16px 48px rgba(0,0,0,0.1)}
-.wc-image-card img{width:100%;height:auto;display:block;max-height:380px;object-fit:cover}
-.wc-image-body{padding:20px 24px 24px}
-.wc-image-body .wc-image-label{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--text2);margin-bottom:6px}
-.wc-image-body .wc-image-label .mi{font-size:18px;color:var(--brand)}
-.wc-image-body p{font-size:14px;color:var(--text2);line-height:1.8;margin:0}
+.wc-hashtag-row{display:flex;justify-content:center;margin:18px 0 26px}
+.wc-hashtag{display:inline-flex;align-items:center;gap:7px;background:var(--brand-soft);border:1px solid rgba(212,22,42,0.25);color:var(--brand);font-weight:800;font-size:13.5px;padding:9px 20px;border-radius:30px;direction:ltr}
+.wc-hashtag .mi{font-size:16px}
 
-.form-card{background:var(--surface);border-radius:22px;border:1px solid var(--border);box-shadow:var(--shadow-lg);overflow:hidden}
+.form-card{background:var(--surface);border-radius:22px;border:1px solid var(--border);box-shadow:var(--shadow-lg);overflow:hidden;transition:var(--tr)}
 .sec-head{display:flex;align-items:center;gap:10px;padding:18px 24px;border-bottom:1px solid var(--border);background:var(--surface2)}
-.sec-icon{width:38px;height:38px;border-radius:10px;background:var(--brand-soft);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sec-icon{width:38px;height:38px;border-radius:10px;background:var(--brand-soft);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:var(--tr)}
 .sec-icon .mi{color:var(--brand);font-size:19px}
 .sec-title{font-size:15px;font-weight:800;color:var(--text)}
 .sec-desc{font-size:12px;color:var(--text3);margin-top:1px}
@@ -153,7 +154,8 @@ select.fi{cursor:pointer;appearance:none}
 .sec-divider{height:1px;background:linear-gradient(90deg,transparent,var(--border2),transparent);margin:8px 0}
 
 .products-list{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
-.product-row{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;background:var(--surface2);border-radius:12px;padding:12px 14px;border:1.5px solid var(--border);animation:fadeIn 0.2s ease}
+.product-row{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;background:var(--surface2);border-radius:12px;padding:12px 14px;border:1.5px solid var(--border);animation:fadeIn 0.2s ease;transition:var(--tr)}
+.product-row:hover{border-color:var(--border2);box-shadow:0 2px 10px rgba(0,0,0,0.04)}
 @keyframes fadeIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
 .product-row .fi{background:var(--surface);border-color:var(--border)}
 .product-row .fi:focus{border-color:var(--brand)}
@@ -161,7 +163,7 @@ select.fi{cursor:pointer;appearance:none}
 .btn-rm-product:hover{background:#FEF2F2;color:var(--brand)}
 .btn-rm-product .mi{font-size:18px}
 .btn-add-product{display:flex;align-items:center;gap:6px;background:var(--brand-soft);border:1.5px dashed rgba(212,22,42,0.3);border-radius:11px;padding:10px 18px;font-family:'Cairo',sans-serif;font-size:13.5px;font-weight:700;color:var(--brand);cursor:pointer;transition:var(--tr);width:100%;justify-content:center}
-.btn-add-product:hover{background:var(--brand-glow)}
+.btn-add-product:hover{background:var(--brand-glow);transform:translateY(-1px)}
 .btn-add-product .mi{font-size:18px}
 
 .img-urls-list{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
@@ -174,6 +176,7 @@ select.fi{cursor:pointer;appearance:none}
 .pay-opt{display:flex;align-items:center;gap:7px;background:var(--surface2);border:1.5px solid var(--border2);border-radius:10px;padding:9px 14px;cursor:pointer;transition:var(--tr);user-select:none;font-size:13.5px;font-weight:600;color:var(--text2)}
 .pay-opt input[type=checkbox]{display:none}
 .pay-opt.checked{background:var(--brand-soft);border-color:rgba(212,22,42,0.4);color:var(--brand)}
+.pay-opt:hover{transform:translateY(-1px)}
 .pay-check{width:18px;height:18px;border-radius:5px;border:2px solid var(--border2);background:var(--surface);display:flex;align-items:center;justify-content:center;transition:var(--tr);flex-shrink:0}
 .pay-opt.checked .pay-check{background:var(--brand);border-color:var(--brand)}
 .pay-check .mi{font-size:12px;color:transparent}
@@ -305,39 +308,29 @@ select.fi{cursor:pointer;appearance:none}
   .modal-footer{flex-direction:column}
   .floating-support-btn{left:16px;bottom:16px}
   .floating-support-popup{left:16px;bottom:80px;width:260px}
-  .wc-campaign-banner{padding:20px 18px 18px}
-  .wc-campaign-cta{width:100%;align-items:stretch}
-  .wc-cta-btn{justify-content:center;padding:12px 20px;font-size:14px}
-  .wc-info-body{padding:16px}
-  .wc-image-body{padding:16px}
+  .wc-cta-inner{flex-direction:column;text-align:center}
+  .wc-cta-arrow{display:none}
 }
 </style>
 </head>
 <body>
 
-<div class="wc-bg" aria-hidden="true">
-  <div class="wc-bg-circle"></div>
-  <div class="wc-bg-circle"></div>
-  <div class="wc-bg-circle"></div>
-  <div class="wc-bg-shape">⚽</div>
-  <div class="wc-bg-shape">🏆</div>
-</div>
+<div class="wc-bg-layer" aria-hidden="true"><div class="wc-bg-pattern"></div></div>
 
-<div class="splash-overlay" id="splashOverlay" role="dialog" aria-label="شاشة ترحيبية">
-  <div class="splash-content">
-    <div class="splash-flag">
-      <span>🇪🇬</span>
-      <span>⚽</span>
-      <span>🇪🇬</span>
+<div class="welcome-overlay" id="welcomeOverlay" role="status" aria-live="polite">
+  <div class="welcome-flag" aria-hidden="true">
+    <div class="stripe red"></div>
+    <div class="stripe white">
+      <svg class="welcome-eagle" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2c-.6 1.6-1.8 2.8-3.4 3.4C7 6 5.6 7.4 5 9.2c-.3.9-.4 1.9-.2 2.8.4-1.3 1.3-2.4 2.5-3 .6 1.5 1.7 2.7 3.1 3.4-.5.5-.8 1.2-.8 1.9 0 .5.1.9.3 1.3-.9.1-1.7.5-2.4 1.1-1 .9-1.6 2.2-1.6 3.6h13.2c0-1.4-.6-2.7-1.6-3.6-.7-.6-1.5-1-2.4-1.1.2-.4.3-.8.3-1.3 0-.7-.3-1.4-.8-1.9 1.4-.7 2.5-1.9 3.1-3.4 1.2.6 2.1 1.7 2.5 3 .2-.9.1-1.9-.2-2.8-.6-1.8-2-3.2-3.6-3.8C13.8 4.8 12.6 3.6 12 2z"/></svg>
     </div>
-    <div class="splash-title">
-      شجّع مصر<br><span class="hl">وسجّل براندك الآن</span>
-    </div>
-    <div class="splash-sub">كأس العالم أحلى معانا</div>
-    <div class="splash-ball">🏆</div>
-    <div class="splash-loader"></div>
-    <div class="splash-eg"></div>
+    <div class="stripe black"></div>
   </div>
+  <div class="welcome-icons" aria-hidden="true">
+    <span class="welcome-icon-ball">⚽</span>
+    <span class="welcome-icon-cup">🏆</span>
+  </div>
+  <div class="welcome-text">شجّع <span>مصر</span> وسجّل براندك الآن</div>
+  <div class="welcome-progress"><div class="welcome-progress-fill"></div></div>
 </div>
 
 <div class="topbar">
@@ -362,46 +355,48 @@ select.fi{cursor:pointer;appearance:none}
   </div>
 </div>
 
+<div class="wc-cta-banner">
+  <div class="wc-cta-inner">
+    <div class="wc-cta-icon" aria-hidden="true">🏆</div>
+    <div class="wc-cta-text">
+      <div class="wc-cta-title">سجّل براندك الآن</div>
+      <div class="wc-cta-sub">قد تكون منتجاتك ضمن المنتجات المختارة للحملات الموسمية القادمة.</div>
+    </div>
+    <div class="wc-cta-arrow" aria-hidden="true"><span class="mi">arrow_downward</span></div>
+  </div>
+</div>
+
 <div class="main-wrap">
 
-  <div class="wc-campaign-banner">
-    <div class="wc-campaign-inner">
-      <div class="wc-campaign-text">
-        <div class="wc-campaign-title">
-          <span class="wc-ball">⚽</span>
-          كأس العالم <span class="wc-highlight">أحلى معانا</span>
-          <span style="font-size:18px;font-weight:400;color:rgba(255,255,255,0.3);">#كأس_العالم_أحلى_معانا</span>
-        </div>
-        <div class="wc-campaign-sub">
-          سجّل براندك الآن، وقد يتم اختيار بعض المنتجات المناسبة لفعاليات تشجيع منتخب مصر للظهور داخل التطبيق في الأقسام المخصصة للحملات الموسمية.
-          <div style="margin-top:6px;font-size:12px;color:rgba(255,255,255,0.35);">
-            <span class="mi" style="font-size:14px;vertical-align:middle;">info</span>
-            اختيار المنتجات أو البراندات ليس تلقائياً أو مضموناً، ويتم بناءً على مدى ملاءمتها للحملة.
-          </div>
-        </div>
-      </div>
-      <div class="wc-campaign-cta">
-        <a href="#main-form-card" class="wc-cta-btn">
-          <span class="mi">send</span>
-          سجّل براندك الآن
-        </a>
-        <div class="wc-cta-sub">
-          <span class="mi" style="font-size:13px;">stars</span>
-          قد تكون منتجاتك ضمن المنتجات المختارة للحملات الموسمية القادمة
-        </div>
+  <div class="wc-info-card">
+    <div class="wc-info-head">
+      <div class="wc-info-icon"><span class="mi">sports_soccer</span></div>
+      <div class="wc-info-title">كأس العالم أحلى معانا</div>
+    </div>
+    <div class="wc-info-body">
+      <div class="wc-info-desc">سجّل براندك الآن، وقد يتم اختيار بعض المنتجات المناسبة لفعاليات تشجيع منتخب مصر للظهور داخل التطبيق في الأقسام المخصصة للحملات الموسمية.</div>
+      <div class="wc-info-alert">
+        <span class="mi">info</span>
+        <div class="wc-info-alert-text">اختيار المنتجات أو البراندات ليس تلقائياً أو مضموناً، ويتم بناءً على مدى ملاءمتها للحملة.</div>
       </div>
     </div>
   </div>
 
-  <div class="wc-image-card">
-    <img src="https://i.postimg.cc/L8VKTcxr/05598f6e-cda6-463f-9af8-fa2c2f0634fa.jpg" alt="مثال لعرض المنتجات المختارة في الحملات الموسمية" loading="lazy" crossorigin="anonymous">
-    <div class="wc-image-body">
-      <div class="wc-image-label">
-        <span class="mi">photo_library</span>
-        مثال توضيحي
-      </div>
-      <p>هذا مثال للمكان الذي قد تظهر فيه المنتجات المختارة داخل التطبيق أثناء الحملات الموسمية الخاصة بتشجيع منتخب مصر.</p>
+  <div class="wc-showcase-card">
+    <div class="wc-showcase-img-wrap">
+      <img src="https://i.postimg.cc/L8VKTcxr/05598f6e-cda6-463f-9af8-fa2c2f0634fa.jpg" alt="مثال لظهور المنتجات داخل التطبيق في حملات كأس العالم" loading="lazy">
+      <div class="wc-showcase-badge"><span class="mi">stars</span>قسم الحملات الموسمية</div>
     </div>
+    <div class="wc-showcase-caption">
+      <div class="wc-showcase-caption-text">
+        <span class="mi">smartphone</span>
+        <span>هذا مثال للمكان الذي قد تظهر فيه المنتجات المختارة داخل التطبيق أثناء الحملات الموسمية الخاصة بتشجيع منتخب مصر.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="wc-hashtag-row">
+    <div class="wc-hashtag"><span class="mi">tag</span>#كأس_العالم_أحلى_معانا</div>
   </div>
 
   <div class="form-card" id="main-form-card">
@@ -1411,16 +1406,6 @@ select.fi{cursor:pointer;appearance:none}
         if(fid&&/^[a-zA-Z0-9_-]+$/.test(fid))_showErr(fid,false);
       });
     });
-
-    var splash=document.getElementById('splashOverlay');
-    if(splash){
-      setTimeout(function(){
-        splash.classList.add('hide');
-        setTimeout(function(){
-          splash.style.display='none';
-        },800);
-      },2800);
-    }
   });
 })();
 </script>
@@ -1471,6 +1456,31 @@ select.fi{cursor:pointer;appearance:none}
       supportBtn.setAttribute('aria-expanded','false');
     }
   });
+})();
+</script>
+
+<script nonce="EG2024NONCE">
+(function(){
+  "use strict";
+  var overlay=document.getElementById('welcomeOverlay');
+  if(!overlay)return;
+  var colors=['#D4162A','#FF3347','#C9A227','#ffffff'];
+  var count=24;
+  for(var i=0;i<count;i++){
+    var c=document.createElement('div');
+    c.className='welcome-confetti';
+    var size=(Math.random()*5+4);
+    c.style.left=(Math.random()*100)+'%';
+    c.style.width=size+'px';
+    c.style.height=size+'px';
+    c.style.background=colors[i%colors.length];
+    c.style.animationDuration=(2.4+Math.random()*1.2)+'s';
+    c.style.animationDelay=(Math.random()*0.6)+'s';
+    overlay.appendChild(c);
+  }
+  setTimeout(function(){
+    overlay.classList.add('wc-hidden');
+  },3300);
 })();
 </script>
 
