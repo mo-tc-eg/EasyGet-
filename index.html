@@ -450,6 +450,8 @@
             padding: 0 16px;
             position: relative;
             z-index: 10;
+            /* زيادة المسافة تحت الكونتينر */
+            margin-bottom: 48px;
         }
 
         .wc-main-card {
@@ -569,32 +571,33 @@
             line-height: 1.7;
             max-width: 400px;
         }
+        /* زر أصغر */
         .wc-hero-cta {
             flex-shrink: 0;
             background: linear-gradient(135deg, var(--brand), #b01020);
             border: none;
-            border-radius: 14px;
-            padding: 14px 28px;
+            border-radius: 11px;
+            padding: 10px 20px;
             font-family: 'Cairo', sans-serif;
-            font-size: 15px;
+            font-size: 13px;
             font-weight: 800;
             color: #fff;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 6px 24px rgba(212, 22, 42, 0.35);
+            box-shadow: 0 4px 16px rgba(212, 22, 42, 0.3);
             display: inline-flex;
             align-items: center;
-            gap: 10px;
+            gap: 7px;
             text-decoration: none;
             position: relative;
             overflow: hidden;
         }
         .wc-hero-cta:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 12px 40px rgba(212, 22, 42, 0.5);
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 8px 28px rgba(212, 22, 42, 0.45);
         }
         .wc-hero-cta .mi {
-            font-size: 20px;
+            font-size: 17px;
         }
 
         /* ---- Showcase with single image (larger) ---- */
@@ -623,6 +626,7 @@
             margin: 0 auto;
         }
 
+        /* الصورة قابلة للضغط */
         .wc-showcase-thumb {
             position: relative;
             border-radius: 20px;
@@ -634,6 +638,7 @@
             transform-style: preserve-3d;
             perspective: 600px;
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+            cursor: pointer;
         }
         .wc-showcase-thumb:hover {
             transform: translateY(-6px) rotateX(2deg) rotateY(2deg) scale(1.02);
@@ -647,6 +652,7 @@
             object-fit: cover;
             display: block;
             transition: transform 0.5s ease;
+            pointer-events: none;
         }
         .wc-showcase-thumb:hover img {
             transform: scale(1.04);
@@ -667,10 +673,111 @@
             gap: 5px;
             letter-spacing: 0.3px;
             border: 1px solid rgba(255, 255, 255, 0.08);
+            pointer-events: none;
         }
         .wc-showcase-thumb .wc-thumb-badge .mi {
             font-size: 14px;
             color: var(--gold-light);
+        }
+        /* أيقونة التكبير */
+        .wc-showcase-thumb .zoom-hint {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(4px);
+            border-radius: 30px;
+            padding: 5px 12px;
+            font-size: 11px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .wc-showcase-thumb .zoom-hint .mi {
+            font-size: 14px;
+        }
+
+        /* ---- Lightbox ---- */
+        .lightbox-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 99998;
+            background: rgba(0, 0, 0, 0.88);
+            backdrop-filter: blur(8px);
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            cursor: pointer;
+            animation: lbFadeIn 0.25s ease;
+        }
+        .lightbox-overlay.show {
+            display: flex;
+        }
+        @keyframes lbFadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        .lightbox-content {
+            max-width: 90vw;
+            max-height: 85vh;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            animation: lbScaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        @keyframes lbScaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.92);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .lightbox-content img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            max-width: 90vw;
+            max-height: 85vh;
+            object-fit: contain;
+        }
+        .lightbox-close {
+            position: fixed;
+            top: 24px;
+            left: 24px;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #fff;
+            font-size: 28px;
+            transition: all 0.25s;
+            z-index: 99999;
+            backdrop-filter: blur(4px);
+        }
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.08);
+        }
+        .lightbox-close .mi {
+            font-size: 28px;
         }
 
         /* ---- Info alert card (refined) ---- */
@@ -750,10 +857,12 @@
         /* ---- form (unchanged) ---- */
         .main-wrap {
             max-width: 860px;
-            margin: -30px auto 60px;
+            margin: -20px auto 60px;
             padding: 0 16px;
             position: relative;
             z-index: 10;
+            /* مسافة إضافية تحت الكونتينر */
+            margin-top: 24px;
         }
 
         .form-card {
@@ -1762,7 +1871,7 @@
                 padding: 16px
             }
             .main-wrap {
-                margin-top: -20px
+                margin-top: -10px;
             }
             .payment-opts {
                 flex-direction: column
@@ -1816,6 +1925,19 @@
             .wc-info-body {
                 padding: 16px 18px;
             }
+            .wc-section {
+                margin-bottom: 32px;
+            }
+            .lightbox-close {
+                top: 16px;
+                left: 16px;
+                width: 40px;
+                height: 40px;
+                font-size: 22px;
+            }
+            .lightbox-close .mi {
+                font-size: 22px;
+            }
         }
         @media(max-width:420px) {
             .wc-hero-icon-wrap {
@@ -1824,6 +1946,13 @@
             }
             .wc-hero-icon-wrap .mi {
                 font-size: 28px;
+            }
+            .wc-hero-cta {
+                padding: 8px 16px;
+                font-size: 12px;
+            }
+            .wc-hero-cta .mi {
+                font-size: 15px;
             }
         }
     </style>
@@ -1897,16 +2026,17 @@
                 </div>
             </div>
 
-            <!-- Showcase with single image (larger) -->
+            <!-- Showcase with single image (larger) - clickable -->
             <div class="wc-showcase-wrap">
                 <div class="wc-showcase-label">
                     <span class="mi">photo_library</span>
-              صورة توضيحية:
+                    صورة توضيحية:
                 </div>
                 <div class="wc-showcase-grid">
-                    <div class="wc-showcase-thumb">
-                        <img src="https://i.postimg.cc/L8VKTcxr/05598f6e-cda6-463f-9af8-fa2c2f0634fa.jpg" alt="فعالية كأس العالم - تشجيع منتخب مصر" loading="lazy">
+                    <div class="wc-showcase-thumb" id="showcaseThumb" role="button" tabindex="0" aria-label="اضغط لعرض الصورة بحجم كامل">
+                        <img src="https://i.postimg.cc/L8VKTcxr/05598f6e-cda6-463f-9af8-fa2c2f0634fa.jpg" alt="فعالية كأس العالم - تشجيع منتخب مصر" loading="lazy" id="showcaseImg">
                         <div class="wc-thumb-badge"><span class="mi">flag</span> تشجيع</div>
+                        <div class="zoom-hint"><span class="mi">zoom_in</span> اضغط للتكبير</div>
                     </div>
                 </div>
             </div>
@@ -2263,6 +2393,16 @@
         <input type="text" id="_hp_field" name="_hp" tabindex="-1" autocomplete="off">
     </div>
 
+    <!-- Lightbox -->
+    <div class="lightbox-overlay" id="lightboxOverlay" role="dialog" aria-modal="true" aria-label="عرض الصورة بحجم كامل">
+        <div class="lightbox-content" id="lightboxContent">
+            <img src="" alt="صورة بحجم كامل" id="lightboxImg">
+        </div>
+        <button class="lightbox-close" id="lightboxClose" type="button" aria-label="إغلاق الصورة">
+            <span class="mi">close</span>
+        </button>
+    </div>
+
     <script nonce="EG2024NONCE">
         (function() {
             var _cfg = {
@@ -2545,7 +2685,7 @@
                     ['حلويات زيك', 'sweets'],
                     ['مشروبات', 'drinks']
                 ],
-                'ملابс': [
+                'ملابس': [
                     ['لبس رجالي', 'mens_clothing'],
                     ['لبس نسائي', 'womens_clothing'],
                     ['لبس أطفالي', 'kids_clothing'],
@@ -3192,6 +3332,48 @@
                         if (fid && /^[a-zA-Z0-9_-]+$/.test(fid)) _showErr(fid, false);
                     });
                 });
+
+                // ---- Lightbox functionality ----
+                var thumb = document.getElementById('showcaseThumb');
+                var img = document.getElementById('showcaseImg');
+                var overlay = document.getElementById('lightboxOverlay');
+                var lbImg = document.getElementById('lightboxImg');
+                var closeBtn = document.getElementById('lightboxClose');
+
+                function openLightbox(e) {
+                    if (e) e.preventDefault();
+                    var src = img.getAttribute('src');
+                    if (src) {
+                        lbImg.setAttribute('src', src);
+                        lbImg.setAttribute('alt', img.getAttribute('alt') || 'صورة بحجم كامل');
+                        overlay.classList.add('show');
+                        document.body.style.overflow = 'hidden';
+                    }
+                }
+
+                function closeLightbox() {
+                    overlay.classList.remove('show');
+                    document.body.style.overflow = '';
+                }
+
+                thumb.addEventListener('click', openLightbox);
+                thumb.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        openLightbox(e);
+                    }
+                });
+
+                closeBtn.addEventListener('click', closeLightbox);
+                overlay.addEventListener('click', function(e) {
+                    if (e.target === overlay) closeLightbox();
+                });
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && overlay.classList.contains('show')) closeLightbox();
+                });
+
+                // منع تمرير الصفحة عند فتح اللايت بوكس
+                overlay.addEventListener('wheel', function(e) { e.preventDefault(); }, { passive: false });
             });
         })();
     </script>
