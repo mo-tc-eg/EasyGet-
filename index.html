@@ -33,14 +33,6 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-h
 ::-webkit-scrollbar-thumb{background:var(--brand);border-radius:2px}
 .mi{font-family:'Material Icons Round';font-weight:normal;font-style:normal;font-size:20px;line-height:1;display:inline-block;white-space:nowrap;direction:ltr;-webkit-font-smoothing:antialiased;user-select:none}
 
-.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;height:58px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100;box-shadow:0 1px 8px rgba(0,0,0,0.05)}
-.brand-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
-.brand-logo img{width:32px;height:32px;border-radius:9px;object-fit:contain}
-.brand-logo-name{font-family:'Poppins','Tajawal',sans-serif;font-size:22px;font-weight:800;color:var(--brand);letter-spacing:-0.3px;text-shadow:0 1px 1px rgba(0,0,0,0.05)}
-.topbar-sep{flex:1}
-.topbar-badge{background:var(--brand-soft);color:var(--brand);border:1px solid rgba(212,22,42,0.2);border-radius:25px;padding:5px 14px;font-size:12.5px;font-weight:700;display:flex;align-items:center;gap:5px}
-.topbar-badge .mi{font-size:15px}
-
 .hero{background:linear-gradient(145deg,#0f0f1a 0%,#1a0810 55%,#0a0a12 100%);padding:56px 24px 64px;text-align:center;position:relative;overflow:hidden}
 .hero::before{content:'';position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(212,22,42,0.18) 0%,transparent 68%);top:-200px;left:50%;transform:translateX(-50%);pointer-events:none}
 .hero::after{content:'';position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(212,22,42,0.1) 0%,transparent 70%);bottom:-80px;right:-60px;pointer-events:none}
@@ -238,15 +230,6 @@ select.fi{cursor:pointer;appearance:none}
 </style>
 </head>
 <body>
-
-<div class="topbar">
-  <a class="brand-logo" href="#">
-    <img src="https://i.postimg.cc/qqL5cNz5/IMG-3669.png" alt="EasyGet" crossorigin="anonymous" referrerpolicy="no-referrer">
-    <div class="brand-logo-name">EasyGet</div>
-  </a>
-  <div class="topbar-sep"></div>
-  <div class="topbar-badge"><span class="mi">store</span>تسجيل براند جديد</div>
-</div>
 
 <div class="hero">
   <div class="hero-inner">
@@ -695,9 +678,22 @@ select.fi{cursor:pointer;appearance:none}
   }
 
   var _ALLOWED_PAYMENT=['الدفع عند الاستلام','فيزا/ماستر','فودافون كاش','انستاباي'];
-  function _sPM(s){
-    if(!s||typeof s!=='string')return'';
-    return s.split(' - ').filter(function(m){return _ALLOWED_PAYMENT.includes(m.trim());}).join(' - ');
+  function _sPM(arr){
+    if(!Array.isArray(arr)) return [];
+    var order = ['الدفع عند الاستلام','فودافون كاش','فيزا/ماستر','انستاباي'];
+    var urlMap = {
+      'الدفع عند الاستلام':'https://cdn-icons-png.flaticon.com/512/3081/3081295.png',
+      'فودافون كاش':'https://drashrafsoliman.com/wp-content/uploads/2022/06/vc-300x300.png',
+      'فيزا/ماستر':'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png',
+      'انستاباي':'https://wp-senior.com/wp-content/uploads/2025/07/unnamed.png'
+    };
+    var result = [];
+    order.forEach(function(method){
+      if(arr.indexOf(method) !== -1) {
+        result.push(urlMap[method]);
+      }
+    });
+    return result;
   }
 
   var _ALLOWED_CATS=['أكل','ملابس','إلكترونيات','العناية','البيت','المكتبة','متنوع'];
@@ -1039,7 +1035,7 @@ select.fi{cursor:pointer;appearance:none}
       deliveryTime:v('deliveryTime'),
       minPrice:n('minPrice')||undefined,
       maxPrice:n('maxPrice')||undefined,
-      paymentMethods:pays.join(' - '),
+      paymentMethods:pays,
       orderUrl:v('orderUrl'),
       socialMedia:{website:v('website'),facebook:v('facebook'),instagram:v('instagram'),tiktok:v('tiktok'),phone:v('phone'),whatsapp:_wLink},
       website:v('website'),
